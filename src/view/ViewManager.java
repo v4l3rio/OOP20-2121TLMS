@@ -4,7 +4,6 @@ package view;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.*;
 
 public class ViewManager {
 	
@@ -22,9 +21,6 @@ public class ViewManager {
 		mainStage.setScene(mainScene);	
 		
 	}
-	
-
-	
 	
 	public Stage getMainStage() {
 		return mainStage;
