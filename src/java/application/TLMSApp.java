@@ -1,4 +1,4 @@
-package application;
+package java.application;
 
 import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;

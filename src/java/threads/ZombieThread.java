@@ -1,4 +1,4 @@
-package threads;
+package java.threads;
 
 public class ZombieThread {
 

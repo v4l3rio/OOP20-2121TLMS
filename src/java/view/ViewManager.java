@@ -1,10 +1,10 @@
-package view;
+package java.view;
 
 
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.*;
+import java.model.*;
 
 public class ViewManager {
 	
