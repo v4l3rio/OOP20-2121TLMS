@@ -2,3 +2,5 @@ bin/
 doc/
 .log
 .pdf
+logs/
+system/
