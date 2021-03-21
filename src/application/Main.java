@@ -1,4 +1,4 @@
-package java.application;
+package application;
 
 
 
@@ -14,9 +14,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import java.model.Enemy;
-import java.model.Zombie;
-import java.view.ViewManager;
+import model.Enemy;
+import model.Zombie;
+import view.ViewManager;
  
 public class Main extends Application {
     
