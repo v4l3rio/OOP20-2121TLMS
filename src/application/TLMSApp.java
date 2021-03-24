@@ -13,74 +13,97 @@ import com.almasb.fxgl.entity.level.Level;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.input.view.KeyView;
 import com.almasb.fxgl.input.virtual.VirtualButton;
+import com.almasb.fxgl.time.TimerAction;
 
+
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import model.Zombie;
+
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
+import java.util.Map;
+import java.util.Random;
 
-public class TLMSApp extends GameApplication{
+public class TLMSApp extends GameApplication {
 
 	@Override
 	protected void initSettings(GameSettings settings) {
-		settings.setWidth(944);
-        settings.setHeight(544);
+		settings.setWidth(1280);
+		settings.setHeight(640);
 
-        settings.setApplicationMode(ApplicationMode.DEVELOPER);
-    }
-	
-	private Entity player; //create pla
-	
-	@Override
-    protected void initInput() {
-        getInput().addAction(new UserAction("Left") {
-            @Override
-            protected void onAction() {
-                player.getComponent(Zombie.class).left();
-            }
+		settings.setApplicationMode(ApplicationMode.DEVELOPER);
+	}
 
-            @Override
-            protected void onActionEnd() {
-                player.getComponent(Zombie.class).stop();
-            }
-        }, KeyCode.A, VirtualButton.LEFT);
-
-        getInput().addAction(new UserAction("Right") {
-            @Override
-            protected void onAction() {
-                player.getComponent(Zombie.class).right();
-            }
-
-            @Override
-            protected void onActionEnd() {
-                player.getComponent(Zombie.class).stop();
-            }
-        }, KeyCode.D, VirtualButton.RIGHT);
-
-    }
+	private Entity zombie; 
+	private double levelTime=0.0;
+	private int seconds=0;
+	private int nextDirection=0;
+	Random rnd = new Random();
 	
 	@Override
-	public void initGame() {	
+	protected void onUpdate(double tpf) {
+		levelTime= levelTime+tpf;
+		nextDirection = rnd.nextInt(3);
 		
+		switch (nextDirection) {
+		case 0:
+			if(levelTime>seconds) {
+				zombie.getComponent(Zombie.class).left();
+				seconds++;
+			}
+			break;
+		case 1:
+			if(levelTime>seconds) {
+				zombie.getComponent(Zombie.class).right();
+				seconds++;
+			}
+			break;
+		case 2:
+			if(levelTime>seconds) {
+				zombie.getComponent(Zombie.class).stop();
+				seconds++;
+			}
+			break;
+			
+		default:
+			if(levelTime>seconds) {
+				zombie.getComponent(Zombie.class).stop();
+				seconds++;
+			}
+			break;
+
+		}
+		
+	}
+
+
+	@Override
+	public void initGame() {
+
 		getGameWorld().addEntityFactory(new TLMSFactory());
-		
-		
-	    
+
 		Level level = setLevelFromMap("base_level.tmx");
 		getGameWorld().setLevel(level);
 		FXGL.setLevelFromMap("base_level.tmx");
-		player = null;
-		player = spawn("player", 50, 50);
-	    set("player", player);
+
+		zombie = null;
+		
+		zombie = spawn("zombie", 50, 50);
+		
+		set("zombie", zombie);
+
+
+
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
+
 	}
 
-		
 }
-
-
