@@ -2,11 +2,6 @@ package model;
 
 public class Bullet extends Entity implements Moveable{
 	
-	public enum Direction{
-		RIGHT,
-		LEFT
-	}
-	
 	private int posX;
 	private int posY;
 	private static final int SIZE = 100;

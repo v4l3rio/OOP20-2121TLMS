@@ -29,6 +29,13 @@ public class ViewManager {
 	public Stage getMainStage() {
 		return mainStage;
 	}
-
+	
+	public int getWidth() {
+		return ViewManager.WIDTH;
+	}
+	
+	public int getHeight() {
+		return ViewManager.HEIGHT;
+	}
 }
  
