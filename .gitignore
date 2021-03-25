@@ -4,3 +4,4 @@ doc/
 .pdf
 system/
 logs/
+.DS_Store

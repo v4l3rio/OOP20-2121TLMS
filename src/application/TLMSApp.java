@@ -22,14 +22,17 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import model.Zombie;
-
+import application.TLMSType;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 
 public class TLMSApp extends GameApplication {
+	
+	
 
 	@Override
 	protected void initSettings(GameSettings settings) {
@@ -39,46 +42,48 @@ public class TLMSApp extends GameApplication {
 		settings.setApplicationMode(ApplicationMode.DEVELOPER);
 	}
 
-	private Entity zombie; 
+	private Entity zombie;
+	int countOfZombie=0;
+	private static final int NUMOFZOMBIE = 10;
+	/*
 	private double levelTime=0.0;
 	private int seconds=0;
 	private int nextDirection=0;
 	Random rnd = new Random();
 	
-	@Override
-	protected void onUpdate(double tpf) {
-		levelTime= levelTime+tpf;
-		nextDirection = rnd.nextInt(3);
+	
+	 * @Override protected void onUpdate(double tpf) { levelTime= levelTime+tpf;
+	 * nextDirection = rnd.nextInt(3);
+	 * 
+	 * switch (nextDirection) { case 0: if(levelTime>seconds) {
+	 * zombie.getComponent(Zombie.class).left(); seconds++; } break; case 1:
+	 * if(levelTime>seconds) { zombie.getComponent(Zombie.class).right(); seconds++;
+	 * } break; case 2: if(levelTime>seconds) {
+	 * zombie.getComponent(Zombie.class).stop(); seconds++; } break;
+	 * 
+	 * default: if(levelTime>seconds) { zombie.getComponent(Zombie.class).stop();
+	 * seconds++; } break;
+	 * 
+	 * }
+	 * 
+	 * }
+	 */
+	
+	private void spawnEnemy() {
 		
-		switch (nextDirection) {
-		case 0:
-			if(levelTime>seconds) {
-				zombie.getComponent(Zombie.class).left();
-				seconds++;
-			}
-			break;
-		case 1:
-			if(levelTime>seconds) {
-				zombie.getComponent(Zombie.class).right();
-				seconds++;
-			}
-			break;
-		case 2:
-			if(levelTime>seconds) {
-				zombie.getComponent(Zombie.class).stop();
-				seconds++;
-			}
-			break;
-			
-		default:
-			if(levelTime>seconds) {
-				zombie.getComponent(Zombie.class).stop();
-				seconds++;
-			}
-			break;
-
+		// IMPORTANTE! gli zombie vanno aggiunti a "numOfZombie"
+		
+		Iterator<Entity> numOfZombie = FXGL.getGameWorld().getEntitiesByType(TLMSType.ZOMBIE).iterator();
+		
+		while(numOfZombie.hasNext()) {
+			countOfZombie++;
+			numOfZombie.next();
 		}
-		
+		while(countOfZombie<NUMOFZOMBIE) {
+			spawn("zombie", 50, 50);
+			countOfZombie++;
+		}
+	
 	}
 
 
@@ -90,12 +95,14 @@ public class TLMSApp extends GameApplication {
 		Level level = setLevelFromMap("base_level.tmx");
 		getGameWorld().setLevel(level);
 		FXGL.setLevelFromMap("base_level.tmx");
-
-		zombie = null;
-		
-		zombie = spawn("zombie", 50, 50);
-		
-		set("zombie", zombie);
+		spawnEnemy();
+		/*
+		 * zombie = null;
+		 * 
+		 * zombie = spawn("zombie", 50, 50);
+		 * 
+		 * set("zombie", zombie);
+		 */
 
 
 
