@@ -22,10 +22,9 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 
-
+import components.ZombieComponent;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
-import model.Zombie;
 
 public class TLMSFactory implements EntityFactory{
 	
@@ -56,7 +55,7 @@ public class TLMSFactory implements EntityFactory{
 	                .with(physics)
 	                .with(new CollidableComponent(true))
 	                .with(new IrremovableComponent())
-	                .with(new Zombie())
+	                .with(new ZombieComponent())
 	                .build();
 	    }
 }

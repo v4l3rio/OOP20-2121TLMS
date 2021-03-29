@@ -1,4 +1,4 @@
-package model;
+package components;
 
 public abstract class Entity {
 	

@@ -1,4 +1,4 @@
-package model;
+package components;
 
 import com.almasb.fxgl.entity.components.IntegerComponent;
 

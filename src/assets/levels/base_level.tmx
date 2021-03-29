@@ -18,7 +18,7 @@
 </data>
  </layer>
  <objectgroup id="4" name="Object Layer 1">
-  <object id="8" type="platform" x="4.18473" y="458.921" width="1262.38" height="110.197"/>
+  <object id="8" type="platform" x="0.687" y="455.423" width="1262.38" height="110.197"/>
   <object id="10" type="platform" x="12.5541" y="12.5541" width="34.8724" height="495.188"/>
   <object id="11" type="platform" x="1230.3" y="16.7387" width="33.4775" height="486.818"/>
  </objectgroup>

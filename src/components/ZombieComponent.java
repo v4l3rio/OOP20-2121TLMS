@@ -1,9 +1,10 @@
-package model;
+package components;
 
-import static com.almasb.fxgl.dsl.FXGL.image;
+
 
 import java.util.Random;
 
+import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.texture.AnimatedTexture;
@@ -12,31 +13,32 @@ import com.almasb.fxgl.texture.AnimationChannel;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
+import models.Zombie;
 
-public class Zombie extends Component {
+public class ZombieComponent extends Component {
 
 	private PhysicsComponent physics;
 
 	private AnimatedTexture texture;
 
 	private AnimationChannel animIdle, animWalk;
+	
+	private Zombie zombie;
 
 	private double levelTime = 0.0;
 	private int seconds = 0;
 	private int nextDirection = 0;
 	Random rnd = new Random();
 
-	public Zombie() {
-
-		Image imageIdle = image("zombie_idle.png");
-		Image imageWolk = image("zombie_move.png");
-		animIdle = new AnimationChannel(imageIdle, 4, 85, 120, Duration.seconds(0.66), 0, 3);
-		animWalk = new AnimationChannel(imageWolk, 6, 70, 120, Duration.seconds(0.66), 0, 3);
-
+	public ZombieComponent(Zombie zombie) {
+		this.zombie = zombie;
+		animIdle = new AnimationChannel(zombie.getIdleTexture(), 4, 85, 120, Duration.seconds(0.66), 0, 3);
+		animWalk = new AnimationChannel(zombie.getMovementTexture(), 6, 70, 120, Duration.seconds(0.66), 0, 3);
 		texture = new AnimatedTexture(animIdle);
 		texture.loop();
-
 	}
+	
+	
 
 	@Override
 	public void onAdded() {
