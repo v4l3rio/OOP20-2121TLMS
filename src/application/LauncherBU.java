@@ -139,13 +139,14 @@ public class LauncherBU extends GameApplication {
 //                .viewWithBBox("JohnTravoltaIdle.png")
 //                .with(new CollidableComponent(true))
 //                .buildAndAttach();
+//        FXGL.entityBuilder() //monetina
+//        .type(TLMSType.ZOMBIE)
+//        .at(500, 200)
+//        .viewWithBBox(new Circle(15, 15, 15, Color.YELLOW))
+//        .with(new CollidableComponent(true))
+//        .buildAndAttach();
     	
-//      FXGL.entityBuilder() //monetina
-//      .type(TLMSType.ZOMBIE)
-//      .at(500, 200)
-//      .viewWithBBox(new Circle(15, 15, 15, Color.YELLOW))
-//      .with(new CollidableComponent(true))
-//      .buildAndAttach();
+      
     	
     	//animation //memo: sprite sheet images
 //    	player = FXGL.entityBuilder()

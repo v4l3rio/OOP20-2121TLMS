@@ -17,13 +17,15 @@ public class AnimationComponent extends Component {
     private PhysicsComponent physics;
 
     private AnimatedTexture texture;
-    private AnimationChannel animIdle, animWalk;
+    private AnimationChannel animIdle, animRun, animJump, animDeath;
     
     private int jumps = 1;
 
     public AnimationComponent() {
-        animIdle = new AnimationChannel(FXGL.image("JTRunning.png"), 8, 112, 134, Duration.seconds(1), 5, 5);
-        animWalk = new AnimationChannel(FXGL.image("JTRunning.png"), 8, 112, 134, Duration.seconds(1), 0, 7);
+        animIdle = new AnimationChannel(FXGL.image("Gunner_Blue_Idle.png"), 5, 48, 48, Duration.seconds(1), 0, 4);
+        animRun = new AnimationChannel(FXGL.image("Gunner_Blue_Run.png"), 6, 48, 48, Duration.seconds(1), 0, 5);
+        animJump = new AnimationChannel(FXGL.image("Gunner_Blue_Jump.png"), 2, 48, 48, Duration.seconds(1.7), 0, 1);
+        animDeath = new AnimationChannel(FXGL.image("Gunner_Blue_Death.png"), 8, 48, 48, Duration.seconds(1.7), 0, 7);
 
         texture = new AnimatedTexture(animIdle);
     }
@@ -34,23 +36,27 @@ public class AnimationComponent extends Component {
         entity.getViewComponent().addChild(texture);
         
         physics.onGroundProperty().addListener((obs, old, isOnGround) -> {
+        	
             if (isOnGround) {
-
-                jumps = 1; 
+                jumps = 1;
             }
         });
     }
 
     @Override
     public void onUpdate(double tpf) {   	
-    	if (physics.isMovingX()) {
-            if (texture.getAnimationChannel() != animWalk) {
-                texture.loopAnimationChannel(animWalk);
+    	if (physics.isMovingX() && physics.isOnGround()) {
+            if (texture.getAnimationChannel() != animRun) {
+                texture.loopAnimationChannel(animRun);
             }
+        } else if(physics.isMovingY()){
+        	if (texture.getAnimationChannel() != animJump) {
+        		texture.loopAnimationChannel(animJump);
+        	}
         } else {
-            if (texture.getAnimationChannel() != animIdle) {
-                texture.loopAnimationChannel(animIdle);
-            }
+	            if (texture.getAnimationChannel() != animIdle) {
+	                texture.loopAnimationChannel(animIdle);
+	            }
         }
     	
     	//without physics
@@ -83,7 +89,7 @@ public class AnimationComponent extends Component {
     }
 
     public void moveLeft() {
-    	
+
     	getEntity().setScaleX(-1); //direzione personaggio
         physics.setVelocityX(-200);
         
@@ -102,7 +108,7 @@ public class AnimationComponent extends Component {
             return;
         }
 
-        physics.setVelocityY(-450);
+        physics.setVelocityY(-350);
 
         jumps--;
     }
