@@ -26,7 +26,7 @@ public class BasicGameApp extends GameApplication {
 		settings.setWidth(600);
 		settings.setHeight(600);
 		settings.setTitle("2021 The Last Man Standing");
-		settings.setVersion("0.0");
+		settings.setVersion("1.0");
 	}   
 	
 	public static void main(String[] args) {
