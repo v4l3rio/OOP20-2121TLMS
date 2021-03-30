@@ -19,7 +19,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import java.util.Map;
 
-public class BasicGameApp extends GameApplication {
+public class TheLastManStandingApp extends GameApplication {
     
 	@Override
 	protected void initSettings(GameSettings settings) {
