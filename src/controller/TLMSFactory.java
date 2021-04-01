@@ -65,6 +65,24 @@ public class TLMSFactory implements EntityFactory{
                 .with(new ZombieComponent(zombie))
                 .build();
     }
+	
+	@Spawns("bullet")
+    public Entity newBullet(spawnData data) {
+	 	Bullet bullet = new Bullet(1, 170, new Image("assets/textures/movingBullet.png"));
+        PhysicsComponent physics = new PhysicsComponent();
+        physics.setBodyType(BodyType.KINEMATIC);
+        
+        // this avoids player sticking to walls
+        physics.setFixtureDef(new FixtureDef().friction(0.0f));
+
+        return entityBuilder(data)
+                .type(BULLET)
+                .bbox(new HitBox(new Point2D(10,25), BoundingShape.box(6, 3)))
+                .with(physics)
+                .with(new CollidableComponent(true))
+                .with(new BasicBulletComponent(bullet))
+                .build();
+    }
 	 
  	@Spawns("damageObject")
     public Entity newDamageObject(SpawnData data) {
