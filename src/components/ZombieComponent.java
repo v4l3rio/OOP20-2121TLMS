@@ -32,8 +32,8 @@ public class ZombieComponent extends Component {
 
 	public ZombieComponent(Zombie zombie) {
 		this.zombie = zombie;
-		animIdle = new AnimationChannel(zombie.getIdleTexture(), 4, 85, 120, Duration.seconds(0.66), 0, 3);
-		animWalk = new AnimationChannel(zombie.getMovementTexture(), 6, 70, 120, Duration.seconds(0.66), 0, 3);
+		animIdle = new AnimationChannel(this.zombie.getIdleTexture(), 4, 85, 120, Duration.seconds(0.66), 0, 3);
+		animWalk = new AnimationChannel(this.zombie.getMovementTexture(), 6, 70, 120, Duration.seconds(0.66), 0, 3);
 		texture = new AnimatedTexture(animIdle);
 		texture.loop();
 	}
@@ -61,53 +61,9 @@ public class ZombieComponent extends Component {
 				texture.loopAnimationChannel(animIdle);
 			}
 		}
-
-		levelTime = levelTime + tpf;
-		nextDirection = rnd.nextInt(3);
-
-		switch (nextDirection) {
-		case 0:
-			if (levelTime > seconds) {
-				left();
-				seconds++;
-			}
-			break;
-		case 1:
-			if (levelTime > seconds) {
-				right();
-				seconds++;
-			}
-			break;
-		case 2:
-			if (levelTime > seconds) {
-				stop();
-				seconds++;
-			}
-			break;
-
-		default:
-			if (levelTime > seconds) {
-				stop();
-				seconds++;
-			}
-			break;
-
-		}
+		
 
 	}
 
-	public void left() {
-		getEntity().setScaleX(-1);
-		physics.setVelocityX(-170);
-	}
-
-	public void right() {
-		getEntity().setScaleX(1);
-		physics.setVelocityX(170);
-	}
-
-	public void stop() {
-		physics.setVelocityX(0);
-	}
 
 }

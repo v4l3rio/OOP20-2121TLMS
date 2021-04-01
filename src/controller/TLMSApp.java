@@ -1,4 +1,4 @@
-package application;
+package controller;
 
 import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
@@ -22,10 +22,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import models.World;
-import threads.ZombieThread;
 import view.ZombieLevel;
-import application.TLMSType;
 import components.ZombieComponent;
+import controller.TLMSType;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
@@ -52,6 +51,8 @@ public class TLMSApp extends GameApplication {
 		zombieLevel = new ZombieLevel();
 		getGameWorld().addEntityFactory(new TLMSFactory());
 		setLevelFromMap(zombieLevel.getLevel());
+			spawn("zombie",50,50);
+		
 	}
 
 	public static void main(String[] args) {
