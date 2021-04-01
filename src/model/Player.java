@@ -1,6 +1,8 @@
 package model;
 
-public class Player extends Entity implements Moveable, Alive {
+import model.Utils.Direction;
+
+public class Player implements Entity{
 	
 	private int posX = 1024/2;
 	private int posY = 768/2;

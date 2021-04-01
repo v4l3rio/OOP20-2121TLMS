@@ -1,6 +1,7 @@
 package model;
+import model.Utils.Direction;
 
-public class Bullet extends Entity implements Moveable{
+public class Bullet implements Entity{
 	
 	private int posX;
 	private int posY;

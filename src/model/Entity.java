@@ -1,5 +1,5 @@
 package model;
 
-public abstract class Entity {
-	
+public interface Entity {
+
 }
