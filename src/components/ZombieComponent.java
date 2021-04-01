@@ -1,7 +1,6 @@
 package components;
 
 
-
 import java.util.Random;
 
 import com.almasb.fxgl.dsl.FXGL;

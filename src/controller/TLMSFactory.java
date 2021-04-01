@@ -23,12 +23,14 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 
+import components.BasicBulletComponent;
 import components.DamageComponent;
 import components.RandomMovementComponent;
 import components.ZombieComponent;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
+import models.Bullet;
 import models.Enemy;
 import models.Zombie;
 
@@ -67,8 +69,8 @@ public class TLMSFactory implements EntityFactory{
     }
 	
 	@Spawns("bullet")
-    public Entity newBullet(spawnData data) {
-	 	Bullet bullet = new Bullet(1, 170, new Image("assets/textures/movingBullet.png"));
+    public Entity newBullet(SpawnData data) {
+	 	Bullet bullet = new Bullet(100, 500, new Image("assets/textures/myBulletsShrunk.png"));
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.KINEMATIC);
         

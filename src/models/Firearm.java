@@ -4,38 +4,22 @@ import com.almasb.fxgl.entity.Entity;
 
 public abstract class Firearm extends Entity{
     
-	private double shotDamage;
-	private double speed;
+	//basic Firearm power, applied to bullet, resulting in speed
+	private double shotSpeed;
 
 	/**
 	 * 
-	 * @param speed set shot speed
+	 * @param set shot speed
 	 */
-    public void setSpeed(double speed) {
-		this.speed = speed;
+    public void setShotSpeed(double speed) {
+		this.shotSpeed = speed;
 	}
 
 	/**
      * Get shot speed.
      * @return the damage.
      */
-	public double getSpeed() {
-		return this.speed;
+	public double getShotSpeed() {
+		return this.shotSpeed;
 	};
-	
-	/**
-     * Get damage per shot.
-     * @return the damage.
-     */
-    public double getShotDamage() {
-        return shotDamage;
-    }
-
-    /**
-     *
-      * @param hitDamage set damage per shot
-     */
-    public void setHitDamage(final double shotDamage) {
-        this.shotDamage = shotDamage;
-    }
 }
