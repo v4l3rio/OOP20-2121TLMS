@@ -1,6 +1,6 @@
 package settings;
 
-public interface SettingsSystem {
+public interface SystemSettings {
 	
 	int getWidth();
 	
