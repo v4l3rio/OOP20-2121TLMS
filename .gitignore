@@ -2,3 +2,6 @@ bin/
 doc/
 .log
 .pdf
+system/
+logs/
+.DS_Store
