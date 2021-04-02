@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class World {
+public class WorldObsoleto {
 	Map<UUID, Enemy> enemies;
 	
-	public World() {
+	public WorldObsoleto() {
 		this.enemies = new HashMap<>();
 	}
 	

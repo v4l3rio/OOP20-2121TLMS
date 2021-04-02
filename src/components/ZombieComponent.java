@@ -25,10 +25,6 @@ public class ZombieComponent extends Component {
 	
 	private Zombie zombie;
 
-	private double levelTime = 0.0;
-	private int seconds = 0;
-	private int nextDirection = 0;
-	Random rnd = new Random();
 
 	public ZombieComponent(Zombie zombie) {
 		this.zombie = zombie;
@@ -44,10 +40,6 @@ public class ZombieComponent extends Component {
 	public void onAdded() {
 		entity.getTransformComponent().setScaleOrigin(new Point2D(16, 21));
 		entity.getViewComponent().addChild(texture);
-		/*
-		 * physics.onGroundProperty().addListener((obs, old, isOnGround) -> { if
-		 * (isOnGround) { //play("land.wav"); jumps = 2; //numero massimo di salti } });
-		 */
 	}
 
 	@Override
@@ -61,9 +53,5 @@ public class ZombieComponent extends Component {
 				texture.loopAnimationChannel(animIdle);
 			}
 		}
-		
-
 	}
-
-
 }

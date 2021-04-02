@@ -23,13 +23,13 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 
-import components.DamageComponent;
+import components.DamagingComponent;
 import components.RandomMovementComponent;
 import components.ZombieComponent;
 import javafx.geometry.Point2D;
-import javafx.geometry.Rectangle2D;
+
 import javafx.scene.image.Image;
-import models.Enemy;
+
 import models.Zombie;
 
 public class TLMSFactory implements EntityFactory{
@@ -45,7 +45,9 @@ public class TLMSFactory implements EntityFactory{
 	
 	@Spawns("zombie")
     public Entity newZombie(SpawnData data) {
-	 	Zombie zombie = new Zombie(1, 170, new Image("assets/textures/zombie_idle.png"), new Image("assets/textures/zombie_move.png"));
+		
+	 	Zombie zombie = new Zombie(10, 170, new Image("assets/textures/zombie_idle.png"), new Image("assets/textures/zombie_move.png"));
+	 	
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
         physics.addGroundSensor(new HitBox("GROUND_SENSOR", new Point2D(16, 38), BoundingShape.box(6, 8)));
@@ -60,7 +62,6 @@ public class TLMSFactory implements EntityFactory{
                 .with(physics)
                 .with(new HealthIntComponent(zombie.getLife()))
                 .with(new CollidableComponent(true))
-                .with(new IrremovableComponent())
                 .with(new RandomMovementComponent(physics))
                 .with(new ZombieComponent(zombie))
                 .build();
@@ -69,9 +70,10 @@ public class TLMSFactory implements EntityFactory{
  	@Spawns("damageObject")
     public Entity newDamageObject(SpawnData data) {
 	 return entityBuilder(data)
-                .type(PLATFORM)
+                .type(DAMAGE_OBJECT)
                 .bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"), data.<Integer>get("height"))))
-                .with(new DamageComponent())
+                .with(new DamagingComponent(2))
+                .with(new CollidableComponent(true))
                 .with(new PhysicsComponent())
                 .build();
     }
