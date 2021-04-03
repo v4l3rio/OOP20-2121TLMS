@@ -5,4 +5,4 @@ doc/
 system/
 logs/
 .DS_Store
-.png
+*.png
