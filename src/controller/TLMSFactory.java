@@ -1,35 +1,25 @@
 package controller;
 
-import static com.almasb.fxgl.dsl.FXGL.entityBuilder;
-import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
-import static com.almasb.fxgl.dsl.FXGL.getAppWidth;
-import static com.almasb.fxgl.dsl.FXGL.geto;
+import static com.almasb.fxgl.dsl.FXGL.*;
 import static controller.TLMSType.*;
 
-import com.almasb.fxgl.core.util.LazyValue;
+
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
 import com.almasb.fxgl.entity.components.CollidableComponent;
-import com.almasb.fxgl.entity.components.IrremovableComponent;
-import com.almasb.fxgl.pathfinding.astar.AStarMoveComponent;
-import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
-import com.almasb.fxgl.dsl.components.RandomMoveComponent;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
-
 import components.DamagingComponent;
 import components.RandomMovementComponent;
-import components.ZombieComponent;
+import components.ZombieTextureComponent;
 import javafx.geometry.Point2D;
-
-import javafx.scene.image.Image;
-
+import models.Texture;
 import models.Zombie;
 
 public class TLMSFactory implements EntityFactory{
@@ -46,13 +36,15 @@ public class TLMSFactory implements EntityFactory{
 	@Spawns("zombie")
     public Entity newZombie(SpawnData data) {
 		
-	 	Zombie zombie = new Zombie(10, 170, new Image("assets/textures/zombie_idle.png"), new Image("assets/textures/zombie_move.png"));
+	 	Zombie zombie = new Zombie(10, 170);
+	 	
+	 	Texture zombieTexture = new Texture();
+	 	zombieTexture.addTexture(IDLE, "assets/textures/zombie_idle.png");
+	 	zombieTexture.addTexture(WALK, "assets/textures/zombie_move.png");
 	 	
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
         physics.addGroundSensor(new HitBox("GROUND_SENSOR", new Point2D(16, 38), BoundingShape.box(6, 8)));
-        
-        // this avoids player sticking to walls
         physics.setFixtureDef(new FixtureDef().friction(0.0f));
 
         return entityBuilder(data)
@@ -62,8 +54,8 @@ public class TLMSFactory implements EntityFactory{
                 .with(physics)
                 .with(new HealthIntComponent(zombie.getLife()))
                 .with(new CollidableComponent(true))
-                .with(new RandomMovementComponent(physics))
-                .with(new ZombieComponent(zombie))
+                .with(new RandomMovementComponent(physics, zombie.getSpeed()))
+                .with(new ZombieTextureComponent(zombieTexture.getTextureMap()))
                 .build();
     }
 	 
