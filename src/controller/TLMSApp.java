@@ -59,7 +59,7 @@ public class TLMSApp extends GameApplication {
 		FXGL.getInput().addAction(new UserAction("Shoot") {
 			@Override
 			protected void onAction() {
-				spawn("bullet", 50, 50);
+				spawn("bullet", 50, 51);
 			}
 		}, KeyCode.P);
 	}
