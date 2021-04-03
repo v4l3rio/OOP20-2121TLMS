@@ -8,7 +8,7 @@ import com.almasb.fxgl.texture.AnimationChannel;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
-import models.Bullet;
+import model.Bullet;
 
 public class BasicBulletComponent extends Component{
 
@@ -43,7 +43,6 @@ public class BasicBulletComponent extends Component{
 		}
 		getEntity().setScaleUniform(-0.2);
 		this.physics.setVelocityX(this.bullet.getShotSpeed());
-		 
 	}
 
 }

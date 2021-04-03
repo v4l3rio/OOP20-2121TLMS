@@ -30,9 +30,9 @@ import components.ZombieComponent;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
-import models.Bullet;
-import models.Enemy;
-import models.Zombie;
+import model.Bullet;
+import model.Enemy;
+import model.Zombie;
 
 public class TLMSFactory implements EntityFactory{
 	

@@ -12,7 +12,7 @@ import com.almasb.fxgl.texture.AnimationChannel;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
-import models.Zombie;
+import model.Zombie;
 
 public class ZombieComponent extends Component {
 

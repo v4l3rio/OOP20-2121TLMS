@@ -21,7 +21,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import models.World;
+import model.World;
 import view.ZombieLevel;
 import components.ZombieComponent;
 import controller.TLMSType;
@@ -58,10 +58,10 @@ public class TLMSApp extends GameApplication {
 	protected void initInput() {
 		FXGL.getInput().addAction(new UserAction("Shoot") {
 			@Override
-			protected void onAction() {
-				spawn("bullet", 50, 51);
+			protected void onActionBegin() {
+				spawn("bullet", 200, 200);
 			}
-		}, KeyCode.P);
+		}, KeyCode.L);
 	}
 	
 	public static void main(String[] args) {
