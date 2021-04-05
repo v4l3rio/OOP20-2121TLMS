@@ -43,6 +43,7 @@ public class ZombieComponent extends Component {
 	public void onAdded() {
 		entity.getTransformComponent().setScaleOrigin(new Point2D(16, 21));
 		entity.getViewComponent().addChild(texture);
+		entity.setScaleUniform(0.4);
 		/*
 		 * physics.onGroundProperty().addListener((obs, old, isOnGround) -> { if
 		 * (isOnGround) { //play("land.wav"); jumps = 2; //numero massimo di salti } });

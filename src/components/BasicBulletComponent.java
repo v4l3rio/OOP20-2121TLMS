@@ -19,9 +19,13 @@ public class BasicBulletComponent extends Component{
 	private AnimationChannel animFire;
 	
 	private Bullet bullet;
+	private double direction;
+	private Point2D playerPos;
 
-	public BasicBulletComponent(Bullet bullet) {
+	public BasicBulletComponent(Bullet bullet, Point2D playerPos, double direction) {
 		this.bullet = bullet;
+		this.playerPos = playerPos;
+		this.direction = direction;
 		animFire = new AnimationChannel(bullet.getMovementTexture(), 3, 200, 120, Duration.seconds(0.30), 0, 2);
 		texture = new AnimatedTexture(animFire);
 		texture.loop();
@@ -31,7 +35,6 @@ public class BasicBulletComponent extends Component{
 	public void onAdded() {
 		entity.getTransformComponent().setScaleOrigin(new Point2D(0.2, 1));
 		entity.getViewComponent().addChild(texture);
-		
 	}
 
 	@Override
@@ -41,8 +44,12 @@ public class BasicBulletComponent extends Component{
 				texture.loopAnimationChannel(animFire);
 			}
 		}
-		getEntity().setScaleUniform(-0.2);
-		this.physics.setVelocityX(this.bullet.getShotSpeed());
+		//set image direction, taken from player
+		getEntity().setScaleUniform(0.2);
+		//bullet image is facing the opposite of player, hence the '-'
+		getEntity().setScaleX(getEntity().getScaleX()*-direction);
+		//set movement direction, equals to player sign
+		this.physics.setVelocityX(this.bullet.getShotSpeed()*direction);
 	}
 
 }
