@@ -12,9 +12,6 @@ public class RandomMovementComponent extends Component implements Moveable {
 
 	private double seconds = 0.0;
 
-	private static enum DIRECTIONS {
-		LEFT, RIGHT, STOP;
-	}
 
 	Random rnd = new Random();
 
@@ -29,6 +26,7 @@ public class RandomMovementComponent extends Component implements Moveable {
 
 	@Override
 	public void onUpdate(double tpf) {
+		
 
 		if (getGameTimer().getNow() > seconds) {
 
@@ -63,12 +61,12 @@ public class RandomMovementComponent extends Component implements Moveable {
 	}
 
 	public void left() {
-		getEntity().setScaleX(-1);
+		getEntity().setScaleX(-0.2);
 		this.physics.setVelocityX(-(this.speed));
 	}
 
 	public void right() {
-		getEntity().setScaleX(1);
+		getEntity().setScaleX(0.2);
 		this.physics.setVelocityX(this.speed);
 	}
 
