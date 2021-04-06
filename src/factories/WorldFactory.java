@@ -9,6 +9,9 @@ import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 
+import javafx.scene.shape.Rectangle;
+
+//implementare l'entita' cassa, ostacolo
 public class WorldFactory implements EntityFactory {
 	
 	@Spawns("platform")
@@ -19,5 +22,14 @@ public class WorldFactory implements EntityFactory {
             .with(new PhysicsComponent())
             .build();
 	}
+	/*
+	@Spawns("player") 
+	public Entity newPlayer(SpawnData data) {
+		return FXGL.entityBuilder(data) 
+			// .type(PLATFORM) 
+			.viewWithBBox(new Rectangle(100, 100))
+			.with(new PhysicsComponent()) 
+			.build(); 
+	}*/
 
 }
