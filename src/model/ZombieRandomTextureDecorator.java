@@ -1,6 +1,6 @@
-package models;
+package model;
 
-import static controller.TLMSType.*;
+import static model.TLMSType.*;
 
 import java.util.Random;
 import java.util.UUID;

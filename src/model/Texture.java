@@ -1,9 +1,7 @@
-package models;
+package model;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import controller.TLMSType;
 
 public class Texture {
 

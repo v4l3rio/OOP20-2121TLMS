@@ -1,4 +1,4 @@
-package controller;
+package model;
 
 public enum TLMSType {
 	PLATFORM, PLAYER, ZOMBIE, DAMAGE_OBJECT, IDLE, RUN, WALK, DEAD, JUMP, ATTACK, BULLET

@@ -1,21 +1,22 @@
 package application;
 
 
-
+import static com.almasb.fxgl.dsl.FXGL.*;
 import java.util.Map;
-
-/**
- * This class represent the Main class of the JavaFX-based application.
- */
-
-
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.audio.Music;
 import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.ui.UI;
 
+import collisions.BulletZombieCollision;
+import collisions.Collision;
+import collisions.PlayerZombieCollision;
+import factories.TLMSFactory;
 import factories.WorldFactory;
+import model.TLMSType;
 import settings.SystemSettingsImpl;
 import view.DisplayController;
 import settings.AudioSettings;
@@ -26,6 +27,10 @@ public class TheLastManStandingApp extends GameApplication {
 	
 	private SystemSettings mySystemSettings = new SystemSettingsImpl();
     private AudioSettings myAudioSettings = new AudioSettingsImpl();
+    private TLMSFactory factory;
+    
+    private final Collision<Entity, Entity> bulletColZombie = new BulletZombieCollision();
+	private final Collision<Entity, Entity> playerColZombie = new PlayerZombieCollision();
 	
 	@Override
 	protected void initSettings(GameSettings settings) {
@@ -37,18 +42,43 @@ public class TheLastManStandingApp extends GameApplication {
 	
 	@Override
 	protected void initGame() {
-		FXGL.getGameWorld().addEntityFactory(new WorldFactory());
-		FXGL.setLevelFromMap("Cemetery.tmx");
+		getGameWorld().addEntityFactory(new WorldFactory());
+		factory = new TLMSFactory();
+		getGameWorld().addEntityFactory(factory);
+		setLevelFromMap("Cemetery.tmx");
 		//Music gameMusic = FXGL.getAssetLoader().loadMusic(myAudioSettings.getMusicGame());
 		//FXGL.getAudioPlayer().loopMusic(gameMusic);
+		
+		spawn("zombie", 100, 50);
 	
 	}
 	
 	@Override
-	protected void initInput() {
-	
+	protected void initPhysics() {
+		getPhysicsWorld().addCollisionHandler(new CollisionHandler(TLMSType.BULLET, TLMSType.ZOMBIE) {
+			@Override
+			protected void onCollisionBegin(final Entity bullet, final Entity zombie) {
+				try {
+					System.out.println("Collisione Avvenuta");
+					bulletColZombie.onCollision(bullet, zombie);
+				} catch (Exception e) {
+					System.out.println("Collisions Bullet - Zombie, Not Work!");
+				}
+			}
+		});
+
+		getPhysicsWorld().addCollisionHandler(new CollisionHandler(TLMSType.PLAYER, TLMSType.ZOMBIE) {
+			@Override
+			protected void onCollisionBegin(final Entity player, final Entity zombie) {
+				try {
+					System.out.println("Collisione Avvenuta");
+					playerColZombie.onCollision(player, zombie);
+				} catch (Exception e) {
+					System.out.println("Collisions Player - Zombie, Not Work!");
+				}
+			}
+		});
 	}
-	
 
     @Override
     protected void initGameVars(Map<String, Object> vars) {
@@ -60,12 +90,12 @@ public class TheLastManStandingApp extends GameApplication {
     protected void initUI() {
     	DisplayController controller = new DisplayController();
     	UI ui = FXGL.getAssetLoader().loadUI("prova.fxml", controller);
-    	FXGL.getGameScene().addUI(ui);
+    	getGameScene().addUI(ui);
 
         controller.getLifeProgressProperty().bind(
-            FXGL.getWorldProperties().doubleProperty("playerLife"));
+            getWorldProperties().doubleProperty("playerLife"));
         controller.getPointsProperty().bind(
-            FXGL.getWorldProperties().intProperty("score").asString("Points: %d"));
+            getWorldProperties().intProperty("score").asString("Points: %d"));
         ui.getRoot().setTranslateY(ui.getRoot().getBoundsInLocal().getWidth());
     	
     }
