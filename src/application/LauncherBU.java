@@ -143,9 +143,9 @@ public class LauncherBU extends GameApplication {
 		player = spawn("player", 200, 0);
         set("player", player);
         
-        Music gameMusic = FXGL.getAssetLoader().loadMusic("thriller.wav");
-    	FXGL.getAudioPlayer().loopMusic(gameMusic);
-    	getSettings().setGlobalMusicVolume(0.05);
+//        Music gameMusic = FXGL.getAssetLoader().loadMusic("thriller.wav");
+//    	FXGL.getAudioPlayer().loopMusic(gameMusic);
+//    	getSettings().setGlobalMusicVolume(0.05);
         
     	//quadrato blu
 //        player = entityBuilder()
