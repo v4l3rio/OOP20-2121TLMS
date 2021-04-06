@@ -108,7 +108,7 @@ public class TLMSFactory implements EntityFactory{
                 .bbox(new HitBox(new Point2D(10,25), BoundingShape.box(6, 3)))
                 .with(physics)
                 .with(new CollidableComponent(true))
-                .with(new BasicBulletComponent(bullet, this.player.getPosition(), this.player.getScaleX()))
+                .with(new BasicBulletComponent(bullet, this.player.getScaleX()))
                 .build();
     }
 	 

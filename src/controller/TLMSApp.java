@@ -35,7 +35,7 @@ public class TLMSApp extends GameApplication {
 	
 	private static final int WIDTH = 1280;
 	private static final int HEIGHT = 640;
-	private static final double WEAPONLENGHT = 55;
+	private static final double WEAPONLENGHT = 25;
 	private Level zombieLevel;
 	private TLMSFactory factory;
 	private World world;
@@ -65,6 +65,7 @@ public class TLMSApp extends GameApplication {
 	}
 	
 	protected void initInput() {
+		
 		FXGL.getInput().addAction(new UserAction("Shoot") {
 			@Override
 			protected void onActionBegin() {
