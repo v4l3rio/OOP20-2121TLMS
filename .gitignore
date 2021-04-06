@@ -6,3 +6,4 @@ doc/
 .classpath
 logs/
 system/
+.DS_Store
