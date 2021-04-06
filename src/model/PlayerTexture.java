@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 
 public class PlayerTexture {
 
-    private Image imageIdle, imageRun, imageJump, imageDeath, imageDemage;
+    private Image imageIdle, imageRun, imageJump, imageDeath;
 
 	public PlayerTexture() {
 		this.imageIdle = FXGL.image("Gunner_Blue_Idle.png");
@@ -30,9 +30,4 @@ public class PlayerTexture {
 	public Image getImageDeath() {
 		return this.imageDeath;
 	}
-    
-    
-    
-    
-
 }

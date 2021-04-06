@@ -8,6 +8,7 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.audio.Music;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.ui.UI;
 
@@ -16,18 +17,18 @@ import collisions.Collision;
 import collisions.PlayerZombieCollision;
 import factories.TLMSFactory;
 import factories.WorldFactory;
+import javafx.scene.input.KeyCode;
+import model.AnimationComponent;
 import model.TLMSType;
 import settings.SystemSettingsImpl;
 import view.DisplayController;
-import settings.AudioSettings;
-import settings.AudioSettingsImpl;
 import settings.SystemSettings;
 
 public class TheLastManStandingApp extends GameApplication {
 	
 	private SystemSettings mySystemSettings = new SystemSettingsImpl();
-    private AudioSettings myAudioSettings = new AudioSettingsImpl();
     private TLMSFactory factory;
+    private Entity player;
     
     private final Collision<Entity, Entity> bulletColZombie = new BulletZombieCollision();
 	private final Collision<Entity, Entity> playerColZombie = new PlayerZombieCollision();
@@ -40,6 +41,41 @@ public class TheLastManStandingApp extends GameApplication {
 		settings.setVersion(mySystemSettings.getVersion());
 	}   
 	
+	 @Override
+	    protected void initInput() {
+	    	
+	    	getInput().addAction(new UserAction("Left") {
+	            @Override
+	            protected void onAction() {
+	                player.getComponent(AnimationComponent.class).moveLeft();
+	            }
+
+	            @Override
+	            protected void onActionEnd() {
+	                player.getComponent(AnimationComponent.class).stop();
+	            }
+	        }, KeyCode.A);
+
+	        getInput().addAction(new UserAction("Right") {
+	            @Override
+	            protected void onAction() {
+	                player.getComponent(AnimationComponent.class).moveRight();
+	            }
+
+	            @Override
+	            protected void onActionEnd() {
+	                player.getComponent(AnimationComponent.class).stop();
+	            }
+	        }, KeyCode.D);
+
+	        getInput().addAction(new UserAction("Jump") {
+	            @Override
+	            protected void onActionBegin() {
+	                player.getComponent(AnimationComponent.class).jump();
+	            }
+	        }, KeyCode.W);
+	 }
+	
 	@Override
 	protected void initGame() {
 		getGameWorld().addEntityFactory(new WorldFactory());
@@ -50,6 +86,10 @@ public class TheLastManStandingApp extends GameApplication {
 		//FXGL.getAudioPlayer().loopMusic(gameMusic);
 		
 		spawn("zombie", 100, 50);
+		player = spawn("player", 200, 0);      
+        Music gameMusic = FXGL.getAssetLoader().loadMusic("thriller.wav");
+    	FXGL.getAudioPlayer().loopMusic(gameMusic);
+    	getSettings().setGlobalMusicVolume(0.1);
 	
 	}
 	
