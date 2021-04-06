@@ -47,7 +47,7 @@ public class LauncherBU extends GameApplication {
             protected void onActionEnd() {
                 player.getComponent(AnimationComponent.class).stop();
             }
-        }, KeyCode.A, VirtualButton.LEFT);
+        }, KeyCode.A);
 
         getInput().addAction(new UserAction("Right") {
             @Override
@@ -59,14 +59,14 @@ public class LauncherBU extends GameApplication {
             protected void onActionEnd() {
                 player.getComponent(AnimationComponent.class).stop();
             }
-        }, KeyCode.D, VirtualButton.RIGHT);
+        }, KeyCode.D);
 
         getInput().addAction(new UserAction("Jump") {
             @Override
             protected void onActionBegin() {
                 player.getComponent(AnimationComponent.class).jump();
             }
-        }, KeyCode.W, VirtualButton.A);
+        }, KeyCode.W);
         
 //        getInput().addAction(new UserAction("Transformation") {
 //            @Override
@@ -143,9 +143,9 @@ public class LauncherBU extends GameApplication {
 		player = spawn("player", 200, 0);
         set("player", player);
         
-//        Music gameMusic = FXGL.getAssetLoader().loadMusic("thriller.wav");
-//    	FXGL.getAudioPlayer().loopMusic(gameMusic);
-//    	getSettings().setGlobalMusicVolume(0.05);
+        Music gameMusic = FXGL.getAssetLoader().loadMusic("thriller.wav");
+    	FXGL.getAudioPlayer().loopMusic(gameMusic);
+    	getSettings().setGlobalMusicVolume(0.1);
         
     	//quadrato blu
 //        player = entityBuilder()
