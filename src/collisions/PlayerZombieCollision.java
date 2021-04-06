@@ -17,6 +17,7 @@ public class PlayerZombieCollision implements Collision<Entity, Entity>{
 		
 		if(player.getComponent(ComponentUtils.HEALTH_COMPONENT).getValue()<=0) {
 			//player muore implementare la morte del player
+			player.removeFromWorld();
 		}
 		
 	}

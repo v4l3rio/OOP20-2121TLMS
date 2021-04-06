@@ -9,9 +9,9 @@ public class Bullet extends Firearm{
 	private final UUID uuid;
 	private Image movementTexture;
 	private double speed;
-	private double shotDamage;
+	private int shotDamage;
 	
-	public Bullet(double shotDamage, double speed, Image movementTexture) {
+	public Bullet(int shotDamage, double speed, Image movementTexture) {
 		this.uuid = UUID.randomUUID();
 		this.movementTexture = movementTexture;
 		this.speed = speed;
@@ -30,7 +30,7 @@ public class Bullet extends Firearm{
     *
      * @param hitDamage set damage per shot
     */
-   public void setHitDamage(final double shotDamage) {
+   public void setHitDamage(final int shotDamage) {
        this.shotDamage = shotDamage;
    }
 

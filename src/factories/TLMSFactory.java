@@ -16,18 +16,26 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 
+import components.BasicBulletComponent;
 import components.DamagingComponent;
 import components.RandomMovementComponent;
 import components.ZombieTextureComponent;
 import javafx.geometry.Point2D;
+import javafx.scene.image.Image;
 import model.AnimationComponent;
+import model.Bullet;
 import model.TLMSType;
 import model.Zombie;
 import model.ZombieRandomTextureDecorator;
 
 public class TLMSFactory implements EntityFactory{
 	
-
+	private Entity player;
+	
+	public void setPlayer(Entity player) {
+		this.player = player;
+	}
+	
 	@Spawns("zombie")
     public Entity newZombie(SpawnData data) {
 	 	
@@ -68,6 +76,25 @@ public class TLMSFactory implements EntityFactory{
                 .with(new CollidableComponent(true))
                 .with(new IrremovableComponent())
                 .with(new AnimationComponent())
+                .build();
+    }
+	
+	@Spawns("bullet")
+    public Entity newBullet(SpawnData data) {
+	 	Bullet bullet = new Bullet(1, 500, new Image("assets/textures/myBulletsShrunk.png"));
+        PhysicsComponent physics = new PhysicsComponent();
+        physics.setBodyType(BodyType.KINEMATIC);
+        
+        // this avoids player sticking to walls
+        physics.setFixtureDef(new FixtureDef().friction(0.0f));
+
+        return entityBuilder(data)
+                .type(BULLET)
+                .bbox(new HitBox(new Point2D(10,25), BoundingShape.box(6, 3)))
+                .with(physics)
+                .with(new CollidableComponent(true))
+                .with(new BasicBulletComponent(bullet, this.player.getScaleX()))
+                .with(new DamagingComponent((int)bullet.getShotDamage()))  //cambiare tutti i danni in double
                 .build();
     }
 	

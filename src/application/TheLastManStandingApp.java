@@ -5,7 +5,6 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 import java.util.Map;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
-import com.almasb.fxgl.audio.Music;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.UserAction;
@@ -26,6 +25,7 @@ import settings.SystemSettings;
 
 public class TheLastManStandingApp extends GameApplication {
 	
+	private static final double WEAPONLENGHT = 25;
 	private SystemSettings mySystemSettings = new SystemSettingsImpl();
     private TLMSFactory factory;
     private Entity player;
@@ -74,6 +74,14 @@ public class TheLastManStandingApp extends GameApplication {
 	                player.getComponent(AnimationComponent.class).jump();
 	            }
 	        }, KeyCode.W);
+	        
+	        getInput().addAction(new UserAction("Shoot") {
+				@Override
+				protected void onActionBegin() {
+					spawn("bullet", player.getPosition().getX() + (WEAPONLENGHT*player.getScaleX())
+							, player.getPosition().getY());
+				}
+			}, KeyCode.L);
 	 }
 	
 	@Override
@@ -82,14 +90,14 @@ public class TheLastManStandingApp extends GameApplication {
 		factory = new TLMSFactory();
 		getGameWorld().addEntityFactory(factory);
 		setLevelFromMap("Cemetery.tmx");
-		//Music gameMusic = FXGL.getAssetLoader().loadMusic(myAudioSettings.getMusicGame());
-		//FXGL.getAudioPlayer().loopMusic(gameMusic);
+		spawn("zombie", 500, 50);
 		
-		spawn("zombie", 100, 50);
-		player = spawn("player", 200, 0);      
-        Music gameMusic = FXGL.getAssetLoader().loadMusic("thriller.wav");
+		player = spawn("player", 100, 0);
+		factory.setPlayer(player);
+		
+       /* Music gameMusic = FXGL.getAssetLoader().loadMusic("thriller.wav");
     	FXGL.getAudioPlayer().loopMusic(gameMusic);
-    	getSettings().setGlobalMusicVolume(0.1);
+    	getSettings().setGlobalMusicVolume(0.1);*/
 	
 	}
 	
@@ -101,10 +109,12 @@ public class TheLastManStandingApp extends GameApplication {
 				try {
 					System.out.println("Collisione Avvenuta");
 					bulletColZombie.onCollision(bullet, zombie);
+					inc("score", +1);
 				} catch (Exception e) {
 					System.out.println("Collisions Bullet - Zombie, Not Work!");
 				}
 			}
+			
 		});
 
 		getPhysicsWorld().addCollisionHandler(new CollisionHandler(TLMSType.PLAYER, TLMSType.ZOMBIE) {
@@ -113,8 +123,9 @@ public class TheLastManStandingApp extends GameApplication {
 				try {
 					System.out.println("Collisione Avvenuta");
 					playerColZombie.onCollision(player, zombie);
+					inc("playerLife", -1.0);
 				} catch (Exception e) {
-					System.out.println("Collisions Player - Zombie, Not Work!");
+					System.out.println("Collisions Player - Zombie, Not Working!");
 				}
 			}
 		});
@@ -123,7 +134,7 @@ public class TheLastManStandingApp extends GameApplication {
     @Override
     protected void initGameVars(Map<String, Object> vars) {
         vars.put("score", 0);
-        vars.put("playerLife", 1.0);
+        vars.put("playerLife", 2.0);
     }
     
     @Override
