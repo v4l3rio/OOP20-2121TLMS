@@ -3,6 +3,7 @@ package application;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.Viewport;
+import com.almasb.fxgl.audio.Music;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.components.CollidableComponent;
@@ -66,6 +67,13 @@ public class LauncherBU extends GameApplication {
                 player.getComponent(AnimationComponent.class).jump();
             }
         }, KeyCode.W, VirtualButton.A);
+        
+//        getInput().addAction(new UserAction("Transformation") {
+//            @Override
+//            protected void onActionBegin() {
+//                player.getComponent(AnimationComponent.class).transformation();
+//            }
+//        }, KeyCode.O);
     	
     	//old movement
 //    	FXGL.getInput().addAction(new UserAction("Right") {
@@ -112,6 +120,14 @@ public class LauncherBU extends GameApplication {
 //        vars.put("pixelsMoved", 0);
 //    }
 
+//    @Override
+//    protected void onPreInit() {
+////    	Music gameMusic = FXGL.getAssetLoader().loadMusic("thriller.wav");
+////    	FXGL.getAudioPlayer().loopMusic(gameMusic);
+//    	
+////        getSettings().setGlobalMusicVolume(0.25);
+////        loopBGM("BGM_dash_runner.wav");
+//    }
 
     @Override
     protected void initGame() {
@@ -126,6 +142,10 @@ public class LauncherBU extends GameApplication {
 		
 		player = spawn("player", 200, 0);
         set("player", player);
+        
+        Music gameMusic = FXGL.getAssetLoader().loadMusic("thriller.wav");
+    	FXGL.getAudioPlayer().loopMusic(gameMusic);
+    	getSettings().setGlobalMusicVolume(0.05);
         
     	//quadrato blu
 //        player = entityBuilder()
