@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<Pane prefHeight="800" prefWidth="800" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+   <VBox layoutX="12.0" layoutY="10.0" prefHeight="800" prefWidth="800">
+      <children>
+          <Label fx:id="points" prefHeight="50" prefWidth="50" textFill="aquamarine" />
+          <ProgressBar fx:id="lifeBar" prefHeight="50" prefWidth="500" progress="1.0" />
+      </children>
+   </VBox>
+</Pane>
+
+
