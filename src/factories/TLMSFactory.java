@@ -48,8 +48,8 @@ public class TLMSFactory implements EntityFactory{
 
         return entityBuilder(data)
                 .type(ZOMBIE)
-               // .bbox(new HitBox(new Point2D(5,5), BoundingShape.circle(12)))
-                .bbox(new HitBox(new Point2D(150,270), BoundingShape.box(150, 230)))
+                //.bbox(new HitBox(new Point2D(5,5), BoundingShape.circle(12)))
+                .bbox(new HitBox(new Point2D(100,80), BoundingShape.box(260, 420))) //coordinate di partenza in alto a destra e dimensione del rettangolo
                 .with(physics)
                 .with(new DamagingComponent(zombieTexturized.getDamage()))
                 .with(new HealthIntComponent(zombieTexturized.getLife()))
@@ -65,7 +65,7 @@ public class TLMSFactory implements EntityFactory{
         physics.setBodyType(BodyType.DYNAMIC);
         physics.addGroundSensor(new HitBox("GROUND_SENSOR", new Point2D(16, 38), BoundingShape.box(6, 8)));
 
-        // this avoids player sticking to walls
+        // this avoidsd player sticking to walls
         //physics.setFixtureDef(new FixtureDef().friction(0.0f));
 
         return entityBuilder(data)
@@ -74,7 +74,7 @@ public class TLMSFactory implements EntityFactory{
                 .bbox(new HitBox(new Point2D(10,25), BoundingShape.box(10, 17)))
                 .with(physics)
                 .with(new CollidableComponent(true))
-                .with(new IrremovableComponent())
+                .with(new HealthIntComponent(10))
                 .with(new AnimationComponent())
                 .build();
     }

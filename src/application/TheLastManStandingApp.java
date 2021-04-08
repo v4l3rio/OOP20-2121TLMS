@@ -5,6 +5,7 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 import java.util.Map;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.audio.Music;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.input.UserAction;
@@ -90,14 +91,15 @@ public class TheLastManStandingApp extends GameApplication {
 		factory = new TLMSFactory();
 		getGameWorld().addEntityFactory(factory);
 		setLevelFromMap("Cemetery.tmx");
-		spawn("zombie", 500, 50);
+		for(int i =0;i<3;i++)
+			spawn("zombie", 500, 50);
 		
 		player = spawn("player", 100, 0);
 		factory.setPlayer(player);
 		
-       /* Music gameMusic = FXGL.getAssetLoader().loadMusic("thriller.wav");
+		Music gameMusic = FXGL.getAssetLoader().loadMusic("thriller.wav");
     	FXGL.getAudioPlayer().loopMusic(gameMusic);
-    	getSettings().setGlobalMusicVolume(0.1);*/
+    	getSettings().setGlobalMusicVolume(0.1);
 	
 	}
 	

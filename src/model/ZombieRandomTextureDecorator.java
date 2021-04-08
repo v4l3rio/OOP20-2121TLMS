@@ -15,7 +15,7 @@ public class ZombieRandomTextureDecorator implements Enemy{
 	public ZombieRandomTextureDecorator(Zombie zombie) {
 		this.zombie = zombie;
 		this.texture = new Texture();
-		this.zombieSelected = rnd.nextInt(1);
+		this.zombieSelected = rnd.nextInt(2);
 		this.texture.addTexture(IDLE, "assets/textures/zombie/zombie"+this.zombieSelected+"/zombie_idle.png");
 		this.texture.addTexture(WALK, "assets/textures/zombie/zombie"+this.zombieSelected+"/zombie_walk.png");
 		this.texture.addTexture(DEAD, "assets/textures/zombie/zombie"+this.zombieSelected+"/zombie_dead.png");
