@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="64" tileheight="64" infinite="0" nextlayerid="5" nextobjectid="14">
+<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="64" tileheight="64" infinite="0" nextlayerid="5" nextobjectid="12">
  <tileset firstgid="1" name="beastlands" tilewidth="64" tileheight="64" tilecount="112" columns="14">
   <image source="beastlands.png" width="944" height="544"/>
  </tileset>
@@ -8,20 +8,18 @@
 91,69,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,91,
 91,44,44,65,44,44,44,44,44,44,65,44,44,44,44,44,65,44,44,91,
 91,44,65,44,44,65,44,65,44,44,44,44,44,44,44,44,44,44,65,91,
-91,44,44,44,44,44,44,44,44,45,44,44,44,65,44,65,44,44,44,91,
-91,65,44,44,65,44,44,44,44,44,44,44,44,44,44,44,44,44,44,91,
+91,44,44,44,44,44,44,44,44,44,44,44,44,65,44,65,44,44,44,91,
+91,65,44,44,65,44,44,44,44,44,65,44,44,44,44,44,44,44,44,91,
 91,44,44,44,44,44,65,44,44,44,44,44,44,44,44,44,44,44,65,91,
 91,44,65,44,44,44,44,44,44,65,44,44,44,44,65,44,44,44,44,91,
-91,84,44,44,44,44,44,44,44,44,84,44,44,44,44,44,44,44,44,91,
+91,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,91,
 93,93,93,93,93,93,93,93,93,93,93,93,93,93,93,93,93,93,93,93,
 95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95,95
 </data>
  </layer>
  <objectgroup id="4" name="Object Layer 1">
-  <object id="8" type="platform" x="5.93359" y="512.478" width="1262.38" height="117.85"/>
+  <object id="8" type="platform" x="24.1244" y="520.076" width="1262.38" height="124.197"/>
   <object id="10" type="platform" x="12.5541" y="12.5541" width="34.8724" height="495.188"/>
   <object id="11" type="platform" x="1230.3" y="16.7387" width="33.4775" height="486.818"/>
-  <object id="12" type="damageObject" x="640.47" y="468.69" width="24.148" height="164.808"/>
-  <object id="13" type="damageObject" x="64.3966" y="467.596" width="24.148" height="164.808"/>
  </objectgroup>
 </map>

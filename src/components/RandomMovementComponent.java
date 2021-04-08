@@ -6,7 +6,7 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
 
-import models.Moveable;
+import model.Moveable;
 
 public class RandomMovementComponent extends Component implements Moveable {
 
