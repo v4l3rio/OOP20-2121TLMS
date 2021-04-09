@@ -12,7 +12,7 @@ import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.ui.UI;
 
-import collisions.BulletZombieCollision;
+import collisions.ShotZombieCollision;
 import collisions.Collision;
 import collisions.PlayerZombieCollision;
 import factories.TLMSFactory;
@@ -31,7 +31,7 @@ public class TheLastManStandingApp extends GameApplication {
     private TLMSFactory factory;
     private Entity player;
     
-    private final Collision<Entity, Entity> bulletColZombie = new BulletZombieCollision();
+    private final Collision<Entity, Entity> bulletColZombie = new ShotZombieCollision();
 	private final Collision<Entity, Entity> playerColZombie = new PlayerZombieCollision();
 	
 	@Override
@@ -79,7 +79,7 @@ public class TheLastManStandingApp extends GameApplication {
 	        getInput().addAction(new UserAction("Shoot") {
 				@Override
 				protected void onActionBegin() {
-					spawn("bullet", player.getPosition().getX() + (WEAPONLENGHT*player.getScaleX())
+					spawn("shot", player.getPosition().getX() + (WEAPONLENGHT*player.getScaleX())
 							, player.getPosition().getY());
 				}
 			}, KeyCode.L);
@@ -105,7 +105,7 @@ public class TheLastManStandingApp extends GameApplication {
 	
 	@Override
 	protected void initPhysics() {
-		getPhysicsWorld().addCollisionHandler(new CollisionHandler(TLMSType.BULLET, TLMSType.ZOMBIE) {
+		getPhysicsWorld().addCollisionHandler(new CollisionHandler(TLMSType.SHOT, TLMSType.ZOMBIE) {
 			@Override
 			protected void onCollisionBegin(final Entity bullet, final Entity zombie) {
 				try {

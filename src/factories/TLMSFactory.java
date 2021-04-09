@@ -16,20 +16,24 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 
-import components.BasicBulletComponent;
+import components.ShotTextureComponent;
 import components.DamagingComponent;
 import components.RandomMovementComponent;
 import components.ZombieTextureComponent;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import model.AnimationComponent;
-import model.Bullet;
+import model.Shot;
 import model.TLMSType;
 import model.Zombie;
 import model.ZombieRandomTextureDecorator;
 
 public class TLMSFactory implements EntityFactory{
 	
+	final static int BASICSHOTDMG = 1;
+	final static double BASICSHOTSPEED = 500;
+	
+	//used to keep track of player (ex. direction)
 	private Entity player;
 	
 	public void setPlayer(Entity player) {
@@ -79,9 +83,12 @@ public class TLMSFactory implements EntityFactory{
                 .build();
     }
 	
-	@Spawns("bullet")
-    public Entity newBullet(SpawnData data) {
-	 	Bullet bullet = new Bullet(1, 500, new Image("assets/textures/myBulletsShrunk.png"));
+	@Spawns("shot")
+    public Entity newShot(SpawnData data) {
+		//
+		// TO DECIDE IF SPEED HAS TO BE IN SHOT OR SHOTCOMPONENT!!!
+		//
+	 	Shot shot = new Shot(BASICSHOTDMG, BASICSHOTSPEED);
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.KINEMATIC);
         
@@ -89,12 +96,12 @@ public class TLMSFactory implements EntityFactory{
         physics.setFixtureDef(new FixtureDef().friction(0.0f));
 
         return entityBuilder(data)
-                .type(BULLET)
+                .type(SHOT)
                 .bbox(new HitBox(new Point2D(10,25), BoundingShape.box(6, 3)))
                 .with(physics)
                 .with(new CollidableComponent(true))
-                .with(new BasicBulletComponent(bullet, this.player.getScaleX()))
-                .with(new DamagingComponent((int)bullet.getShotDamage()))  //cambiare tutti i danni in double
+                .with(new ShotTextureComponent(this.player.getScaleX()))
+                .with(new DamagingComponent((int)shot.getShotDamage()))  //cambiare tutti i danni in double
                 .build();
     }
 	

@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 import com.almasb.fxgl.achievement.AchievementEvent;
 
 
-public class BulletZombieCollision implements Collision<Entity, Entity>{
+public class ShotZombieCollision implements Collision<Entity, Entity>{
 
 
 	public void onCollision(Entity bullet, Entity zombie) {
