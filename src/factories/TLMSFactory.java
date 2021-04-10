@@ -18,13 +18,16 @@ import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 
 import components.ShotTextureComponent;
+import components.ComponentUtils;
 import components.DamagingComponent;
+import components.FirearmComponent;
 import components.RandomMovementComponent;
 import components.ZombieTextureComponent;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import model.AnimationComponent;
-import model.Shot;
+import model.Beretta92;
+import model.Player;
 import model.TLMSType;
 import model.Zombie;
 import model.ZombieRandomTextureDecorator;
@@ -78,6 +81,7 @@ public class TLMSFactory implements EntityFactory{
                 .bbox(new HitBox(new Point2D(5,5), BoundingShape.circle(12)))
                 .bbox(new HitBox(new Point2D(10,25), BoundingShape.box(10, 17)))
                 .with(physics)
+                .with(new FirearmComponent(new Beretta92()))
                 .with(new CollidableComponent(true))
                 .with(new HealthIntComponent(10))
                 .with(new AnimationComponent())
@@ -86,10 +90,6 @@ public class TLMSFactory implements EntityFactory{
 	
 	@Spawns("shot")
     public Entity newShot(SpawnData data) {
-		//
-		// TO DECIDE IF SPEED HAS TO BE IN SHOT OR SHOTCOMPONENT!!!
-		//
-	 	final Shot shot = new Shot(BASICSHOTDMG);
 	 	final double direction = this.player.getScaleX();
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.KINEMATIC);
@@ -101,10 +101,10 @@ public class TLMSFactory implements EntityFactory{
                 .type(SHOT)
                 .bbox(new HitBox(new Point2D(10,25), BoundingShape.box(6, 3)))
                 .with(physics)
-                //.with(new ProjectileComponent(new Point2D(1 * direction, 0), BASICSHOTSPEED))
                 .with(new CollidableComponent(true))
                 .with(new ShotTextureComponent(direction))
-                .with(new DamagingComponent(shot.getShotDamage()))  //cambiare tutti i danni in double
+                .with(new DamagingComponent(player.getComponent(ComponentUtils.FIREARM_COMPONENT)
+                		.getCurrentFirearm().getShotDamage()))
                 .build();
     }
 	

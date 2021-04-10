@@ -79,6 +79,7 @@ public class TheLastManStandingApp extends GameApplication {
 	        getInput().addAction(new UserAction("Shoot") {
 				@Override
 				protected void onActionBegin() {
+					// have the shot spawn facing coherently as player, with due distance from it
 					spawn("shot", player.getPosition().getX() + (WEAPONLENGHT*player.getScaleX())
 							, player.getPosition().getY());
 				}

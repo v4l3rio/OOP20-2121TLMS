@@ -10,5 +10,7 @@ public final class ComponentUtils {
 	
 	public static final Class<ZombieTextureComponent> TEXTURE_COMPONENT = ZombieTextureComponent.class;
 	
+	public static final Class<FirearmComponent> FIREARM_COMPONENT = FirearmComponent.class;
+	
 	private ComponentUtils() {}
 }

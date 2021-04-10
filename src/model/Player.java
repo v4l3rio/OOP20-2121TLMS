@@ -3,6 +3,7 @@ package model;
 public class Player {
 	
 //	private boolean redPlayer;
+
 	private int lives;
 	private int speed;
 	private int nJumps;
