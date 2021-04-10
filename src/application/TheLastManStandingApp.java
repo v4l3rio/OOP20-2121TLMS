@@ -107,13 +107,13 @@ public class TheLastManStandingApp extends GameApplication {
 	protected void initPhysics() {
 		getPhysicsWorld().addCollisionHandler(new CollisionHandler(TLMSType.SHOT, TLMSType.ZOMBIE) {
 			@Override
-			protected void onCollisionBegin(final Entity bullet, final Entity zombie) {
+			protected void onCollisionBegin(final Entity shot, final Entity zombie) {
 				try {
 					System.out.println("Collisione Avvenuta");
-					bulletColZombie.onCollision(bullet, zombie);
+					bulletColZombie.onCollision(shot, zombie);
 					inc("score", +1);
 				} catch (Exception e) {
-					System.out.println("Collisions Bullet - Zombie, Not Work!");
+					System.out.println("Collisions Shot - Zombie, Not Work!");
 				}
 			}
 			

@@ -10,6 +10,7 @@ import com.almasb.fxgl.entity.Spawns;
 import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.entity.components.IrremovableComponent;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
+import com.almasb.fxgl.dsl.components.ProjectileComponent;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
@@ -30,7 +31,7 @@ import model.ZombieRandomTextureDecorator;
 
 public class TLMSFactory implements EntityFactory{
 	
-	final static int BASICSHOTDMG = 1;
+	final static int BASICSHOTDMG = 3;
 	final static double BASICSHOTSPEED = 500;
 	
 	//used to keep track of player (ex. direction)
@@ -88,7 +89,8 @@ public class TLMSFactory implements EntityFactory{
 		//
 		// TO DECIDE IF SPEED HAS TO BE IN SHOT OR SHOTCOMPONENT!!!
 		//
-	 	Shot shot = new Shot(BASICSHOTDMG, BASICSHOTSPEED);
+	 	final Shot shot = new Shot(BASICSHOTDMG);
+	 	final double direction = this.player.getScaleX();
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.KINEMATIC);
         
@@ -99,9 +101,10 @@ public class TLMSFactory implements EntityFactory{
                 .type(SHOT)
                 .bbox(new HitBox(new Point2D(10,25), BoundingShape.box(6, 3)))
                 .with(physics)
+                //.with(new ProjectileComponent(new Point2D(1 * direction, 0), BASICSHOTSPEED))
                 .with(new CollidableComponent(true))
-                .with(new ShotTextureComponent(this.player.getScaleX()))
-                .with(new DamagingComponent((int)shot.getShotDamage()))  //cambiare tutti i danni in double
+                .with(new ShotTextureComponent(direction))
+                .with(new DamagingComponent(shot.getShotDamage()))  //cambiare tutti i danni in double
                 .build();
     }
 	

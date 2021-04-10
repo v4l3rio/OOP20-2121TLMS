@@ -19,7 +19,7 @@ public class ShotTextureComponent extends Component{
 	private double direction;
 	private final static Image SHOTIMAGE = new Image("assets/textures/myShotShrunk.png");
 	private final static int NTEXTURES = 3;
-	private final static int SHOTSPEED = 500;
+	private final static double SHOTSPEED = 500;
 
 	public ShotTextureComponent(double direction) {
 		this.direction = direction;

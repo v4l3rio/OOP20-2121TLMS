@@ -7,13 +7,10 @@ import javafx.scene.image.Image;
 public class Shot extends Firearm{
 	
 	private final UUID uuid;
-	private double speed;
-
 	private int shotDamage;
 	
-	public Shot(int shotDamage, double speed) {
+	public Shot(int shotDamage) {
 		this.uuid = UUID.randomUUID();
-		this.speed = speed;
 		this.shotDamage = shotDamage;
 	}
 	
@@ -32,15 +29,6 @@ public class Shot extends Firearm{
    public void setShotDamage(final int shotDamage) {
        this.shotDamage = shotDamage;
    }
-
-	public void setSpeed(double speed) {
-		this.speed = speed;
-	}
-	
-	@Override
-	public double getShotSpeed() {
-		return speed;
-	}
 	
 	public UUID getUUID() {
 		return uuid;
