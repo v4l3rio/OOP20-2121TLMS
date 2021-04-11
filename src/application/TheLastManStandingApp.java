@@ -15,10 +15,10 @@ import com.almasb.fxgl.ui.UI;
 import collisions.BulletZombieCollision;
 import collisions.Collision;
 import collisions.PlayerZombieCollision;
+import components.AnimationComponent;
 import factories.TLMSFactory;
 import factories.WorldFactory;
 import javafx.scene.input.KeyCode;
-import model.AnimationComponent;
 import model.TLMSType;
 import settings.SystemSettingsImpl;
 import view.DisplayController;
@@ -98,7 +98,7 @@ public class TheLastManStandingApp extends GameApplication {
 		factory.setPlayer(player);
 		
 		Music gameMusic = FXGL.getAssetLoader().loadMusic("thriller.wav");
-    	FXGL.getAudioPlayer().loopMusic(gameMusic);
+    	getAudioPlayer().loopMusic(gameMusic);
     	getSettings().setGlobalMusicVolume(0.1);
 	
 	}

@@ -16,13 +16,13 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 
+import components.AnimationComponent;
 import components.BasicBulletComponent;
 import components.DamagingComponent;
 import components.RandomMovementComponent;
 import components.ZombieTextureComponent;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
-import model.AnimationComponent;
 import model.Bullet;
 import model.TLMSType;
 import model.Zombie;
@@ -65,18 +65,17 @@ public class TLMSFactory implements EntityFactory{
         physics.setBodyType(BodyType.DYNAMIC);
         physics.addGroundSensor(new HitBox("GROUND_SENSOR", new Point2D(16, 38), BoundingShape.box(6, 8)));
 
-        // this avoidsd player sticking to walls
-        //physics.setFixtureDef(new FixtureDef().friction(0.0f));
-
         return entityBuilder(data)
                 .type(TLMSType.PLAYER)
-                .bbox(new HitBox(new Point2D(5,5), BoundingShape.circle(12)))
-                .bbox(new HitBox(new Point2D(10,25), BoundingShape.box(10, 17)))
+                .bbox(new HitBox(new Point2D(5,5), BoundingShape.circle(12))) //poligoni primitivi con una dimensione che si assegnano a una texture //testa
+                .bbox(new HitBox(new Point2D(10,25), BoundingShape.box(10, 17))) //x collisioni e x piattaforme. Immagini sono incollate sulle hitbox //busto
+                //point2D ti dice il punto di inizio in alto a sx, bounding shape ti da la forma del tuo player
+                //x,y
                 .with(physics)
-                .with(new CollidableComponent(true))
-                .with(new HealthIntComponent(10))
-                .with(new AnimationComponent())
-                .build();
+                .with(new CollidableComponent(true)) //può essere colpito e può atterrare su piattaforme
+                .with(new HealthIntComponent(10)) //gli da i punti vita
+                .with(new AnimationComponent()) 
+                .build();  //builda tutto quello che ho scritto
     }
 	
 	@Spawns("bullet")
