@@ -4,11 +4,6 @@ package collisions;
 import com.almasb.fxgl.entity.Entity;
 
 import components.ComponentUtils;
-import static com.almasb.fxgl.dsl.FXGL.*;
-
-import java.util.concurrent.TimeUnit;
-
-import com.almasb.fxgl.achievement.AchievementEvent;
 
 
 public class ShotZombieCollision implements Collision<Entity, Entity>{

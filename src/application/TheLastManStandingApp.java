@@ -13,12 +13,15 @@ import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.ui.UI;
 
 import collisions.ShotZombieCollision;
+import components.ComponentUtils;
 import collisions.Collision;
 import collisions.PlayerZombieCollision;
 import factories.TLMSFactory;
 import factories.WorldFactory;
 import javafx.scene.input.KeyCode;
+import javafx.util.Duration;
 import model.AnimationComponent;
+import model.Firearm;
 import model.TLMSType;
 import settings.SystemSettingsImpl;
 import view.DisplayController;
@@ -30,6 +33,8 @@ public class TheLastManStandingApp extends GameApplication {
 	private SystemSettings mySystemSettings = new SystemSettingsImpl();
     private TLMSFactory factory;
     private Entity player;
+    // might wanna switch to enum
+    private boolean isRecharging = false;
     
     private final Collision<Entity, Entity> bulletColZombie = new ShotZombieCollision();
 	private final Collision<Entity, Entity> playerColZombie = new PlayerZombieCollision();
@@ -79,9 +84,21 @@ public class TheLastManStandingApp extends GameApplication {
 	        getInput().addAction(new UserAction("Shoot") {
 				@Override
 				protected void onActionBegin() {
-					// have the shot spawn facing coherently as player, with due distance from it
-					spawn("shot", player.getPosition().getX() + (WEAPONLENGHT*player.getScaleX())
-							, player.getPosition().getY());
+					final Firearm currentFirearm = player.getComponent(ComponentUtils.FIREARM_COMPONENT).getCurrentFirearm();
+					//is recharging? do nothing
+					if(isRecharging) {
+					} else if(currentFirearm.getNAmmo() > 0) {
+						// have the shot spawn facing coherently as player, with due distance from it
+						spawn("shot", player.getPosition().getX() + (WEAPONLENGHT*player.getScaleX())
+								, player.getPosition().getY());
+						currentFirearm.decAmmo();
+					} else {
+						isRecharging = true;
+						runOnce(()->{
+							currentFirearm.recharge();
+							isRecharging = false;
+						}, Duration.seconds(2));
+					}
 				}
 			}, KeyCode.L);
 	 }

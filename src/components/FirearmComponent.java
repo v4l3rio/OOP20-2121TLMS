@@ -7,6 +7,10 @@ import model.Firearm;
 public class FirearmComponent extends Component {
 
 	private Firearm currentFirearm;
+
+	public FirearmComponent(Firearm firearm) {
+		this.currentFirearm = firearm;
+	}
 	
 	public Firearm getCurrentFirearm() {
 		return currentFirearm;
@@ -14,9 +18,5 @@ public class FirearmComponent extends Component {
 
 	public void setCurrentFirearm(Firearm currentFirearm) {
 		this.currentFirearm = currentFirearm;
-	}
-
-	public FirearmComponent(Firearm firearm) {
-		this.currentFirearm = firearm;
 	}
 }

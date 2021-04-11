@@ -8,7 +8,7 @@ import com.almasb.fxgl.texture.AnimationChannel;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
 
-public class ShotTextureComponent extends Component{
+public class ShotMovementComponent extends Component{
 
 	private PhysicsComponent physics;
 
@@ -17,13 +17,13 @@ public class ShotTextureComponent extends Component{
 	private AnimationChannel animFire;
 	
 	private double direction;
-	private final static Image SHOTIMAGE = new Image("assets/textures/myShotShrunk.png");
 	private final static int NTEXTURES = 3;
 	private final static double SHOTSPEED = 500;
 
-	public ShotTextureComponent(double direction) {
+	public ShotMovementComponent(double direction, Image shotImage) {
 		this.direction = direction;
-		animFire = new AnimationChannel(SHOTIMAGE, 3, 200, 120, Duration.seconds(0.30), 0, NTEXTURES - 1);
+		animFire = new AnimationChannel(shotImage, 3, (int) (shotImage.getWidth()/NTEXTURES)
+				, (int) shotImage.getHeight(), Duration.seconds(0.80), 0, NTEXTURES - 1);
 		texture = new AnimatedTexture(animFire);
 		texture.loop();
 	}
@@ -33,7 +33,7 @@ public class ShotTextureComponent extends Component{
 		//get the entity to which the component connected, attaching the texture to it
 		getEntity().getViewComponent().addChild(texture);
 		//reduce bullet size, so to match player's one
-		getEntity().setScaleUniform(0.2);
+		getEntity().setScaleUniform(0.4);
 		//set image direction, taken from player
 		getEntity().setScaleX(getEntity().getScaleX()*direction);
 	}
