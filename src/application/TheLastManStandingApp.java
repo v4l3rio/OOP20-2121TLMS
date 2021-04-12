@@ -125,7 +125,7 @@ public class TheLastManStandingApp extends GameApplication {
 				try {
 					System.out.println("Collisione Avvenuta");
 					playerColZombie.onCollision(player, zombie);
-					inc("playerLife", -1.0);
+					inc("playerLife", -0.1);
 				} catch (Exception e) {
 					System.out.println("Collisions Player - Zombie, Not Working!");
 				}
@@ -136,20 +136,20 @@ public class TheLastManStandingApp extends GameApplication {
     @Override
     protected void initGameVars(Map<String, Object> vars) {
         vars.put("score", 0);
-        vars.put("playerLife", 2.0);
+        vars.put("playerLife", 1.0);
     }
     
     @Override
     protected void initUI() {
-    	DisplayController controller = new DisplayController();
-    	UI ui = FXGL.getAssetLoader().loadUI("prova.fxml", controller);
+    	DisplayController displayController = new DisplayController();
+    	UI ui = getAssetLoader().loadUI("displayView.fxml", displayController);
     	getGameScene().addUI(ui);
 
-        controller.getLifeProgressProperty().bind(
+    	displayController.getLifeProgressProperty().bind(
             getWorldProperties().doubleProperty("playerLife"));
-        controller.getPointsProperty().bind(
+    	displayController.getPointsProperty().bind(
             getWorldProperties().intProperty("score").asString("Points: %d"));
-        ui.getRoot().setTranslateY(ui.getRoot().getBoundsInLocal().getWidth());
+        //ui.getRoot().setTranslateY(ui.getRoot().getBoundsInLocal().getWidth());
     	
     }
 
