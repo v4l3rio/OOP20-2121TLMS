@@ -5,6 +5,7 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 import java.util.Map;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.audio.Music;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
@@ -40,6 +41,8 @@ public class TheLastManStandingApp extends GameApplication {
 		settings.setHeight(mySystemSettings.getHeight());
 		settings.setTitle(mySystemSettings.getTitle());
 		settings.setVersion(mySystemSettings.getVersion());
+		settings.setMainMenuEnabled(true);
+		settings.setSceneFactory(new SceneFactory());
 	}   
 	
 	 @Override
