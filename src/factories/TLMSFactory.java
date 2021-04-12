@@ -39,7 +39,7 @@ public class TLMSFactory implements EntityFactory{
 	@Spawns("zombie")
     public Entity newZombie(SpawnData data) {
 	 	
-	 	ZombieRandomTextureDecorator zombieTexturized = new ZombieRandomTextureDecorator(new Zombie(10, 170, 3));
+	 	ZombieRandomTextureDecorator zombieTexturized = new ZombieRandomTextureDecorator(new Zombie(10, 170, 1));
 	 	
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);

@@ -27,6 +27,15 @@ public class WorldFactory implements EntityFactory {
             .with(new PhysicsComponent())
             .build();
 	}
+	
+	@Spawns("wall")
+	public Entity newWall(SpawnData data) {
+		return FXGL.entityBuilder(data)
+		   // .type(PLATFORM)
+            .bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"), data.<Integer>get("height"))))
+            .with(new PhysicsComponent())
+            .build();
+	}
 
 
 	//da rivedere, l'ha fatto vale. Danno in damagingcomponent()
