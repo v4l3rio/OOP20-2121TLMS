@@ -9,6 +9,9 @@ import javafx.scene.image.Image;
 import javafx.util.Duration;
 
 public class ShotMovementComponent extends Component{
+	
+	private final static int NTEXTURES = 3;
+	private final static double SHOTSPEED = 500;
 
 	private PhysicsComponent physics;
 
@@ -17,8 +20,6 @@ public class ShotMovementComponent extends Component{
 	private AnimationChannel animFire;
 	
 	private double direction;
-	private final static int NTEXTURES = 3;
-	private final static double SHOTSPEED = 500;
 
 	public ShotMovementComponent(double direction, Image shotImage) {
 		this.direction = direction;
@@ -33,7 +34,7 @@ public class ShotMovementComponent extends Component{
 		//get the entity to which the component connected, attaching the texture to it
 		getEntity().getViewComponent().addChild(texture);
 		//reduce bullet size, so to match player's one
-		getEntity().setScaleUniform(0.4);
+		getEntity().setScaleUniform(0.3);
 		//set image direction, taken from player
 		getEntity().setScaleX(getEntity().getScaleX()*direction);
 	}

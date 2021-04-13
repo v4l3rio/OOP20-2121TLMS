@@ -19,6 +19,7 @@ import components.ShotMovementComponent;
 import components.ComponentUtils;
 import components.DamagingComponent;
 import components.FirearmComponent;
+import components.PropComponent;
 import components.RandomMovementComponent;
 import components.ZombieTextureComponent;
 import javafx.geometry.Point2D;
@@ -26,6 +27,7 @@ import javafx.scene.image.Image;
 import model.AnimationComponent;
 import model.Beretta92;
 import model.Firearm;
+import model.MagmaGun;
 import model.Player;
 import model.TLMSType;
 import model.Zombie;
@@ -96,7 +98,7 @@ public class TLMSFactory implements EntityFactory{
 
         return entityBuilder(data)
                 .type(SHOT)
-                .bbox(new HitBox(new Point2D(10,25), BoundingShape.box(6, 3)))
+                .bbox(new HitBox(new Point2D(50,100), BoundingShape.box(130, 130)))
                 .with(physics)
                 .with(new CollidableComponent(true))
                 .with(new ShotMovementComponent(direction, currentFirearm.getShotTexture()))
@@ -104,4 +106,20 @@ public class TLMSFactory implements EntityFactory{
                 .build();
     }
 	
+	@Spawns("magmaGun")
+    public Entity newMagmaGun(SpawnData data) {
+		Firearm magmaGun = new MagmaGun();
+        PhysicsComponent physics = new PhysicsComponent();
+        physics.setBodyType(BodyType.DYNAMIC);        
+        // this avoids player sticking to walls
+        physics.setFixtureDef(new FixtureDef().friction(0.0f));
+
+        return entityBuilder(data)
+                .type(PROP)
+                .bbox(new HitBox(new Point2D(35,130), BoundingShape.box(160, 100)))
+                .with(new CollidableComponent(true))
+                .with(physics)
+                .with(new PropComponent(magmaGun.getWeaponTexture()))
+                .build();
+    }
 }

@@ -6,7 +6,8 @@ import javafx.scene.image.Image;
 
 public class Beretta92 extends Entity implements Firearm{
 	//although it's the model, after some thinking, this seems the best place for the texture placing
-	private final Image shotTexture = new Image("assets/textures/Beretta92bullet.png");
+	private final Image shotTexture = new Image("assets/textures/beretta92Shot.png");
+	private final Image gunTexture = new Image("assets/textures/beretta92Gun.png");
 	//one third of real Beretta92 magazine
 	private final static int MAXAMMO = 5;
 	private final static int SHOTDMG = 3;
@@ -36,6 +37,11 @@ public class Beretta92 extends Entity implements Firearm{
 	@Override
 	public void recharge() {
 		nAmmo = MAXAMMO;
+	}
+
+	@Override
+	public Image getWeaponTexture() {
+		return this.gunTexture;
 	}
 	
 }

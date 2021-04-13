@@ -13,4 +13,6 @@ public interface Firearm{
     public void recharge();
     
 	public Image getShotTexture();
+	
+	public Image getWeaponTexture();
 }

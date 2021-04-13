@@ -3,6 +3,8 @@ package application;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import java.util.Map;
+import java.util.Random;
+
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.audio.Music;
@@ -15,6 +17,7 @@ import com.almasb.fxgl.ui.UI;
 import collisions.ShotZombieCollision;
 import components.ComponentUtils;
 import collisions.Collision;
+import collisions.PlayerMagmaGunCollision;
 import collisions.PlayerZombieCollision;
 import factories.TLMSFactory;
 import factories.WorldFactory;
@@ -29,6 +32,7 @@ import settings.SystemSettings;
 
 public class TheLastManStandingApp extends GameApplication {
 	
+	private Random random = new Random();
 	private static final double WEAPONLENGHT = 25;
 	private SystemSettings mySystemSettings = new SystemSettingsImpl();
     private TLMSFactory factory;
@@ -38,6 +42,7 @@ public class TheLastManStandingApp extends GameApplication {
     
     private final Collision<Entity, Entity> bulletColZombie = new ShotZombieCollision();
 	private final Collision<Entity, Entity> playerColZombie = new PlayerZombieCollision();
+	private final Collision<Entity, Entity> playerMagmaGun = new PlayerMagmaGunCollision();
 	
 	@Override
 	protected void initSettings(GameSettings settings) {
@@ -85,7 +90,7 @@ public class TheLastManStandingApp extends GameApplication {
 				@Override
 				protected void onActionBegin() {
 					final Firearm currentFirearm = player.getComponent(ComponentUtils.FIREARM_COMPONENT).getCurrentFirearm();
-					//is recharging? do nothing
+					//is recharging? can't shoot rn, do nothing
 					if(isRecharging) {
 					} else if(currentFirearm.getNAmmo() > 0) {
 						// have the shot spawn facing coherently as player, with due distance from it
@@ -102,23 +107,22 @@ public class TheLastManStandingApp extends GameApplication {
 				}
 			}, KeyCode.L);
 	 }
-	
+
 	@Override
 	protected void initGame() {
 		getGameWorld().addEntityFactory(new WorldFactory());
 		factory = new TLMSFactory();
 		getGameWorld().addEntityFactory(factory);
 		setLevelFromMap("Cemetery.tmx");
+		getGameTimer().runAtInterval(() -> {spawn("magmaGun", random.nextInt(mySystemSettings.getWidth()), -100);}, Duration.seconds(1));
 		for(int i =0;i<3;i++)
 			spawn("zombie", 500, 50);
-		
 		player = spawn("player", 100, 0);
 		factory.setPlayer(player);
 		
 		Music gameMusic = FXGL.getAssetLoader().loadMusic("thriller.wav");
     	FXGL.getAudioPlayer().loopMusic(gameMusic);
     	getSettings().setGlobalMusicVolume(0.1);
-	
 	}
 	
 	@Override
@@ -146,6 +150,19 @@ public class TheLastManStandingApp extends GameApplication {
 					inc("playerLife", -1.0);
 				} catch (Exception e) {
 					System.out.println("Collisions Player - Zombie, Not Working!");
+				}
+			}
+		});
+		
+		getPhysicsWorld().addCollisionHandler(new CollisionHandler(TLMSType.PLAYER, TLMSType.PROP) {
+			@Override
+			protected void onCollisionBegin(final Entity player, final Entity magmaGun) {
+				try {
+					System.out.println("Collisione Avvenuta");
+					playerMagmaGun.onCollision(player, magmaGun);
+					inc("playerLife", -1.0);
+				} catch (Exception e) {
+					System.out.println("Collisions Player - MagmaGun, Not Working!");
 				}
 			}
 		});

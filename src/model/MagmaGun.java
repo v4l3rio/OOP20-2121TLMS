@@ -6,10 +6,11 @@ import javafx.scene.image.Image;
 
 public class MagmaGun extends Entity implements Firearm {
 	
-	private final Image shotTexture = new Image("assets/textures/myShotShrunk.png");
+	private final Image shotTexture = new Image("assets/textures/magmaShot.png");
+	private final Image gunTexture = new Image("assets/textures/magmaGunTexture.png");
 	
 	private final static int MAXAMMO = 10;
-	private final static int SHOTDMG = 5;
+	private final static int SHOTDMG = 10;
 	private final static double SHOTSPEED = 800;
 	private int nAmmo = MAXAMMO;
 
@@ -36,6 +37,11 @@ public class MagmaGun extends Entity implements Firearm {
 	@Override
 	public void recharge() {
 		nAmmo = MAXAMMO;
+	}
+
+	@Override
+	public Image getWeaponTexture() {
+		return this.gunTexture;
 	}
 
 }
