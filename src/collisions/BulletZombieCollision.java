@@ -7,9 +7,12 @@ import com.almasb.fxgl.physics.CollisionHandler;
 import components.ComponentUtils;
 import model.TLMSType;
 
-import static com.almasb.fxgl.dsl.FXGL.*;
 
 
+/**
+ * @version 2.3
+ * Manages collisions between bullet and zombies
+ */
 
 public class BulletZombieCollision extends CollisionHandler{
 
@@ -18,7 +21,7 @@ public class BulletZombieCollision extends CollisionHandler{
 		super(bullet, zombie);
 	}
 
-	public void onCollision(Entity bullet, Entity zombie) {
+	public void onCollisionBegin(Entity bullet, Entity zombie) {
 		
 		zombie.getComponent(ComponentUtils.HEALTH_COMPONENT).damage(bullet.getComponent(ComponentUtils.DAMAGING_COMPONENT).getDamage());
 		
@@ -26,8 +29,7 @@ public class BulletZombieCollision extends CollisionHandler{
 		
 		System.out.println("Lo zombie ha vita: " + zombie.getComponent(ComponentUtils.HEALTH_COMPONENT).getValue());
 		
-	
-		
+
 		if(zombie.getComponent(ComponentUtils.HEALTH_COMPONENT).getValue()<=0) {
 			System.out.println("Zombie rimosso");
 		}

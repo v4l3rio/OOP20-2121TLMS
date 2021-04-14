@@ -40,7 +40,7 @@ public class AnimationComponent extends Component {
     public void onAdded() {
         entity.getTransformComponent().setScaleOrigin(new Point2D(16, 21));
         entity.getViewComponent().addChild(texture);
-        
+        entity.setScaleUniform(2);
         physics.onGroundProperty().addListener((obs, old, isOnGround) -> {
         	
             if (isOnGround) {
@@ -85,7 +85,7 @@ public class AnimationComponent extends Component {
 
     public void moveRight() {
     	
-    	getEntity().setScaleX(1); //direzione personaggio
+    	getEntity().setScaleX(2); //direzione personaggio
         physics.setVelocityX(player.getSpeed());
         
         //without velocity
@@ -96,7 +96,7 @@ public class AnimationComponent extends Component {
 
     public void moveLeft() {
 
-    	getEntity().setScaleX(-1); //direzione personaggio
+    	getEntity().setScaleX(-2); //direzione personaggio
         physics.setVelocityX(-player.getSpeed());
         
         //without physics

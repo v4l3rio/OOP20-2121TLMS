@@ -1,12 +1,26 @@
 package model;
 
-public interface ZombieTextureDecorator {
-	int getDamage();
+import java.util.Random;
+
+/**
+ * 
+ * @author Valerio Di Zio
+ * @version 1.1
+ * This Class models a Zombie with Texture
+ */
+public interface ZombieTextureDecorator extends Enemy{
 	
-	int getSpeed();
+	public static enum GENDER {
+		MALE, FEMALE;
+		
+		public static GENDER getRandom() {
+			return GENDER.values()[new Random().nextInt(GENDER.values().length)];
+		}
+	}
 	
-	int getLife();
-	
+	/**
+     * @return Texture of zombie
+     */
 	public Texture getTexture();
 	
 }

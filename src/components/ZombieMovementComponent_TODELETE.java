@@ -9,8 +9,14 @@ import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
 
 import model.Moveable;
-
-public class ZombieMovementComponent extends Component implements Moveable {
+/**
+ * 
+ * @author Valerio Di Zio
+ * @version 1.1
+ * This component gives the ability to move a zombie randomly or following the player
+ *
+ */
+public class ZombieMovementComponent_TODELETE extends Component implements Moveable {
 
 	private Entity player;
 	private PhysicsComponent physics;
@@ -18,11 +24,11 @@ public class ZombieMovementComponent extends Component implements Moveable {
 
 	private double seconds = 0.0;
 
-	private TYPEOFMOVEMENT selectedType;
+	private TYPE_OF_MOVEMENT selectedType;
 
 	private Random rnd = new Random();
 
-	public ZombieMovementComponent(Entity player, PhysicsComponent physics, int speed) {
+	public ZombieMovementComponent_TODELETE(Entity player, PhysicsComponent physics, int speed) {
 		this.player = player;
 		this.physics = physics;
 		this.speed = speed;
@@ -30,6 +36,9 @@ public class ZombieMovementComponent extends Component implements Moveable {
 
 	@Override
 	public void onAdded() {
+		/**
+		 * define the type of movement randomly
+		 */
 		selectedType = getRandomTypeOfMovement();
 	}
 
@@ -37,7 +46,7 @@ public class ZombieMovementComponent extends Component implements Moveable {
 	public void onUpdate(double tpf) {
 		if (getGameTimer().getNow() > seconds)
 
-			if (selectedType == TYPEOFMOVEMENT.RANDOM) {
+			if (selectedType == TYPE_OF_MOVEMENT.RANDOM) {
 
 				switch (getRandomDirections()) {
 				case LEFT:
@@ -57,7 +66,7 @@ public class ZombieMovementComponent extends Component implements Moveable {
 					break;
 
 				}
-			} else if (selectedType == TYPEOFMOVEMENT.FOLLOW) {
+			} else if (selectedType == TYPE_OF_MOVEMENT.FOLLOW) {
 
 				if (entity.getX() > this.player.getX()) {
 					left();
@@ -68,12 +77,20 @@ public class ZombieMovementComponent extends Component implements Moveable {
 
 	}
 
+	/**
+	 * 
+	 * @return random direction
+	 */
 	private DIRECTIONS getRandomDirections() {
 		return DIRECTIONS.values()[rnd.nextInt(DIRECTIONS.values().length)];
 	}
-
-	private TYPEOFMOVEMENT getRandomTypeOfMovement() {
-		return TYPEOFMOVEMENT.values()[rnd.nextInt(TYPEOFMOVEMENT.values().length)];
+	
+	/**
+	 * 
+	 * @return random type of zombie, follow the player or random movement
+	 */
+	private TYPE_OF_MOVEMENT getRandomTypeOfMovement() {
+		return TYPE_OF_MOVEMENT.values()[rnd.nextInt(TYPE_OF_MOVEMENT.values().length)];
 	}
 
 	public void left() {

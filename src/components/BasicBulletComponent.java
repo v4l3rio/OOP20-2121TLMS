@@ -32,7 +32,7 @@ public class BasicBulletComponent extends Component{
 		//get the entity to which the component connected, attaching the texture to it
 		getEntity().getViewComponent().addChild(texture);
 		//reduce bullet size, so to match player's one
-		getEntity().setScaleUniform(0.2);
+		getEntity().setScaleUniform(0.1);
 		//set image direction, taken from player
 		getEntity().setScaleX(getEntity().getScaleX()*direction);
 	}

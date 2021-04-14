@@ -1,11 +1,16 @@
 package collisions;
 
-import com.almasb.fxgl.dsl.FXGL;
+
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.CollisionHandler;
 
 import components.ComponentUtils;
 import model.TLMSType;
+
+/**
+ * @version 2.2
+ * Manages collisions between players and zombies
+ */
 
 public class PlayerZombieCollision extends CollisionHandler{
 

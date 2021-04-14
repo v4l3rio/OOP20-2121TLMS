@@ -97,9 +97,9 @@ public class TheLastManStandingApp extends GameApplication {
 		player = spawn("player", 100, 0);
 		factory.setPlayer(player);
 
-		//Music gameMusic = FXGL.getAssetLoader().loadMusic("thriller.wav");
-		//FXGL.getAudioPlayer().loopMusic(gameMusic);
-		//getSettings().setGlobalMusicVolume(0.1);
+		Music gameMusic = FXGL.getAssetLoader().loadMusic("thriller.wav");
+		FXGL.getAudioPlayer().loopMusic(gameMusic);
+		getSettings().setGlobalMusicVolume(0.1);
 
 	}
 

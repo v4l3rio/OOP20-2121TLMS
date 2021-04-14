@@ -1,65 +1,49 @@
 package components;
 
+import static com.almasb.fxgl.dsl.FXGL.getGameTimer;
+
 import java.util.Random;
 
-import static com.almasb.fxgl.dsl.FXGL.*;
+import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
 
 import model.Moveable;
 
-public class RandomMovementComponent_TODELETE extends Component implements Moveable {
-
+public class FollowPlayerComponent extends Component implements Moveable{
+	
+	Entity player;
+	PhysicsComponent physics;
+	int speed;
+	
 	private double seconds = 0.0;
 
 
 	Random rnd = new Random();
 
-	int speed;
-
-	PhysicsComponent physics;
-
-	public RandomMovementComponent_TODELETE(PhysicsComponent physics, int speed) {
+	
+	public FollowPlayerComponent(Entity player, PhysicsComponent physics, int speed) {
+		this.player = player;
 		this.physics = physics;
 		this.speed = speed;
 	}
-
+	
 	@Override
 	public void onUpdate(double tpf) {
 		
-
 		if (getGameTimer().getNow() > seconds) {
-
-			switch (getRandomDirections()) {
-			case LEFT:
+			
+			if(entity.getX()>this.player.getX()) {
 				left();
 				seconds = seconds + rnd.nextDouble();
-				break;
-
-			case RIGHT:
+			}
+			else {
 				right();
 				seconds = seconds + rnd.nextDouble();
-				break;
-
-			case STOP:
-				stop();
-				seconds = seconds + rnd.nextDouble();
-				break;
-
-			default:
-				stop();
-				seconds = seconds + rnd.nextDouble();
-				break;
-
 			}
 		}
-
 	}
-
-	public DIRECTIONS getRandomDirections() {
-		return DIRECTIONS.values()[rnd.nextInt(DIRECTIONS.values().length)];
-	}
-
+	
 	public void left() {
 		getEntity().setScaleX(-1);
 		this.physics.setVelocityX(-(this.speed));
@@ -78,4 +62,6 @@ public class RandomMovementComponent_TODELETE extends Component implements Movea
 	public void jump() {
 		this.physics.setVelocityY(0); // incapace di saltare avendo messo 0 come valore
 	}
+	
+
 }

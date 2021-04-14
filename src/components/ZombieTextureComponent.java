@@ -13,6 +13,14 @@ import javafx.scene.image.Image;
 import javafx.util.Duration;
 import model.TLMSType;
 
+
+/**
+ * 
+ * @author Valerio Di Zio
+ * @version 2.3
+ * This component attached to a zombie enriches it with textures and animations
+ */
+
 public class ZombieTextureComponent extends Component {
 
 	private PhysicsComponent physics;
@@ -25,6 +33,10 @@ public class ZombieTextureComponent extends Component {
 
 	Map<TLMSType, String> textureMap;
 
+	/**
+	 * 
+	 * @param textureMap, texture map with all zombie states
+	 */
 	public ZombieTextureComponent(Map<TLMSType, String> textureMap) {
 		this.textureMap = textureMap;
 		animIdle = new AnimationChannel(new Image(this.textureMap.get(TLMSType.IDLE)), 15, 132, 160,
