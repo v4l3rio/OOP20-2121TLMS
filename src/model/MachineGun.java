@@ -1,17 +1,17 @@
 package model;
 
-import com.almasb.fxgl.entity.Entity;
-
 import javafx.scene.image.Image;
 
-public class Beretta92 extends Entity implements Firearm{
+public class MachineGun implements Firearm {
+	//this gun has unlimited bullets
+	
 	//although it's the model, after some thinking, this seems the best place for the texture placing
-	private final Image shotTexture = new Image("assets/textures/beretta92Shot.png");
-	private final Image gunTexture = new Image("assets/textures/beretta92Gun.png");
+	private final Image shotTexture = new Image("assets/textures/machineGunShot.png");
+	private final Image gunTexture = new Image("assets/textures/machineGunTexture.png");
 	//one third of real Beretta92 magazine
-	private final static int MAXAMMO = 5;
-	private final static int SHOTDMG = 3;
-	private final static double SHOTSPEED = 500;
+	private final static int MAXAMMO = 1;
+	private final static int SHOTDMG = 5;
+	private final static double SHOTSPEED = 1000;
 	private int nAmmo = MAXAMMO;
 	
 	public Image getShotTexture() {
@@ -27,7 +27,6 @@ public class Beretta92 extends Entity implements Firearm{
 	}
 
 	public void decAmmo() {
-		--this.nAmmo;
 	}
 
     public int getShotDamage() {
@@ -46,7 +45,7 @@ public class Beretta92 extends Entity implements Firearm{
 
 	@Override
 	public String getName() {
-		return "Beretta92";
+		return "MachineGun";
 	}
 	
 }

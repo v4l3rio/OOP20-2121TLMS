@@ -27,6 +27,7 @@ import javafx.scene.image.Image;
 import model.AnimationComponent;
 import model.Beretta92;
 import model.Firearm;
+import model.MachineGun;
 import model.MagmaGun;
 import model.Player;
 import model.TLMSType;
@@ -115,11 +116,26 @@ public class TLMSFactory implements EntityFactory{
         physics.setFixtureDef(new FixtureDef().friction(0.0f));
 
         return entityBuilder(data)
-                .type(PROP)
+                .type(MAGMAGUN)
                 .bbox(new HitBox(new Point2D(35,130), BoundingShape.box(160, 100)))
                 .with(new CollidableComponent(true))
                 .with(physics)
                 .with(new PropComponent(magmaGun.getWeaponTexture()))
+                .build();
+    }
+
+	@Spawns("machineGun")
+    public Entity newMachineGun(SpawnData data) {
+		Firearm machineGun = new MachineGun();
+        PhysicsComponent physics = new PhysicsComponent();
+        physics.setBodyType(BodyType.DYNAMIC);
+
+        return entityBuilder(data)
+                .type(MACHINEGUN)
+                .bbox(new HitBox(new Point2D(35,130), BoundingShape.box(160, 100)))
+                .with(new CollidableComponent(true))
+                .with(physics)
+                .with(new PropComponent(machineGun.getWeaponTexture()))
                 .build();
     }
 }

@@ -6,6 +6,16 @@ import model.Firearm;
 
 public class FirearmComponent extends Component {
 
+	private boolean changed = false;
+	
+	public boolean hasChanged() {
+		return changed;
+	}
+
+	public void setChanged(boolean hasChanged) {
+		this.changed = hasChanged;
+	}
+
 	private Firearm currentFirearm;
 
 	public FirearmComponent(Firearm firearm) {
@@ -18,5 +28,9 @@ public class FirearmComponent extends Component {
 
 	public void setCurrentFirearm(Firearm currentFirearm) {
 		this.currentFirearm = currentFirearm;
+	}
+	
+	public boolean isDefault() {
+		return this.currentFirearm.getName() == "Beretta92";
 	}
 }

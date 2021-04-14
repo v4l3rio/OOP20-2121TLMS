@@ -15,4 +15,6 @@ public interface Firearm{
 	public Image getShotTexture();
 	
 	public Image getWeaponTexture();
+	
+	public String getName();
 }

@@ -44,4 +44,9 @@ public class MagmaGun extends Entity implements Firearm {
 		return this.gunTexture;
 	}
 
+	@Override
+	public String getName() {
+		return "MagmaGun";
+	}
+
 }
