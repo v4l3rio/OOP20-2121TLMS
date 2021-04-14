@@ -2,19 +2,25 @@ package collisions;
 
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.physics.CollisionHandler;
 
 import components.ComponentUtils;
+import model.TLMSType;
 
-public class PlayerZombieCollision implements Collision<Entity, Entity>{
+public class PlayerZombieCollision extends CollisionHandler{
+
+	public PlayerZombieCollision(TLMSType player, TLMSType zombie) {
+		super(player, zombie);
+	}
 
 	@Override
-	public void onCollision(Entity player, Entity zombie) {
+	public void onCollisionBegin(Entity player, Entity zombie) {
 		
 		player.getComponent(ComponentUtils.HEALTH_COMPONENT).damage(zombie.getComponent(ComponentUtils.DAMAGING_COMPONENT).getDamage());
 		
 		System.out.println("Il player ha vita: " + player.getComponent(ComponentUtils.HEALTH_COMPONENT).getValue());
 		
-		zombie.getComponent(ComponentUtils.TEXTURE_COMPONENT).setAttack(true);
+		zombie.getComponent(ComponentUtils.TEXTURE_COMPONENT).setAttacking(true);
 		
 		if(player.getComponent(ComponentUtils.HEALTH_COMPONENT).getValue()<=0) {
 			

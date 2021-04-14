@@ -2,17 +2,21 @@ package collisions;
 
 
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.physics.CollisionHandler;
 
 import components.ComponentUtils;
+import model.TLMSType;
+
 import static com.almasb.fxgl.dsl.FXGL.*;
 
-import java.util.concurrent.TimeUnit;
-
-import com.almasb.fxgl.achievement.AchievementEvent;
 
 
-public class BulletZombieCollision implements Collision<Entity, Entity>{
+public class BulletZombieCollision extends CollisionHandler{
 
+
+	public BulletZombieCollision(TLMSType bullet, TLMSType zombie) {
+		super(bullet, zombie);
+	}
 
 	public void onCollision(Entity bullet, Entity zombie) {
 		
@@ -22,10 +26,10 @@ public class BulletZombieCollision implements Collision<Entity, Entity>{
 		
 		System.out.println("Lo zombie ha vita: " + zombie.getComponent(ComponentUtils.HEALTH_COMPONENT).getValue());
 		
-		//zombie.getComponent(ComponentUtils.TEXTURE_COMPONENT).setAttack(true);
+	
 		
 		if(zombie.getComponent(ComponentUtils.HEALTH_COMPONENT).getValue()<=0) {
-			System.out.println("Ho eliminato lo zombie!");
+			System.out.println("Zombie rimosso");
 		}
 		
 	}

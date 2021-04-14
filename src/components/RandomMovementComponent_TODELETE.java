@@ -8,7 +8,7 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 
 import model.Moveable;
 
-public class RandomMovementComponent extends Component implements Moveable {
+public class RandomMovementComponent_TODELETE extends Component implements Moveable {
 
 	private double seconds = 0.0;
 
@@ -19,7 +19,7 @@ public class RandomMovementComponent extends Component implements Moveable {
 
 	PhysicsComponent physics;
 
-	public RandomMovementComponent(PhysicsComponent physics, int speed) {
+	public RandomMovementComponent_TODELETE(PhysicsComponent physics, int speed) {
 		this.physics = physics;
 		this.speed = speed;
 	}
@@ -61,12 +61,12 @@ public class RandomMovementComponent extends Component implements Moveable {
 	}
 
 	public void left() {
-		getEntity().setScaleX(-0.2);
+		getEntity().setScaleX(-1);
 		this.physics.setVelocityX(-(this.speed));
 	}
 
 	public void right() {
-		getEntity().setScaleX(0.2);
+		getEntity().setScaleX(1);
 		this.physics.setVelocityX(this.speed);
 	}
 
