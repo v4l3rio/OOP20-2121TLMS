@@ -39,14 +39,12 @@ public class ZombieMaleDecorator implements ZombieTextureDecorator{
 	}
 
 
-	public int getSpeed() {
-		
+	public int getSpeed() {		
 		return this.zombie.getSpeed();
 	}
 
 
-	public int getLife() {
-		
+	public int getLife() {		
 		return this.zombie.getLife();
 	}
 	

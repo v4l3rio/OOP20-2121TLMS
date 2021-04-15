@@ -1,33 +1,30 @@
 package model;
 
-import com.almasb.fxgl.dsl.FXGL;
-
-import javafx.scene.image.Image;
-
 public class PlayerTexture {
-
-    private Image imageIdle, imageRun, imageJump, imageDeath;
-
-	public PlayerTexture() {
-		this.imageIdle = FXGL.image("Gunner_Blue_Idle.png");
-		this.imageRun = FXGL.image("Gunner_Blue_Run.png");
-		this.imageJump = FXGL.image("Gunner_Blue_Jump.png");
-		this.imageDeath = FXGL.image("Gunner_Blue_Death.png");
+	
+	private Texture playerTextureBlue;
+	private Texture playerTextureRed;
+	
+	public PlayerTexture () {
+		this.playerTextureBlue = new Texture();
+		this.playerTextureRed = new Texture();
+		
+		this.playerTextureBlue.addTexture(TLMSType.IDLE, "Gunner_Blue_Idle.png");
+		this.playerTextureBlue.addTexture(TLMSType.RUN, "Gunner_Blue_Run.png");
+		this.playerTextureBlue.addTexture(TLMSType.JUMP, "Gunner_Blue_Jump.png");
+		this.playerTextureBlue.addTexture(TLMSType.DEAD, "Gunner_Blue_Death.png");	
+		
+		this.playerTextureRed.addTexture(TLMSType.IDLE, "Gunner_Red_Idle.png");
+		this.playerTextureRed.addTexture(TLMSType.RUN, "Gunner_Red_Run.png");
+		this.playerTextureRed.addTexture(TLMSType.JUMP, "Gunner_Red_Jump.png");
+		this.playerTextureRed.addTexture(TLMSType.DEAD, "Gunner_Red_Death.png");		
 	}
 	
-	public Image getImageIdle() {
-		return this.imageIdle;
+	public Texture getTextureBlue() {
+		return this.playerTextureBlue;
 	}
-
-	public Image getImageRun() {
-		return this.imageRun;
-	}
-
-	public Image getImageJump() {
-		return this.imageJump;
-	}
-
-	public Image getImageDeath() {
-		return this.imageDeath;
+	
+	public Texture getTextureRed() {
+		return this.playerTextureRed;
 	}
 }

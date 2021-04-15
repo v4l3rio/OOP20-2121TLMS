@@ -1,7 +1,6 @@
 package factories;
 
 import static com.almasb.fxgl.dsl.FXGL.entityBuilder;
-import static model.TLMSType.DAMAGE_OBJECT;
 import static model.TLMSType.PLATFORM;
 import static model.TLMSType.WALL;
 

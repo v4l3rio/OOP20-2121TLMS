@@ -18,6 +18,16 @@ import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import components.*;
 import javafx.geometry.Point2D;
 import model.*;
+import components.PlayerComponent;
+import components.FirePowerComponent;
+import components.DamagingComponent;
+import components.RandomMovementComponent;
+import components.TextureComponent;
+import components.ZombieTextureComponent;
+import model.TLMSType;
+import model.Player;
+import model.PlayerImpl;
+import model.PlayerTexture;
 
 /**
  * 
@@ -82,25 +92,27 @@ public class TLMSFactory implements EntityFactory{
 	
 	@Spawns("player")
     public Entity newPlayer(SpawnData data) {
+		Player playerAbility = new PlayerImpl();
+		PlayerTexture pt = new PlayerTexture();
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
         physics.addGroundSensor(new HitBox("GROUND_SENSOR", new Point2D(16, 38), BoundingShape.box(6, 8)));
 
-        // this avoidsd player sticking to walls
-        //physics.setFixtureDef(new FixtureDef().friction(0.0f));
-
         return entityBuilder(data)
                 .type(TLMSType.PLAYER)
-                .bbox(new HitBox(new Point2D(5,5), BoundingShape.circle(12)))
-                .bbox(new HitBox(new Point2D(10,25), BoundingShape.box(10, 17)))
+                .bbox(new HitBox(new Point2D(5,5), BoundingShape.circle(12))) //poligoni primitivi con una dimensione che si assegnano a una texture //testa
+                .bbox(new HitBox(new Point2D(10,25), BoundingShape.box(10, 17))) //x collisioni e x piattaforme. Immagini sono incollate sulle hitbox //busto
+                //point2D ti dice il punto di inizio in alto a sx, bounding shape ti da la forma del tuo player
+                //x,y
                 .with(physics)
                 .with(new FirearmComponent(new Beretta92()))
-                .with(new CollidableComponent(true))
-                .with(new HealthIntComponent(10))
-                .with(new AnimationComponent())
-                .build();
+                .with(new CollidableComponent(true)) //può essere colpito e può atterrare su piattaforme
+                .with(new HealthIntComponent(playerAbility.getHealt())) //gli da i punti vita
+                .with(new PlayerComponent()) 
+                .with(new TextureComponent(pt.getTextureBlue().getTextureMap()))
+                .build();  //builda tutto quello che ho scritto
     }
-	
+
 	@Spawns("shot")
     public Entity newShot(SpawnData data) {
 		final Firearm currentFirearm = player.getComponent(ComponentUtils.FIREARM_COMPONENT).getCurrentFirearm();
@@ -149,5 +161,20 @@ public class TLMSFactory implements EntityFactory{
                 .with(new PropComponent(machineGun.getWeaponTexture()))
                 .build();
     }
+	
+	@Spawns("firePowerUp")
+	public Entity newPower(SpawnData data) {
+		PhysicsComponent physics = new PhysicsComponent();
+		physics.setBodyType(BodyType.DYNAMIC);
+		physics.addGroundSensor(new HitBox("GROUND_SENSOR", new Point2D(16, 38), BoundingShape.box(6, 80)));
+		
+		return entityBuilder(data)
+				.type(TLMSType.FIREPOWER)
+				.bbox(new HitBox(new Point2D(5,5), BoundingShape.circle(12)))
+				.with(physics)
+				.with(new CollidableComponent(true))
+				.with(new FirePowerComponent())
+				.build();
+	}
 
 }

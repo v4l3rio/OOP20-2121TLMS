@@ -14,6 +14,8 @@ public final class ComponentUtils {
 
 	public static final Class<DamagingComponent> DAMAGING_COMPONENT = DamagingComponent.class;
 	
+	public static final Class<PlayerComponent> PLAYER_COMPONENT = PlayerComponent.class;
+	
 	public static final Class<ZombieTextureComponent> TEXTURE_COMPONENT = ZombieTextureComponent.class;
 	
 	public static final Class<FirearmComponent> FIREARM_COMPONENT = FirearmComponent.class;
