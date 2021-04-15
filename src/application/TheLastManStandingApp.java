@@ -148,7 +148,7 @@ public class TheLastManStandingApp extends GameApplication {
 						scoreController.updateScore(
 								new JsonScore(getWorldProperties().intProperty("score").get())
 						);
-						System.exit(0);
+						gameOver();
 					}
 				} catch (Exception e) {
 					System.out.println("Collisions Player - Zombie, Not Working!");
@@ -156,6 +156,10 @@ public class TheLastManStandingApp extends GameApplication {
 			}
 		});
 	}
+	
+	private void gameOver() {
+        getDialogService().showMessageBox("Game Over. Press OK to exit", getGameController()::exit);
+    }
 
     @Override
     protected void initGameVars(Map<String, Object> vars) {
