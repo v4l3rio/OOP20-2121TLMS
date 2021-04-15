@@ -17,9 +17,7 @@ import com.almasb.fxgl.ui.UI;
 import collisions.ShotZombieCollision;
 import components.ComponentUtils;
 import collisions.Collision;
-import collisions.GunCollisionFactoryImpl;
-import collisions.PlayerMachineGunCollision;
-import collisions.PlayerMagmaGunCollision;
+import collisions.FirearmCollisionFactoryImpl;
 import collisions.PlayerZombieCollision;
 import factories.TLMSFactory;
 import factories.WorldFactory;
@@ -27,8 +25,6 @@ import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 import model.AnimationComponent;
 import model.Firearm;
-import model.MachineGun;
-import model.MagmaGun;
 import model.TLMSType;
 import settings.SystemSettingsImpl;
 import view.DisplayController;
@@ -49,9 +45,9 @@ public class TheLastManStandingApp extends GameApplication {
     
     private final Collision<Entity, Entity> bulletColZombie = new ShotZombieCollision();
 	private final Collision<Entity, Entity> playerColZombie = new PlayerZombieCollision();
-	private final Collision<Entity, Entity> playerMagmaGun = new GunCollisionFactoryImpl()
+	private final Collision<Entity, Entity> playerMagmaGun = new FirearmCollisionFactoryImpl()
 			.createGunCollision(TLMSType.MAGMAGUN, MAGMAGUNDURATION);
-	private final Collision<Entity, Entity> playerMachineGun = new GunCollisionFactoryImpl()
+	private final Collision<Entity, Entity> playerMachineGun = new FirearmCollisionFactoryImpl()
 			.createGunCollision(TLMSType.MACHINEGUN, MACHINEGUNDURATION);
 	
 	@Override
@@ -185,7 +181,6 @@ public class TheLastManStandingApp extends GameApplication {
 			@Override
 			protected void onCollisionBegin(final Entity player, final Entity magmaGun) {
 				try {
-					System.out.println("Collisione Avvenuta");
 					playerMagmaGun.onCollision(player, magmaGun);
 				} catch (Exception e) {
 					System.out.println("Collisions Player - MagmaGun, Not Working!");
@@ -197,7 +192,6 @@ public class TheLastManStandingApp extends GameApplication {
 			@Override
 			protected void onCollisionBegin(final Entity player, final Entity machineGun) {
 				try {
-					System.out.println("Collisione Avvenuta");
 					playerMachineGun.onCollision(player, machineGun);
 				} catch (Exception e) {
 					System.out.println("Collisions Player - MachineGun, Not Working!");

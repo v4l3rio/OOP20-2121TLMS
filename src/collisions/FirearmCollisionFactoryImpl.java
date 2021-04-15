@@ -7,19 +7,18 @@ import com.almasb.fxgl.entity.Entity;
 import components.ComponentUtils;
 import javafx.util.Duration;
 import model.Beretta92;
-import model.Firearm;
 import model.MachineGun;
 import model.MagmaGun;
 import model.TLMSType;
 
-public class GunCollisionFactoryImpl implements GunCollisionFactory {
+public class FirearmCollisionFactoryImpl implements FirearmCollisionFactory {
 
 	@Override
-	public Collision<Entity, Entity> createGunCollision(TLMSType gunType, int delay) {
+	public Collision<Entity, Entity> createGunCollision(TLMSType firearmType, int delay) {
 		return new Collision<Entity, Entity>() {
-			
+
 			@Override
-			public void onCollision(Entity player, Entity gunProp) {
+			public void onCollision(Entity player, Entity firearmProp) {
 				//if current gun isn't the default one, there's another timer running,
 				//this way I have him know there has been a multiple gun change, so that its timer
 				//has to be disabled.
@@ -29,9 +28,9 @@ public class GunCollisionFactoryImpl implements GunCollisionFactory {
 				}
 				//I set MachineGun to be the new gun
 				player.getComponent(ComponentUtils.FIREARM_COMPONENT)
-					.setCurrentFirearm(gunType.equals(TLMSType.MAGMAGUN)? new MagmaGun() : new MachineGun());
+					.setCurrentFirearm(firearmType.equals(TLMSType.MAGMAGUN)? new MagmaGun() : new MachineGun());
 				//I remove the prop
-				gunProp.removeFromWorld();
+				firearmProp.removeFromWorld();
 				//after a delay, set the gun back to default, but if there has been a multiple change, do nothing
 				//but resetting the boolean
 				runOnce(()->{

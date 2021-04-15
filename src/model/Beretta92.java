@@ -8,10 +8,12 @@ public class Beretta92 extends Entity implements Firearm{
 	//although it's the model, after some thinking, this seems the best place for the texture placing
 	private final Image shotTexture = new Image("assets/textures/beretta92Shot.png");
 	private final Image gunTexture = new Image("assets/textures/beretta92Gun.png");
-	//one third of real Beretta92 magazine
+	
+	private final static String FIREARMNAME = "Beretta92";
 	private final static int MAXAMMO = 5;
 	private final static int SHOTDMG = 3;
 	private final static double SHOTSPEED = 500;
+	
 	private int nAmmo = MAXAMMO;
 	
 	public Image getShotTexture() {
@@ -44,9 +46,8 @@ public class Beretta92 extends Entity implements Firearm{
 		return this.gunTexture;
 	}
 
-	@Override
-	public String getName() {
-		return "Beretta92";
+	public String getFirearmName() {
+		return FIREARMNAME;
 	}
 	
 }

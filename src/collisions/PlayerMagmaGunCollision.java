@@ -5,10 +5,10 @@ import com.almasb.fxgl.entity.Entity;
 import components.ComponentUtils;
 import javafx.util.Duration;
 import model.Beretta92;
+import model.Firearm;
 import model.MagmaGun;
 
 public class PlayerMagmaGunCollision implements Collision<Entity, Entity>{
-	
 	public void onCollision(final Entity player, final Entity magmaGunProp) {
 		//if current gun isn't the default one, there's another timer running,
 		//this way I have him know there has been a multiple gun change, so that its timer

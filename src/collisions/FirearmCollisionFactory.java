@@ -4,7 +4,7 @@ import com.almasb.fxgl.entity.Entity;
 import model.Firearm;
 import model.TLMSType;
 
-public interface GunCollisionFactory {
+public interface FirearmCollisionFactory {
 	/**
 	 * 
 	 * @param gun the new gun to be set

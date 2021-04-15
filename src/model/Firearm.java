@@ -2,7 +2,7 @@ package model;
 
 import javafx.scene.image.Image;
 
-public interface Firearm{	
+public interface Firearm{
 	
 	public int getNAmmo();
 	
@@ -16,5 +16,5 @@ public interface Firearm{
 	
 	public Image getWeaponTexture();
 	
-	public String getName();
+	public String getFirearmName();
 }
