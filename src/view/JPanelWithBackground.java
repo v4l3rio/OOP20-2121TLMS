@@ -1,4 +1,4 @@
-package menu;
+package view;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -13,15 +13,14 @@ public class JPanelWithBackground extends JPanel {
 	private static final long serialVersionUID = -5042514025454946591L;
 	private final Image backgroundImage;
 
-	  public JPanelWithBackground(String fileName) throws IOException {
-	    backgroundImage = ImageIO.read(new File(fileName));
-	    this.setOpaque(false);
-	  }
-
-	  @Override
-	  public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-	    g.drawImage(backgroundImage, 0, 0, this);
-
-	  }
+	public JPanelWithBackground(String fileName) throws IOException {
+		backgroundImage = ImageIO.read(new File(fileName));
+		this.setOpaque(false);
 	}
+
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(backgroundImage, 0, 0, this);
+	}
+}

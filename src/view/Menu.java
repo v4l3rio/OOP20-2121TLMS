@@ -1,4 +1,4 @@
-package menu;
+package view;
 
 
 import java.awt.Color;
@@ -17,30 +17,29 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import application.TheLastManStandingApp;
+import controller.ScoreController;
+import controller.ScoreControllerImpl;
 
-
-
-public class MenuViewImpl implements MenuView  {
+public class Menu {
 	
-	private MenuController controller;
+	private ScoreController controller;
 	private final int BACKGROUND_WIDTH = 1280;
 	private final int BACKGROUND_HEIGHT = 720;
 	private JFrame mainWindow; 
 	private JPanelWithBackground mainPanel;
 	private List<JButton> buttonList = new ArrayList<>();
-	private JButton startButton = new JButton("START");
-	private JButton usernameButton = new JButton("USERNAME");
-	private JButton rankingButton = new JButton("RANKING");
-	private JButton controlsButton = new JButton("CONTROLS");
-	private JButton exitButton = new JButton("EXIT");
-	private JLabel title = new JLabel();
+	private JButton startButton;
+	private JButton usernameButton;
+	private JButton rankingButton;
+	private JButton controlsButton;
+	private JButton exitButton;
+	private JLabel title;
 	private Font titleFont = new Font("Times New Roman", Font.PLAIN, 50);
 	private float[] buttonColor = Color.RGBtoHSB(102, 199, 255, null); //color using RGB settings
-	private String pathUser = "src/assets/score/userName.json";
 	
-	public MenuViewImpl(MenuController menuController, String[] args) throws IOException {
+	public Menu(String[] args) throws IOException {
 		
-		this.controller = menuController;
+		this.controller = new ScoreControllerImpl();
 		this.mainWindow = new JFrame("The Last Man Standing-Menu");
 		addBackground(mainWindow, "src/assets/levels/menuBackground.png");		
 		addTitle("THE LAST MAN STANDING");
@@ -108,11 +107,16 @@ public class MenuViewImpl implements MenuView  {
 	}
 
 	private void initButtons() {
-		this.buttonList.add(startButton);
-		this.buttonList.add(controlsButton);
-		this.buttonList.add(exitButton);
-		this.buttonList.add(usernameButton);
-		this.buttonList.add(rankingButton);
+		startButton = new JButton("START");
+		usernameButton = new JButton("USERNAME");
+		rankingButton = new JButton("RANKING");
+		controlsButton = new JButton("CONTROLS");
+		exitButton = new JButton("EXIT");
+		buttonList.add(startButton);
+		buttonList.add(controlsButton);
+		buttonList.add(exitButton);
+		buttonList.add(usernameButton);
+		buttonList.add(rankingButton);
 		setButtonColor(buttonList, buttonColor);
 		buttonList.forEach(b -> mainPanel.add(b));
 		controlsButton.setSize(200, 70);
@@ -133,20 +137,20 @@ public class MenuViewImpl implements MenuView  {
 	}	
 	
 	private String readLastUser() throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader(pathUser));
+		BufferedReader reader = new BufferedReader(new FileReader(TheLastManStandingApp.PATH_USER));
 	    String name = reader.readLine();
 	    reader.close();
 	    return name;
 	}
 	
 	private void writeUser(String user) throws IOException {
-		BufferedWriter writer = new BufferedWriter(new FileWriter(pathUser));
+		BufferedWriter writer = new BufferedWriter(new FileWriter(TheLastManStandingApp.PATH_USER));
 	    writer.write(user.toUpperCase());
 	    writer.close();
 	}
 	
 	private void addTitle(String titleName) {
-		title.setText(titleName);
+		title = new JLabel(titleName);
 		mainPanel.add(title);
 		title.setSize(800, 100);
 		title.setLocation(300, 5);

@@ -2,10 +2,7 @@
 
 import java.io.IOException;
 
-import menu.MenuController;
-import menu.MenuControllerImpl;
-import menu.MenuModelImpl;
-import menu.MenuViewImpl;
+import view.Menu;
 
 /**
  * This class represents the Launcher of the system, to bypass JAVA 11 modules constraints.
@@ -20,6 +17,6 @@ public final class Launcher {
      */
     public static void main(final String[] args) throws IOException {
     	
-    	new MenuControllerImpl(args);
+    	new Menu(args);
     }
 }

@@ -1,16 +1,18 @@
-package menu;
+package model.score;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+
+import application.TheLastManStandingApp;
 
 public class JsonScore implements Score<String, Integer> {
 
 	private String name;
 	private Integer score;
 	
-	public JsonScore(final String pathUser, final Integer score) throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader(pathUser));
+	public JsonScore(final Integer score) throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader(TheLastManStandingApp.PATH_USER));
 	    this.name = reader.readLine();
 	    this.score = score;
 	    reader.close();

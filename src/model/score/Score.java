@@ -1,4 +1,4 @@
-package menu;
+package model.score;
 
 public interface Score<U, V> {
 	

@@ -17,34 +17,30 @@ import collisions.BulletZombieCollision;
 import collisions.Collision;
 import collisions.PlayerZombieCollision;
 import components.ComponentUtils;
+import controller.ScoreController;
+import controller.ScoreControllerImpl;
+import controller.VisorController;
 import factories.TLMSFactory;
 import factories.WorldFactory;
 import javafx.scene.input.KeyCode;
-import menu.JsonScore;
-import menu.MenuController;
-import menu.MenuControllerImpl;
-import menu.MenuView;
-import menu.MenuViewImpl;
-import menu.Score;
 import model.AnimationComponent;
 import model.TLMSType;
+import model.score.JsonScore;
 import settings.SystemSettingsImpl;
-import view.DisplayController;
 import settings.SystemSettings;
 
 public class TheLastManStandingApp extends GameApplication {
 	
+    public static final String PATH_SCORE = "src/assets/score/score.json";
+    public static final String PATH_USER = "src/assets/score/userName.json";
+    private static final String PATH_MAP = "Cemetery.tmx";
 	private static final double WEAPONLENGHT = 25;
-	private SystemSettings mySystemSettings = new SystemSettingsImpl();
-    private TLMSFactory factory;
-    private Entity player;
-    private MenuController menuController = new MenuControllerImpl();
-    private String pathScore = "src/assets/score/score.json";
-    private String pathUser = "src/assets/score/userName.json";
-    
-    
+	private final SystemSettings mySystemSettings = new SystemSettingsImpl();
+    private final ScoreController scoreController = new ScoreControllerImpl();    
     private final Collision<Entity, Entity> bulletColZombie = new BulletZombieCollision();
 	private final Collision<Entity, Entity> playerColZombie = new PlayerZombieCollision();
+    private TLMSFactory factory;
+    private Entity player;
 	
 	@Override
 	protected void initSettings(GameSettings settings) {
@@ -110,7 +106,7 @@ public class TheLastManStandingApp extends GameApplication {
 		getGameWorld().addEntityFactory(new WorldFactory());
 		factory = new TLMSFactory();
 		getGameWorld().addEntityFactory(factory);
-		setLevelFromMap("Cemetery.tmx");
+		setLevelFromMap(PATH_MAP);
 		for(int i =0;i<3;i++)
 			spawn("zombie", 500, 50);
 		
@@ -149,7 +145,9 @@ public class TheLastManStandingApp extends GameApplication {
 					inc("playerLife", -0.1);
 					if(player.getComponent(ComponentUtils.HEALTH_COMPONENT).getValue()<=0) {
 						player.removeFromWorld();
-						menuController.updateScore(pathScore, new JsonScore(pathUser, getWorldProperties().intProperty("score").get()));
+						scoreController.updateScore(
+								new JsonScore(getWorldProperties().intProperty("score").get())
+						);
 						System.exit(0);
 					}
 				} catch (Exception e) {
@@ -167,14 +165,18 @@ public class TheLastManStandingApp extends GameApplication {
     
     @Override
     protected void initUI() {
-    	DisplayController displayController = new DisplayController();
-    	UI ui = getAssetLoader().loadUI("displayView.fxml", displayController);
+    	VisorController visorController = new VisorController();
+    	UI ui = getAssetLoader().loadUI(visorController.getFxmlVisor(), visorController);
     	getGameScene().addUI(ui);
-
-    	displayController.getLifeProgressProperty().bind(
-            getWorldProperties().doubleProperty("playerLife"));
-    	displayController.getPointsProperty().bind(
-            getWorldProperties().intProperty("score").asString("Points: %d"));  	
+    	visorController.getLifeProgressProperty().bind(
+            getWorldProperties()
+            .doubleProperty("playerLife")
+        );
+    	visorController.getPointsProperty().bind(
+            getWorldProperties()
+            .intProperty("score")
+            .asString("Points: %d")
+        );  	
     }
 
 	public static void main(String[] args) {
