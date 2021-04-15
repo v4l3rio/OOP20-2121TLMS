@@ -1,4 +1,4 @@
-package view;
+package controller;
 
 import com.almasb.fxgl.ui.UIController;
 
@@ -8,7 +8,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 
-public class DisplayController implements UIController {
+public class VisorController implements UIController {
+	
+	private String fxmlVisorView = "visorView.fxml";
 
 	@FXML
 	private ProgressBar lifeBar;
@@ -16,11 +18,14 @@ public class DisplayController implements UIController {
 	@FXML
 	private Label points;
 	
-	public DisplayController() {
+	public VisorController() {
 		lifeBar = new ProgressBar();
 		points = new Label();
 	}
-
+	
+	public String getFxmlVisor() {
+		return this.fxmlVisorView;
+	}
 	
 	public DoubleProperty getLifeProgressProperty() {
 		return this.lifeBar.progressProperty();

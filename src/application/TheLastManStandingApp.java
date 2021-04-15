@@ -8,6 +8,7 @@ import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.audio.Music;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.ui.UI;
@@ -15,24 +16,31 @@ import com.almasb.fxgl.ui.UI;
 import collisions.BulletZombieCollision;
 import collisions.Collision;
 import collisions.PlayerZombieCollision;
+import components.ComponentUtils;
+import controller.ScoreController;
+import controller.ScoreControllerImpl;
+import controller.VisorController;
 import factories.TLMSFactory;
 import factories.WorldFactory;
 import javafx.scene.input.KeyCode;
 import model.AnimationComponent;
 import model.TLMSType;
+import model.score.JsonScore;
 import settings.SystemSettingsImpl;
-import view.DisplayController;
 import settings.SystemSettings;
 
 public class TheLastManStandingApp extends GameApplication {
 	
+    public static final String PATH_SCORE = "src/assets/score/score.json";
+    public static final String PATH_USER = "src/assets/score/userName.json";
+    private static final String PATH_MAP = "Cemetery.tmx";
 	private static final double WEAPONLENGHT = 25;
-	private SystemSettings mySystemSettings = new SystemSettingsImpl();
-    private TLMSFactory factory;
-    private Entity player;
-    
+	private final SystemSettings mySystemSettings = new SystemSettingsImpl();
+    private final ScoreController scoreController = new ScoreControllerImpl();    
     private final Collision<Entity, Entity> bulletColZombie = new BulletZombieCollision();
 	private final Collision<Entity, Entity> playerColZombie = new PlayerZombieCollision();
+    private TLMSFactory factory;
+    private Entity player;
 	
 	@Override
 	protected void initSettings(GameSettings settings) {
@@ -40,6 +48,8 @@ public class TheLastManStandingApp extends GameApplication {
 		settings.setHeight(mySystemSettings.getHeight());
 		settings.setTitle(mySystemSettings.getTitle());
 		settings.setVersion(mySystemSettings.getVersion());
+		settings.setGameMenuEnabled(false);   //disable the default FXGL menu
+
 	}   
 	
 	 @Override
@@ -83,6 +93,13 @@ public class TheLastManStandingApp extends GameApplication {
 							, player.getPosition().getY());
 				}
 			}, KeyCode.L);
+	        
+	        getInput().addAction(new UserAction("Reload") {
+	            @Override
+	            protected void onActionBegin() {
+	            	spawn("text", new SpawnData(750,150).put("text", "RELOAD"));
+	            }
+	        }, KeyCode.R);
 	 }
 	
 	@Override
@@ -90,7 +107,7 @@ public class TheLastManStandingApp extends GameApplication {
 		getGameWorld().addEntityFactory(new WorldFactory());
 		factory = new TLMSFactory();
 		getGameWorld().addEntityFactory(factory);
-		setLevelFromMap("Cemetery.tmx");
+		setLevelFromMap(PATH_MAP);
 		for(int i =0;i<3;i++)
 			spawn("zombie", 500, 50);
 		
@@ -100,7 +117,7 @@ public class TheLastManStandingApp extends GameApplication {
 		Music gameMusic = FXGL.getAssetLoader().loadMusic("thriller.wav");
     	FXGL.getAudioPlayer().loopMusic(gameMusic);
     	getSettings().setGlobalMusicVolume(0.1);
-	
+		
 	}
 	
 	@Override
@@ -112,6 +129,7 @@ public class TheLastManStandingApp extends GameApplication {
 					System.out.println("Collisione Avvenuta");
 					bulletColZombie.onCollision(bullet, zombie);
 					inc("score", +1);
+					spawn("zombiePoints", new SpawnData(zombie.getX(),zombie.getY()).put("zombiePoints", "+1"));
 				} catch (Exception e) {
 					System.out.println("Collisions Bullet - Zombie, Not Work!");
 				}
@@ -126,12 +144,23 @@ public class TheLastManStandingApp extends GameApplication {
 					System.out.println("Collisione Avvenuta");
 					playerColZombie.onCollision(player, zombie);
 					inc("playerLife", -0.1);
+					if(player.getComponent(ComponentUtils.HEALTH_COMPONENT).getValue()<=0) {
+						player.removeFromWorld();
+						scoreController.updateScore(
+								new JsonScore(getWorldProperties().intProperty("score").get())
+						);
+						gameOver();
+					}
 				} catch (Exception e) {
 					System.out.println("Collisions Player - Zombie, Not Working!");
 				}
 			}
 		});
 	}
+	
+	private void gameOver() {
+        getDialogService().showMessageBox("Game Over. Press OK to exit", getGameController()::exit);
+    }
 
     @Override
     protected void initGameVars(Map<String, Object> vars) {
@@ -141,18 +170,23 @@ public class TheLastManStandingApp extends GameApplication {
     
     @Override
     protected void initUI() {
-    	DisplayController displayController = new DisplayController();
-    	UI ui = getAssetLoader().loadUI("displayView.fxml", displayController);
+    	VisorController visorController = new VisorController();
+    	UI ui = getAssetLoader().loadUI(visorController.getFxmlVisor(), visorController);
     	getGameScene().addUI(ui);
-
-    	displayController.getLifeProgressProperty().bind(
-            getWorldProperties().doubleProperty("playerLife"));
-    	displayController.getPointsProperty().bind(
-            getWorldProperties().intProperty("score").asString("Points: %d"));
+    	visorController.getLifeProgressProperty().bind(
+            getWorldProperties()
+            .doubleProperty("playerLife")
+        );
+    	visorController.getPointsProperty().bind(
+            getWorldProperties()
+            .intProperty("score")
+            .asString("Points: %d")
+        );  	
     }
 
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
 }
 
