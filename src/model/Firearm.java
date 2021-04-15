@@ -1,25 +1,20 @@
 package model;
 
-import com.almasb.fxgl.entity.Entity;
+import javafx.scene.image.Image;
 
-public abstract class Firearm extends Entity{
+public interface Firearm{
+	
+	public int getNAmmo();
+	
+	public void decAmmo();
+	
+    public int getShotDamage();
     
-	//basic Firearm power, applied to bullet, resulting in speed
-	private double shotSpeed;
-
-	/**
-	 * 
-	 * @param set shot speed
-	 */
-    public void setShotSpeed(double speed) {
-		this.shotSpeed = speed;
-	}
-
-	/**
-     * Get shot speed.
-     * @return the damage.
-     */
-	public double getShotSpeed() {
-		return this.shotSpeed;
-	};
+    public void recharge();
+    
+	public Image getShotTexture();
+	
+	public Image getWeaponTexture();
+	
+	public String getFirearmName();
 }

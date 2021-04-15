@@ -4,21 +4,16 @@ package collisions;
 import com.almasb.fxgl.entity.Entity;
 
 import components.ComponentUtils;
-import static com.almasb.fxgl.dsl.FXGL.*;
-
-import java.util.concurrent.TimeUnit;
-
-import com.almasb.fxgl.achievement.AchievementEvent;
 
 
-public class BulletZombieCollision implements Collision<Entity, Entity>{
+public class ShotZombieCollision implements Collision<Entity, Entity>{
 
 
-	public void onCollision(Entity bullet, Entity zombie) {
+	public void onCollision(Entity shot, Entity zombie) {
 		
-		zombie.getComponent(ComponentUtils.HEALTH_COMPONENT).damage(bullet.getComponent(ComponentUtils.DAMAGING_COMPONENT).getDamage());
+		zombie.getComponent(ComponentUtils.HEALTH_COMPONENT).damage(shot.getComponent(ComponentUtils.DAMAGING_COMPONENT).getDamage());
 		
-		bullet.removeFromWorld();
+		shot.removeFromWorld();
 		
 		System.out.println("Lo zombie ha vita: " + zombie.getComponent(ComponentUtils.HEALTH_COMPONENT).getValue());
 		

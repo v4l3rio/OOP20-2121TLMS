@@ -3,6 +3,8 @@ package application;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 import java.util.Map;
+import java.util.Random;
+
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.audio.Music;
@@ -13,8 +15,10 @@ import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.ui.UI;
 
-import collisions.BulletZombieCollision;
+import collisions.ShotZombieCollision;
+import components.ComponentUtils;
 import collisions.Collision;
+import collisions.FirearmCollisionFactoryImpl;
 import collisions.PlayerZombieCollision;
 import components.ComponentUtils;
 import controller.ScoreController;
@@ -23,7 +27,9 @@ import controller.VisorController;
 import factories.TLMSFactory;
 import factories.WorldFactory;
 import javafx.scene.input.KeyCode;
+import javafx.util.Duration;
 import model.AnimationComponent;
+import model.Firearm;
 import model.TLMSType;
 import model.score.JsonScore;
 import settings.SystemSettingsImpl;
@@ -35,10 +41,19 @@ public class TheLastManStandingApp extends GameApplication {
     public static final String PATH_USER = "src/assets/score/userName.json";
     private static final String PATH_MAP = "Cemetery.tmx";
 	private static final double WEAPONLENGHT = 25;
+	private int GunSpawnDelay = 5;
+	private Random random = new Random();
+    private boolean isRecharging = false;
+	private static final int MAGMAGUNDURATION = 5;
+	private static final int MACHINEGUNDURATION = 6;
 	private final SystemSettings mySystemSettings = new SystemSettingsImpl();
     private final ScoreController scoreController = new ScoreControllerImpl();    
-    private final Collision<Entity, Entity> bulletColZombie = new BulletZombieCollision();
+    private final Collision<Entity, Entity> bulletColZombie = new ShotZombieCollision();
 	private final Collision<Entity, Entity> playerColZombie = new PlayerZombieCollision();
+	private final Collision<Entity, Entity> playerMagmaGun = new FirearmCollisionFactoryImpl()
+			.createGunCollision(TLMSType.MAGMAGUN, MAGMAGUNDURATION);
+	private final Collision<Entity, Entity> playerMachineGun = new FirearmCollisionFactoryImpl()
+			.createGunCollision(TLMSType.MACHINEGUN, MACHINEGUNDURATION);
     private TLMSFactory factory;
     private Entity player;
 	
@@ -89,49 +104,79 @@ public class TheLastManStandingApp extends GameApplication {
 	        getInput().addAction(new UserAction("Shoot") {
 				@Override
 				protected void onActionBegin() {
-					spawn("bullet", player.getPosition().getX() + (WEAPONLENGHT*player.getScaleX())
-							, player.getPosition().getY());
+					final Firearm currentFirearm = player.getComponent(ComponentUtils.FIREARM_COMPONENT).getCurrentFirearm();
+					//is recharging? can't shoot rn, do nothing
+					if(isRecharging) {
+					} else if(currentFirearm.getNAmmo() > 0) {
+						// have the shot spawn facing coherently as player, with due distance from it
+						spawn("shot", player.getPosition().getX() + (WEAPONLENGHT*player.getScaleX())
+								, player.getPosition().getY());
+						currentFirearm.decAmmo();
+					} else {
+						isRecharging = true;
+						runOnce(()->{
+							currentFirearm.recharge();
+							isRecharging = false;
+						}, Duration.seconds(2));
+					}
 				}
 			}, KeyCode.L);
 	        
 	        getInput().addAction(new UserAction("Reload") {
 	            @Override
 	            protected void onActionBegin() {
+	            	final Firearm currentFirearm = player.getComponent(ComponentUtils.FIREARM_COMPONENT).getCurrentFirearm();
 	            	spawn("text", new SpawnData(750,150).put("text", "RELOAD"));
+	            	isRecharging = true; 
+	        		runOnce(() -> { 
+	        			currentFirearm.recharge(); 
+	        			isRecharging = false; 
+	        			}, Duration.seconds(2)
+	        		); 
 	            }
 	        }, KeyCode.R);
+
+			
+			
+			 
 	 }
-	
+
 	@Override
 	protected void initGame() {
 		getGameWorld().addEntityFactory(new WorldFactory());
 		factory = new TLMSFactory();
 		getGameWorld().addEntityFactory(factory);
 		setLevelFromMap(PATH_MAP);
-		for(int i =0;i<3;i++)
+		//spawn a magmaGun after a base+random delay, both incremental
+		getGameTimer().runAtInterval(() -> {
+			spawn("magmaGun", random.nextInt(mySystemSettings.getWidth()), -100);
+			}, Duration.seconds(GunSpawnDelay + random.nextInt(++GunSpawnDelay)));
+		getGameTimer().runAtInterval(() -> {
+			//spawn a machineGun after a base+random time
+			spawn("machineGun", random.nextInt(mySystemSettings.getWidth()), -100);
+			}, Duration.seconds(GunSpawnDelay + random.nextInt(++GunSpawnDelay)));
+		for(int i =0;i<8;i++)
 			spawn("zombie", 500, 50);
-		
-		player = spawn("player", 100, 0);
+		player = spawn("player", 1000, 0);
 		factory.setPlayer(player);
 		
-		Music gameMusic = FXGL.getAssetLoader().loadMusic("thriller.wav");
-    	FXGL.getAudioPlayer().loopMusic(gameMusic);
-    	getSettings().setGlobalMusicVolume(0.1);
-		
+//		Music gameMusic = FXGL.getAssetLoader().loadMusic("thriller.wav");
+//    	FXGL.getAudioPlayer().loopMusic(gameMusic);
+//    	getSettings().setGlobalMusicVolume(0.1);
 	}
 	
 	@Override
 	protected void initPhysics() {
-		getPhysicsWorld().addCollisionHandler(new CollisionHandler(TLMSType.BULLET, TLMSType.ZOMBIE) {
+		getPhysicsWorld().addCollisionHandler(new CollisionHandler(TLMSType.SHOT, TLMSType.ZOMBIE) {
 			@Override
-			protected void onCollisionBegin(final Entity bullet, final Entity zombie) {
+			protected void onCollisionBegin(final Entity shot, final Entity zombie) {
 				try {
 					System.out.println("Collisione Avvenuta");
-					bulletColZombie.onCollision(bullet, zombie);
+					bulletColZombie.onCollision(shot, zombie);
 					inc("score", +1);
 					spawn("zombiePoints", new SpawnData(zombie.getX(),zombie.getY()).put("zombiePoints", "+1"));
 				} catch (Exception e) {
-					System.out.println("Collisions Bullet - Zombie, Not Work!");
+					System.out.println("Collisions Shot - Zombie, Not Work!");
 				}
 			}
 			
@@ -153,6 +198,28 @@ public class TheLastManStandingApp extends GameApplication {
 					}
 				} catch (Exception e) {
 					System.out.println("Collisions Player - Zombie, Not Working!");
+				}
+			}
+		});
+		
+		getPhysicsWorld().addCollisionHandler(new CollisionHandler(TLMSType.PLAYER, TLMSType.MAGMAGUN) {
+			@Override
+			protected void onCollisionBegin(final Entity player, final Entity magmaGun) {
+				try {
+					playerMagmaGun.onCollision(player, magmaGun);
+				} catch (Exception e) {
+					System.out.println("Collisions Player - MagmaGun, Not Working!");
+				}
+			}
+		});
+		
+		getPhysicsWorld().addCollisionHandler(new CollisionHandler(TLMSType.PLAYER, TLMSType.MACHINEGUN) {
+			@Override
+			protected void onCollisionBegin(final Entity player, final Entity machineGun) {
+				try {
+					playerMachineGun.onCollision(player, machineGun);
+				} catch (Exception e) {
+					System.out.println("Collisions Player - MachineGun, Not Working!");
 				}
 			}
 		});
