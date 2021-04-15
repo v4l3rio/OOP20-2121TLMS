@@ -1,6 +1,7 @@
 package factories;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
+
 import static model.TLMSType.*;
 
 import com.almasb.fxgl.entity.Entity;
@@ -14,55 +15,68 @@ import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
-
-import components.ShotMovementComponent;
-import components.ComponentUtils;
-import components.DamagingComponent;
-import components.FirearmComponent;
-import components.PropComponent;
-import components.RandomMovementComponent;
-import components.ZombieTextureComponent;
+import components.*;
 import javafx.geometry.Point2D;
-import javafx.scene.image.Image;
-import model.AnimationComponent;
-import model.Beretta92;
-import model.Firearm;
-import model.MachineGun;
-import model.MagmaGun;
-import model.Player;
-import model.TLMSType;
-import model.Zombie;
-import model.ZombieRandomTextureDecorator;
+import model.*;
+
+/**
+ * 
+ * @version 3.1
+ * This factory creates various types of entities that can be spawned with the "spawn ()" method
+ */
 
 public class TLMSFactory implements EntityFactory{
 	
-	//used to keep track of player (ex. direction)
 	private Entity player;
 	
 	public void setPlayer(Entity player) {
 		this.player = player;
 	}
-	
-	@Spawns("zombie")
-    public Entity newZombie(SpawnData data) {
-	 	
-	 	ZombieRandomTextureDecorator zombieTexturized = new ZombieRandomTextureDecorator(new Zombie(10, 170, 1));
-	 	
+
+	/**
+	 * 
+	 * @param data, data to customize the creation of the zombie
+	 * @return
+	 */
+	@Spawns("stupidZombie")
+    public Entity newStupidZombie(SpawnData data) {
+		
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
         physics.addGroundSensor(new HitBox("GROUND_SENSOR", new Point2D(16, 38), BoundingShape.box(6, 8)));
-        physics.setFixtureDef(new FixtureDef().friction(0.0f));
+
+        ZombieTextureDecorator zombie = data.get("zombie");
 
         return entityBuilder(data)
                 .type(ZOMBIE)
-                //.bbox(new HitBox(new Point2D(5,5), BoundingShape.circle(12)))
-                .bbox(new HitBox(new Point2D(100,80), BoundingShape.box(260, 420))) //coordinate di partenza in alto a destra e dimensione del rettangolo
+                .bbox(new HitBox(new Point2D(35,28), BoundingShape.box(65, 125)))
                 .with(physics)
-                .with(new DamagingComponent(zombieTexturized.getDamage()))
-                .with(new HealthIntComponent(zombieTexturized.getLife()))
+                .with(new DamagingComponent(zombie.getDamage()))
+                .with(new HealthIntComponent(zombie.getLife()))
                 .with(new CollidableComponent(true))
-                .with(new RandomMovementComponent(physics, zombieTexturized.getSpeed()))
-                .with(new ZombieTextureComponent(zombieTexturized.getTexture().getTextureMap()))
+                .with(new RandomMovementComponent(physics, zombie.getSpeed()))
+                .with(new ZombieTextureComponent(zombie.getTexture().getTextureMap()))
+                .build();
+    }
+	
+	@Spawns("followingZombie")
+    public Entity newFollowingZombie(SpawnData data) {
+		
+        PhysicsComponent physics = new PhysicsComponent();
+        physics.setBodyType(BodyType.DYNAMIC);
+        physics.addGroundSensor(new HitBox("GROUND_SENSOR", new Point2D(16, 38), BoundingShape.box(6, 8)));
+
+        ZombieTextureDecorator zombie = data.get("zombie");
+
+        return entityBuilder(data)
+                .type(ZOMBIE)
+                .bbox(new HitBox(new Point2D(35,28), BoundingShape.box(65, 125)))
+                .with(physics)
+                .with(new DamagingComponent(zombie.getDamage()))
+                .with(new HealthIntComponent(zombie.getLife()))
+                .with(new CollidableComponent(true))
+                .with(new FollowPlayerComponent(this.player, physics, zombie.getSpeed()))
+                .with(new ZombieTextureComponent(zombie.getTexture().getTextureMap()))
                 .build();
     }
 	
@@ -94,9 +108,6 @@ public class TLMSFactory implements EntityFactory{
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.KINEMATIC);
         
-        // this avoids player sticking to walls
-        physics.setFixtureDef(new FixtureDef().friction(0.0f));
-
         return entityBuilder(data)
                 .type(SHOT)
                 .bbox(new HitBox(new Point2D(50,100), BoundingShape.box(130, 130)))
@@ -138,4 +149,5 @@ public class TLMSFactory implements EntityFactory{
                 .with(new PropComponent(machineGun.getWeaponTexture()))
                 .build();
     }
+
 }

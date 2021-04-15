@@ -3,6 +3,7 @@ package collisions;
 import static com.almasb.fxgl.dsl.FXGL.runOnce;
 
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.physics.CollisionHandler;
 
 import components.ComponentUtils;
 import javafx.util.Duration;
@@ -14,8 +15,8 @@ import model.TLMSType;
 public class FirearmCollisionFactoryImpl implements FirearmCollisionFactory {
 
 	@Override
-	public Collision<Entity, Entity> createGunCollision(TLMSType firearmType, int delay) {
-		return new Collision<Entity, Entity>() {
+	public CollisionHandler createGunCollision(TLMSType firearmType, int delay) {
+		return new CollisionHandler(TLMSType.PLAYER, firearmType) {
 
 			@Override
 			public void onCollision(Entity player, Entity firearmProp) {

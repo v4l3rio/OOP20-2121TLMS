@@ -1,12 +1,13 @@
 package components;
 
-import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
 import javafx.geometry.Point2D;
 import javafx.util.Duration;
+import model.Player;
+import model.PlayerTexture;
 
 public class AnimationComponent extends Component {
 		
@@ -14,18 +15,20 @@ public class AnimationComponent extends Component {
     //private int speed = 0;
     
     private PhysicsComponent physics;
-
     private AnimatedTexture texture;
-    private AnimationChannel animIdle, animRun, animJump, animDeath;
-    
-    private int jumps = 1;
+    private AnimationChannel animIdle, animRun, animJump, animDeath, animDamage;   
+    private Player player;
+    private PlayerTexture playerTexture;
 
     public AnimationComponent() {
-        animIdle = new AnimationChannel(FXGL.image("Gunner_Blue_Idle.png"), 5, 48, 48, Duration.seconds(1), 0, 4);
-        animRun = new AnimationChannel(FXGL.image("Gunner_Blue_Run.png"), 6, 48, 48, Duration.seconds(1), 0, 5);
-        animJump = new AnimationChannel(FXGL.image("Gunner_Blue_Jump.png"), 2, 48, 48, Duration.seconds(1.7), 0, 1);
-        animDeath = new AnimationChannel(FXGL.image("Gunner_Blue_Death.png"), 8, 48, 48, Duration.seconds(1.7), 0, 7);
-
+    	this.player = new Player();
+    	this.playerTexture = new PlayerTexture();
+    	
+        animIdle = new AnimationChannel(playerTexture.getImageIdle(), 5, 48, 48, Duration.seconds(1), 0, 4);
+        animRun = new AnimationChannel(playerTexture.getImageRun(), 6, 48, 48, Duration.seconds(1), 0, 5);
+        animJump = new AnimationChannel(playerTexture.getImageJump(), 2, 48, 48, Duration.seconds(1.7), 0, 1);
+        animDeath = new AnimationChannel(playerTexture.getImageDeath(), 8, 48, 48, Duration.seconds(1.7), 0, 7);
+        animDamage = new AnimationChannel(playerTexture.getImageDeath(), 8, 48, 48, Duration.seconds(1.7), 0, 3);
         texture = new AnimatedTexture(animIdle);
     }
 
@@ -33,11 +36,11 @@ public class AnimationComponent extends Component {
     public void onAdded() {
         entity.getTransformComponent().setScaleOrigin(new Point2D(16, 21));
         entity.getViewComponent().addChild(texture);
-        
+        entity.setScaleUniform(2);
         physics.onGroundProperty().addListener((obs, old, isOnGround) -> {
         	
             if (isOnGround) {
-                jumps = 1;
+            	player.resetNJumps();
             }
         });
     }
@@ -78,8 +81,8 @@ public class AnimationComponent extends Component {
 
     public void moveRight() {
     	
-    	getEntity().setScaleX(1); //direzione personaggio
-        physics.setVelocityX(200);
+    	getEntity().setScaleX(2); //direzione personaggio
+        physics.setVelocityX(player.getSpeed());
         
         //without velocity
 //        speed = 150;
@@ -89,8 +92,8 @@ public class AnimationComponent extends Component {
 
     public void moveLeft() {
 
-    	getEntity().setScaleX(-1); //direzione personaggio
-        physics.setVelocityX(-200);
+    	getEntity().setScaleX(-2); //direzione personaggio
+        physics.setVelocityX(-player.getSpeed());
         
         //without physics
 //        speed = -150;
@@ -103,12 +106,14 @@ public class AnimationComponent extends Component {
     }
     
     public void jump() {
-        if (jumps == 0) {
-            return;
+
+        if (player.getNJumps() > 0) {
+	        physics.setVelocityY(player.getJumpHeight());
+	        player.decreaseJumps();
         }
-
-        physics.setVelocityY(-350);
-
-        jumps--;
     }
+    
+//    public void transformation() {
+//    	player.toRed();
+//    }
 }

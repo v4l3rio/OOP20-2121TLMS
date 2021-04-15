@@ -46,17 +46,6 @@ public class WorldFactory implements EntityFactory {
             .with(new PhysicsComponent())
             .build();
 	}
-
- 	@Spawns("damageObject")
-    public Entity newDamageObject(SpawnData data) {
-	 return entityBuilder(data)
-                .type(DAMAGE_OBJECT)
-                .bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"), data.<Integer>get("height"))))
-                .with(new DamagingComponent(0))
-                .with(new CollidableComponent(true))
-                .with(new PhysicsComponent())
-                .build();
-    }
  	
  	 @Spawns("text")
      public Entity centralText(SpawnData data) {

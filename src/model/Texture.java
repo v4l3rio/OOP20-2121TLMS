@@ -3,6 +3,10 @@ package model;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 
+ * @version 1.1
+ */
 public class Texture {
 
 	Map<TLMSType, String> textureMap;
