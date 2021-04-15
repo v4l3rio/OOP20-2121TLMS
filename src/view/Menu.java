@@ -20,6 +20,11 @@ import application.TheLastManStandingApp;
 import controller.ScoreController;
 import controller.ScoreControllerImpl;
 
+/**
+ * 
+ * This class generates the view menu
+ *
+ */
 public class Menu {
 	
 	private ScoreController controller;
@@ -37,6 +42,12 @@ public class Menu {
 	private Font titleFont = new Font("Times New Roman", Font.PLAIN, 50);
 	private float[] buttonColor = Color.RGBtoHSB(102, 199, 255, null); //color using RGB settings
 	
+	/**
+	 * 
+	 * @param args
+	 * @throws IOException 
+	 * 		       if an I/O error occurs
+	 */
 	public Menu(String[] args) throws IOException {
 		
 		this.controller = new ScoreControllerImpl();
