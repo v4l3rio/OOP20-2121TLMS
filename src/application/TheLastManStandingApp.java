@@ -5,10 +5,10 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 import java.util.Map;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
-import com.almasb.fxgl.app.scene.SceneFactory;
 import com.almasb.fxgl.audio.Music;
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.ui.UI;
@@ -16,9 +16,16 @@ import com.almasb.fxgl.ui.UI;
 import collisions.BulletZombieCollision;
 import collisions.Collision;
 import collisions.PlayerZombieCollision;
+import components.ComponentUtils;
 import factories.TLMSFactory;
 import factories.WorldFactory;
 import javafx.scene.input.KeyCode;
+import menu.JsonScore;
+import menu.MenuController;
+import menu.MenuControllerImpl;
+import menu.MenuView;
+import menu.MenuViewImpl;
+import menu.Score;
 import model.AnimationComponent;
 import model.TLMSType;
 import settings.SystemSettingsImpl;
@@ -31,6 +38,10 @@ public class TheLastManStandingApp extends GameApplication {
 	private SystemSettings mySystemSettings = new SystemSettingsImpl();
     private TLMSFactory factory;
     private Entity player;
+    private MenuController menuController = new MenuControllerImpl();
+    private String pathScore = "src/assets/score/score.json";
+    private String pathUser = "src/assets/score/userName.json";
+    
     
     private final Collision<Entity, Entity> bulletColZombie = new BulletZombieCollision();
 	private final Collision<Entity, Entity> playerColZombie = new PlayerZombieCollision();
@@ -41,8 +52,7 @@ public class TheLastManStandingApp extends GameApplication {
 		settings.setHeight(mySystemSettings.getHeight());
 		settings.setTitle(mySystemSettings.getTitle());
 		settings.setVersion(mySystemSettings.getVersion());
-		settings.setMainMenuEnabled(true);
-		settings.setSceneFactory(new SceneFactory());
+		settings.setGameMenuEnabled(false);   //disable the default FXGL menu
 	}   
 	
 	 @Override
@@ -86,6 +96,13 @@ public class TheLastManStandingApp extends GameApplication {
 							, player.getPosition().getY());
 				}
 			}, KeyCode.L);
+	        
+	        getInput().addAction(new UserAction("Reload") {
+	            @Override
+	            protected void onActionBegin() {
+	            	spawn("text", new SpawnData(750,150).put("text", "RELOAD"));
+	            }
+	        }, KeyCode.R);
 	 }
 	
 	@Override
@@ -103,7 +120,7 @@ public class TheLastManStandingApp extends GameApplication {
 		Music gameMusic = FXGL.getAssetLoader().loadMusic("thriller.wav");
     	FXGL.getAudioPlayer().loopMusic(gameMusic);
     	getSettings().setGlobalMusicVolume(0.1);
-	
+		
 	}
 	
 	@Override
@@ -115,6 +132,7 @@ public class TheLastManStandingApp extends GameApplication {
 					System.out.println("Collisione Avvenuta");
 					bulletColZombie.onCollision(bullet, zombie);
 					inc("score", +1);
+					spawn("zombiePoints", new SpawnData(zombie.getX(),zombie.getY()).put("zombiePoints", "+1"));
 				} catch (Exception e) {
 					System.out.println("Collisions Bullet - Zombie, Not Work!");
 				}
@@ -129,6 +147,11 @@ public class TheLastManStandingApp extends GameApplication {
 					System.out.println("Collisione Avvenuta");
 					playerColZombie.onCollision(player, zombie);
 					inc("playerLife", -0.1);
+					if(player.getComponent(ComponentUtils.HEALTH_COMPONENT).getValue()<=0) {
+						player.removeFromWorld();
+						menuController.updateScore(pathScore, new JsonScore(pathUser, getWorldProperties().intProperty("score").get()));
+						System.exit(0);
+					}
 				} catch (Exception e) {
 					System.out.println("Collisions Player - Zombie, Not Working!");
 				}
@@ -151,13 +174,12 @@ public class TheLastManStandingApp extends GameApplication {
     	displayController.getLifeProgressProperty().bind(
             getWorldProperties().doubleProperty("playerLife"));
     	displayController.getPointsProperty().bind(
-            getWorldProperties().intProperty("score").asString("Points: %d"));
-        //ui.getRoot().setTranslateY(ui.getRoot().getBoundsInLocal().getWidth());
-    	
+            getWorldProperties().intProperty("score").asString("Points: %d"));  	
     }
 
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
 }
 

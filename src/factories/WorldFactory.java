@@ -3,7 +3,9 @@ package factories;
 import static com.almasb.fxgl.dsl.FXGL.entityBuilder;
 import static model.TLMSType.DAMAGE_OBJECT;
 
+import com.almasb.fxgl.animation.Interpolators;
 import com.almasb.fxgl.dsl.FXGL;
+import com.almasb.fxgl.dsl.components.ExpireCleanComponent;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
@@ -14,7 +16,9 @@ import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 
 import components.DamagingComponent;
+import javafx.geometry.Point2D;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 //implementare l'entita' cassa, ostacolo, muro
 public class WorldFactory implements EntityFactory {
@@ -49,4 +53,43 @@ public class WorldFactory implements EntityFactory {
                 .with(new PhysicsComponent())
                 .build();
     }
+ 	
+ 	 @Spawns("text")
+     public Entity centralText(SpawnData data) {
+         String text = data.get("text");
+         var e = entityBuilder(data)
+                 .view(FXGL.getUIFactoryService().newText(text, 70))
+                 .with(new ExpireCleanComponent(Duration.seconds(2.0)))
+                 .build();
+
+         FXGL.animationBuilder()
+                 .duration(Duration.seconds(2.0))
+                 .interpolator(Interpolators.EXPONENTIAL.EASE_OUT())
+                 .translate(e)
+                 .from(new Point2D(data.getX(), data.getY()))
+                 .to(new Point2D(data.getX(), data.getY() - 30))
+                 .buildAndPlay();
+
+         return e;
+     }
+ 	 
+ 	 @Spawns("zombiePoints")
+     public Entity newScoreText(SpawnData data) {
+         String text = data.get("zombiePoints");
+
+         var e = entityBuilder(data)
+                 .view(FXGL.getUIFactoryService().newText(text, 30))
+                 .with(new ExpireCleanComponent(Duration.seconds(1.0)).animateOpacity())
+                 .build();
+
+         FXGL.animationBuilder()
+                 .duration(Duration.seconds(2.0))
+                 .interpolator(Interpolators.EXPONENTIAL.EASE_OUT())
+                 .translate(e)
+                 .from(new Point2D(data.getX(), data.getY()))
+                 .to(new Point2D(data.getX(), data.getY() - 30))
+                 .buildAndPlay();
+
+         return e;
+     }
 }
