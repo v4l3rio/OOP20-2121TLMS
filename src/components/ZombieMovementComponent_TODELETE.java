@@ -11,7 +11,6 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 import model.Moveable;
 /**
  * 
- * @author Valerio Di Zio
  * @version 1.1
  * This component gives the ability to move a zombie randomly or following the player
  *

@@ -6,7 +6,6 @@ import java.util.Map;
 
 /**
  * 
- * @author Valerio Di Zio, Luca Cantagallo
  * @version 1.1
  */
 public class Texture {

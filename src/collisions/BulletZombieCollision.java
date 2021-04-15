@@ -17,8 +17,10 @@ import model.TLMSType;
 public class BulletZombieCollision extends CollisionHandler{
 
 
+	
 	public BulletZombieCollision(TLMSType bullet, TLMSType zombie) {
 		super(bullet, zombie);
+
 	}
 
 	public void onCollisionBegin(Entity bullet, Entity zombie) {

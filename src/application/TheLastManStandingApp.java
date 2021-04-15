@@ -109,6 +109,7 @@ public class TheLastManStandingApp extends GameApplication {
 		getPhysicsWorld().addCollisionHandler(new BulletZombieCollision(TLMSType.BULLET, TLMSType.ZOMBIE));
 
 		getPhysicsWorld().addCollisionHandler(new PlayerZombieCollision(TLMSType.PLAYER, TLMSType.ZOMBIE));
+
 	}
 
 	@Override

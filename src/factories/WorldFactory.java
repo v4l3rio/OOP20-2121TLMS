@@ -14,7 +14,7 @@ import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 
 import components.DamagingComponent;
-import javafx.scene.shape.Rectangle;
+
 
 //implementare l'entita' cassa, ostacolo, muro
 public class WorldFactory implements EntityFactory {

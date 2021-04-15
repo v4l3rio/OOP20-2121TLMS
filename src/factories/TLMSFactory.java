@@ -20,7 +20,6 @@ import components.BasicBulletComponent;
 import components.DamagingComponent;
 import components.FollowPlayerComponent;
 import components.RandomMovementComponent;
-import components.ZombieMovementComponent_TODELETE;
 import components.ZombieTextureComponent;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
@@ -30,7 +29,6 @@ import model.ZombieTextureDecorator;
 
 /**
  * 
- * @author Valerio Di Zio, Luca Cantagallo, Matteo Belletti
  * @version 3.1
  * This factory creates various types of entities that can be spawned with the "spawn ()" method
  */

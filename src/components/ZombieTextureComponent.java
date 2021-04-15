@@ -16,7 +16,6 @@ import model.TLMSType;
 
 /**
  * 
- * @author Valerio Di Zio
  * @version 2.3
  * This component attached to a zombie enriches it with textures and animations
  */

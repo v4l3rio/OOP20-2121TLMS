@@ -4,7 +4,6 @@ import java.util.Random;
 
 /**
  * 
- * @author Valerio Di Zio
  * @version 1.1
  * This Class models a Zombie with Texture
  */

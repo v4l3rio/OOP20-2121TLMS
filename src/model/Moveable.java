@@ -2,11 +2,9 @@ package model;
 
 import java.util.Random;
 
-import model.Moveable.TYPE_OF_MOVEMENT;
 
 /**
  * 
- * @author Valerio Di Zio
  * @version 2.1
  * Movement of entity
  */

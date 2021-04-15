@@ -4,7 +4,6 @@ import java.util.UUID;
 
 /**
  * 
- * @author Valerio Di Zio
  * @version 1.0
  * This class models a generic Enemy
  */

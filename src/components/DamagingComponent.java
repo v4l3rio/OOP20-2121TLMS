@@ -4,7 +4,6 @@ import com.almasb.fxgl.entity.component.Component;
 
 /**
  * 
- * @author Valerio Di Zio
  * @version 1.1
  * This component gives an entity the ability to do damage
  */

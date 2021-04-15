@@ -3,8 +3,7 @@ package model;
 import java.util.UUID;
 
 /**
- * 
- * @author Valerio Di Zio
+ * Model Generic Zombie
  * @version 1.1
  */
 public class Zombie implements Enemy{

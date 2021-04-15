@@ -2,7 +2,6 @@ package factories;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
-import java.util.Optional;
 import java.util.Random;
 
 import com.almasb.fxgl.entity.SpawnData;
@@ -17,7 +16,6 @@ import model.ZombieTextureDecorator.GENDER;
 
 /**
  * 
- * @author Valerio Di Zio
  * @version 2.3
  * This class creates and spawn zombies with random stats
  */

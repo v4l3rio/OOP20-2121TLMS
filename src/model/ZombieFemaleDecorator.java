@@ -7,7 +7,6 @@ import java.util.UUID;
 
 /**
  * 
- * @author Valerio Di Zio
  * @version 2.0
  * This Class models a Female Zombie 
  */
