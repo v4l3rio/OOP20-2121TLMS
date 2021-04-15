@@ -16,17 +16,23 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 
-import components.AnimationComponent;
+import components.PlayerComponent;
+import components.FirePowerComponent;
 import components.BasicBulletComponent;
 import components.DamagingComponent;
 import components.RandomMovementComponent;
+import components.TextureComponent;
 import components.ZombieTextureComponent;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import model.Bullet;
 import model.TLMSType;
+import model.Texture;
 import model.Zombie;
 import model.ZombieRandomTextureDecorator;
+import model.Player;
+import model.PlayerImpl;
+import model.PlayerTexture;
 
 public class TLMSFactory implements EntityFactory{
 	
@@ -61,6 +67,8 @@ public class TLMSFactory implements EntityFactory{
 	
 	@Spawns("player")
     public Entity newPlayer(SpawnData data) {
+		Player playerAbility = new PlayerImpl();
+		PlayerTexture pt = new PlayerTexture();
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
         physics.addGroundSensor(new HitBox("GROUND_SENSOR", new Point2D(16, 38), BoundingShape.box(6, 8)));
@@ -73,18 +81,33 @@ public class TLMSFactory implements EntityFactory{
                 //x,y
                 .with(physics)
                 .with(new CollidableComponent(true)) //può essere colpito e può atterrare su piattaforme
-                .with(new HealthIntComponent(10)) //gli da i punti vita
-                .with(new AnimationComponent()) 
+                .with(new HealthIntComponent(playerAbility.getHealt())) //gli da i punti vita
+                .with(new PlayerComponent()) 
+                .with(new TextureComponent(pt.getTextureBlue().getTextureMap()))
                 .build();  //builda tutto quello che ho scritto
     }
+	
+	@Spawns("firepower")
+	public Entity newPower(SpawnData data) {
+		PhysicsComponent physics = new PhysicsComponent();
+		physics.setBodyType(BodyType.DYNAMIC);
+		physics.addGroundSensor(new HitBox("GROUND_SENSOR", new Point2D(16, 38), BoundingShape.box(6, 80)));
+		
+		return entityBuilder(data)
+				.type(TLMSType.FIREPOWER)
+				.bbox(new HitBox(new Point2D(5,5), BoundingShape.circle(12)))
+				.with(physics)
+				.with(new CollidableComponent(true))
+				.with(new FirePowerComponent())
+				.build();
+	}
 	
 	@Spawns("bullet")
     public Entity newBullet(SpawnData data) {
 	 	Bullet bullet = new Bullet(1, 500, new Image("assets/textures/myBulletsShrunk.png"));
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.KINEMATIC);
-        
-        // this avoids player sticking to walls
+
         physics.setFixtureDef(new FixtureDef().friction(0.0f));
 
         return entityBuilder(data)
@@ -93,7 +116,7 @@ public class TLMSFactory implements EntityFactory{
                 .with(physics)
                 .with(new CollidableComponent(true))
                 .with(new BasicBulletComponent(bullet, this.player.getScaleX()))
-                .with(new DamagingComponent((int)bullet.getShotDamage()))  //cambiare tutti i danni in double
+                .with(new DamagingComponent((int)bullet.getShotDamage())) 
                 .build();
     }
 	

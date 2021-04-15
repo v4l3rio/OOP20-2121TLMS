@@ -32,14 +32,12 @@ public class ZombieRandomTextureDecorator implements Enemy{
 	}
 
 
-	public int getSpeed() {
-		
+	public int getSpeed() {		
 		return this.zombie.getSpeed();
 	}
 
 
-	public int getLife() {
-		
+	public int getLife() {		
 		return this.zombie.getLife();
 	}
 	

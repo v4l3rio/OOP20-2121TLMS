@@ -16,7 +16,6 @@ public class Texture {
 	}
 	
 	public Map<TLMSType, String> getTextureMap(){
-		return this.textureMap;
-		
+		return this.textureMap;		
 	}
 }
