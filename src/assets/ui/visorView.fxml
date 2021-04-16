@@ -13,7 +13,7 @@
          <children>
             <Label fx:id="points" prefHeight="65.0" prefWidth="427.0" text="Points:" textAlignment="CENTER" textFill="#c91515">
                <font>
-                  <Font name="Digital Readout Thick" size="35.0" />
+                  <Font size="35.0" />
                </font>
             </Label>
             <ProgressBar fx:id="lifeBar" prefHeight="51.0" prefWidth="431.0" progress="0.0" />
@@ -21,8 +21,3 @@
       </VBox>
    </children>
 </Pane>
-
-
-
-
-
