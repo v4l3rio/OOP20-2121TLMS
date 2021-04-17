@@ -11,10 +11,10 @@ public class PlayerImpl implements Player {
 	public PlayerImpl() {
 		this.dimension = 1.7;
 		this.healt = 10;
-		this.speed = 300;
+		this.speed = 400;
 		this.maxJumps = 1;
 		this.jumpCounter = 1;
-		this.jumpsHeight = -500;
+		this.jumpsHeight = -600;
 	}
 	
 	@Override

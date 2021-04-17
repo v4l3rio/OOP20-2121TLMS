@@ -92,7 +92,7 @@ public class PlayerComponent extends Component {
     
     public void toRed () {
     	this.isRed = true;
-    	this.player.setSpeed(350);
+    	this.player.setSpeed(650);
     	this.player.setHealt(10);
     	this.player.setMaxJumps(5);
     	this.player.resetNJumps();
@@ -100,7 +100,7 @@ public class PlayerComponent extends Component {
     
     public void toBlue() {
     	this.isRed = false;
-    	this.player.setSpeed(300);
+    	this.player.setSpeed(400);
     	this.player.setMaxJumps(1);
     	this.player.resetNJumps();
     }
