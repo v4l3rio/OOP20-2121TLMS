@@ -20,7 +20,7 @@ public class PlayerFirePowerCollision implements Collision<Entity, Entity>{
 		if(!player.getComponent(PlayerComponent.class).isRed()) {
 			PlayerTexture playerTexture = new PlayerTexture();
 			
-			firepower.getComponent(FirePowerComponent.class).collide();
+			firepower.getComponent(FirePowerComponent.class).disappear();
 			firepower.removeFromWorld();
 			getGameTimer().runOnceAfter(() -> {
 				player.getComponent(PlayerComponent.class).toRed();	

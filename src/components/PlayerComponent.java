@@ -94,7 +94,7 @@ public class PlayerComponent extends Component {
     	this.isRed = true;
     	this.player.setSpeed(350);
     	this.player.setHealt(10);
-    	this.player.setMaxJumps(4);
+    	this.player.setMaxJumps(5);
     	this.player.resetNJumps();
     }
     

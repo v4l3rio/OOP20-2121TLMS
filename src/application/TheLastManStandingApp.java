@@ -107,10 +107,10 @@ public class TheLastManStandingApp extends GameApplication {
 		for(int i =0;i<3;i++)
 			spawn("zombie", 500, 50);
 		
-		
+		spawn("firepower", rnd.nextInt(2000), 50);
 		getGameTimer().runAtInterval(() -> {
 		    spawn("firepower", rnd.nextInt(2000), 50);
-		}, Duration.seconds(20));
+		}, Duration.seconds(11));
 		
 		
 		player = spawn("player", 100, 0);

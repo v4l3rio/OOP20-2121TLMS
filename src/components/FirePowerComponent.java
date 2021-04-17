@@ -33,18 +33,22 @@ public class FirePowerComponent extends Component{
 	
 	 @Override
 	 public void onUpdate(double tpf) { 
-//		 if(!this.used) {
-//			getGameTimer().runOnceAfter(() -> {
-//	 			entity.removeFromWorld();
-//	     	}, Duration.seconds(5));	  
-//		 }
-		 
+//		 
+//		 physics.onGroundProperty().addListener((obs, old, isOnGround) -> { //obs(observer) //old??
+//	        	if (isOnGround) {
+//	        		getGameTimer().runOnceAfter(() -> {
+//	        			disappear();
+//	    	     	}, Duration.seconds(5));
+//		        	
+//		        }
+//	        });
+//		 
 		 if (animTexture.getAnimationChannel() != animFire) {
              animTexture.loopAnimationChannel(animFire);
          }
 	 }
 	 
-	 public void collide() {
+	 public void disappear() {
 		 used = true;
 	 }
 }
