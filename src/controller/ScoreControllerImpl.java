@@ -14,6 +14,9 @@ import java.util.stream.Stream;
 import application.TheLastManStandingApp;
 import model.score.Score;
 
+/**
+ * Implementation of {@link ScoreController} 
+ */
 public class ScoreControllerImpl implements ScoreController {
 
 	@Override
@@ -54,6 +57,14 @@ public class ScoreControllerImpl implements ScoreController {
 		return list;
 	}
 	
+	/**
+	 * @param stream
+	 *            the top three ranking stream
+	 * @param score
+	 *            the score to compare with the top3
+	 * @return
+	 *     true if the score is in the top3 and the ranking will be updated 
+	 */
 	private boolean isInTopThree(Stream<String> stream, Integer score) {	
 		return stream.map(l -> l.split(" "))
 				.map(s -> Integer.valueOf(s[0]))

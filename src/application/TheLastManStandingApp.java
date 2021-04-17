@@ -29,6 +29,11 @@ import components.PlayerComponent;
 import components.TextureComponent;
 import factories.TLMSFactory;
 import factories.WorldFactory;
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 import model.Firearm;
@@ -164,6 +169,7 @@ public class TheLastManStandingApp extends GameApplication {
 			}, Duration.seconds(GunSpawnDelay + random.nextInt(++GunSpawnDelay)));
 		player = spawn("player", 1000, 0);
 		factory.setPlayer(player);
+		inc("playerLife", ((double)player.getComponent(ComponentUtils.HEALTH_COMPONENT).getValue()) / 10);
 		
 		getGameTimer().runAtInterval(() -> {
 		    spawn("firePowerUp", random.nextInt(2000), 50);
@@ -190,7 +196,8 @@ public class TheLastManStandingApp extends GameApplication {
     @Override
     protected void initGameVars(Map<String, Object> vars) {
         vars.put("score", 0);
-        vars.put("playerLife", 1.0);
+        vars.put("playerLife",0.0);
+        
     }
     
     @Override

@@ -48,7 +48,7 @@ public class PlayerZombieCollision extends CollisionHandler{
     	player.getComponent(PlayerComponent.class).attacked();
     	zombie.getComponent(ComponentUtils.TEXTURE_COMPONENT).setAttacking(true);
     	
-    	inc("playerLife", -0.1);
+    	inc("playerLife", -((double)(zombie.getComponent(ComponentUtils.DAMAGING_COMPONENT).getDamage())) / 10);
 		
 		System.out.println("Il player ha vita: " + player.getComponent(ComponentUtils.HEALTH_COMPONENT).getValue());
 			

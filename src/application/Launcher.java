@@ -12,8 +12,9 @@ public final class Launcher {
     private Launcher() { }
 
     /**
-     * @param args unused
+     * @param args
      * @throws IOException 
+     * 		       if an I/O error occurs 
      */
     public static void main(final String[] args) throws IOException {
     	

@@ -20,6 +20,11 @@ import components.DamagingComponent;
 import javafx.geometry.Point2D;
 import javafx.util.Duration;
 
+/**
+ * 
+ * factory for static (not dynamic) entities
+ *
+ */
 public class WorldFactory implements EntityFactory {
 	
 	private final double durationPointsText = 1.0;
@@ -28,6 +33,11 @@ public class WorldFactory implements EntityFactory {
 	private final int sizeReloadText = 70;
 	private final int widthShiftText = 30;
 	
+	/**
+	 * @param data
+	 * @return
+	 *     a platform entity
+	 */
 	@Spawns("platform")
 	public Entity newPlatform(SpawnData data) {
 		return FXGL.entityBuilder(data)
@@ -37,6 +47,11 @@ public class WorldFactory implements EntityFactory {
             .build();
 	}
 	
+	/**
+	 * @param data
+	 * @return
+	 *     a wall entity
+	 */
 	@Spawns("wall")
 	public Entity newWall(SpawnData data) {
 		return FXGL.entityBuilder(data)
@@ -46,6 +61,11 @@ public class WorldFactory implements EntityFactory {
             .build();
 	}
  	
+	/**
+	 * @param data
+	 * @return
+	 *     a generic text entity on north-center of the window
+	 */
  	 @Spawns("text")
      public Entity centralText(SpawnData data) {
          String text = data.get("text");
@@ -65,6 +85,11 @@ public class WorldFactory implements EntityFactory {
          return e;
      }
  	 
+ 	 /** 
+ 	  * @param data
+ 	  * @return
+ 	  *     the points text of the kill of a zombie on the zombie's head
+ 	  */
  	 @Spawns("zombiePoints")
      public Entity newScoreText(SpawnData data) {
          String text = data.get("zombiePoints");

@@ -21,29 +21,26 @@ import controller.ScoreController;
 import controller.ScoreControllerImpl;
 
 /**
- * 
  * This class generates the view menu
- *
  */
 public class Menu {
 	
-	private ScoreController controller;
+	private final ScoreController controller;
 	private final int BACKGROUND_WIDTH = 1280;
 	private final int BACKGROUND_HEIGHT = 720;
-	private JFrame mainWindow; 
+	private final JFrame mainWindow; 
 	private JPanelWithBackground mainPanel;
-	private List<JButton> buttonList = new ArrayList<>();
 	private JButton startButton;
 	private JButton usernameButton;
 	private JButton rankingButton;
 	private JButton controlsButton;
 	private JButton exitButton;
 	private JLabel title;
-	private Font titleFont = new Font("Times New Roman", Font.PLAIN, 50);
-	private float[] buttonColor = Color.RGBtoHSB(102, 199, 255, null); //color using RGB settings
+	private final Font titleFont = new Font("Times New Roman", Font.PLAIN, 50);
+	private final float[] buttonColor = Color.RGBtoHSB(102, 199, 255, null); //color using RGB settings
+	private final List<JButton> buttonList = new ArrayList<>();
 	
 	/**
-	 * 
 	 * @param args
 	 * @throws IOException 
 	 * 		       if an I/O error occurs
@@ -112,11 +109,21 @@ public class Menu {
 		
 	}
 	
+	/**
+	 * @param frame
+	 * @param path
+	 * 	          path of Background image 
+	 * @throws IOException
+	 * 		       if an I/O error occurs
+	 */
 	private void addBackground(JFrame frame, String path) throws IOException {
 		mainPanel = new JPanelWithBackground(path);
 		frame.getContentPane().add(mainPanel);		
 	}
-
+	
+	/**
+	 * init all buttons settings
+	 */
 	private void initButtons() {
 		startButton = new JButton("START");
 		usernameButton = new JButton("USERNAME");
@@ -143,10 +150,22 @@ public class Menu {
 		
 	}
 	
+	/**
+	 * @param buttons
+	 * 		      the buttons lists
+	 * @param color
+	 * 		      the color array
+	 */
 	private void setButtonColor(List<JButton> buttons, float[] color) {
 		buttons.forEach(b -> b.setBackground(Color.getHSBColor(color[0], color[1], color[2])));		
 	}	
 	
+	/** 
+	 * @return 
+	 *     the last User saved in json file
+	 * @throws IOException
+	 * 			  if an I/O error occurs
+	 */
 	private String readLastUser() throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(TheLastManStandingApp.PATH_USER));
 	    String name = reader.readLine();
@@ -154,12 +173,22 @@ public class Menu {
 	    return name;
 	}
 	
+	/**
+	 * @param user
+	 * 			  the user that will wrote on ranking json file
+	 * @throws IOException
+	 * 			   if an I/O error occurs
+	 */
 	private void writeUser(String user) throws IOException {
 		BufferedWriter writer = new BufferedWriter(new FileWriter(TheLastManStandingApp.PATH_USER));
 	    writer.write(user.toUpperCase());
 	    writer.close();
 	}
-	
+
+	/**
+	 * @param titleName
+	 * 	          the window title
+	 */
 	private void addTitle(String titleName) {
 		title = new JLabel(titleName);
 		mainPanel.add(title);
