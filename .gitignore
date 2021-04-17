@@ -1,8 +1,12 @@
+
 bin/
 doc/
 .log
 .pdf
-system/
+.classpath
 logs/
+system/
 .DS_Store
-*.png
+
+
+
