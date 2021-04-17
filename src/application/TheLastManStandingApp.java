@@ -47,9 +47,9 @@ public class TheLastManStandingApp extends GameApplication {
     public static final String PATH_USER = "src/assets/score/userName.json";
     private static final String PATH_MAP = "Cemetery.tmx";
 	private static final double WEAPONLENGHT = 25;
-	private int GunSpawnDelay = 5;
+	private int GunSpawnDelay = 7;
 	private Random random = new Random();
-    private boolean isRecharging = false;
+    private boolean isReloading = false;
 	private static final int MAGMAGUNDURATION = 5;
 	private static final int MACHINEGUNDURATION = 6;
 	private final SystemSettings mySystemSettings = new SystemSettingsImpl();
@@ -111,18 +111,19 @@ public class TheLastManStandingApp extends GameApplication {
 				@Override
 				protected void onActionBegin() {
 					final Firearm currentFirearm = player.getComponent(ComponentUtils.FIREARM_COMPONENT).getCurrentFirearm();
-					//is recharging? can't shoot rn, do nothing
-					if(isRecharging) {
+					//is reloading? can't shoot rn, do nothing
+					if(isReloading) {
 					} else if(currentFirearm.getNAmmo() > 0) {
 						// have the shot spawn facing coherently as player, with due distance from it
 						spawn("shot", player.getPosition().getX() + (WEAPONLENGHT*player.getScaleX())
 								, player.getPosition().getY());
-						currentFirearm.decAmmo();
+						currentFirearm.shoot();
 					} else {
-						isRecharging = true;
+						isReloading = true;
+						spawn("text", new SpawnData(840,150).put("text", "RELOADING"));
 						runOnce(()->{
-							currentFirearm.recharge();
-							isRecharging = false;
+							currentFirearm.reload();
+							isReloading = false;
 						}, Duration.seconds(2));
 					}
 				}
@@ -132,18 +133,17 @@ public class TheLastManStandingApp extends GameApplication {
 	            @Override
 	            protected void onActionBegin() {
 	            	final Firearm currentFirearm = player.getComponent(ComponentUtils.FIREARM_COMPONENT).getCurrentFirearm();
-	            	spawn("text", new SpawnData(750,150).put("text", "RELOAD"));
-	            	isRecharging = true; 
+	            	spawn("text", new SpawnData(840,150).put("text", "RELOADING"));
+	            	isReloading = true; 
 	        		runOnce(() -> { 
-	        			currentFirearm.recharge(); 
-	        			isRecharging = false; 
+	        			currentFirearm.reload(); 
+	        			isReloading = false; 
 	        			}, Duration.seconds(2)
 	        		); 
 	            }
 	        }, KeyCode.R);
 
-	 }
-
+	 } 
 	
 	@Override
 	protected void initGame() {
@@ -151,17 +151,17 @@ public class TheLastManStandingApp extends GameApplication {
 		factory = new TLMSFactory();
 		getGameWorld().addEntityFactory(factory);
 		setLevelFromMap(PATH_MAP);
-
+		spawn("text", new SpawnData(mySystemSettings.getWidth()/5,mySystemSettings.getHeight()/8).put("text", "PRESS R FOR AN EARLY RELOAD"));
 		ZombieSpawner spawner = new ZombieSpawner();
 		spawner.start();
 		//spawn a magmaGun after a base+random delay, both incremental
 		getGameTimer().runAtInterval(() -> {
 			spawn("magmaGun", random.nextInt(mySystemSettings.getWidth()), -100);
-			}, Duration.seconds(GunSpawnDelay + random.nextInt(++GunSpawnDelay)));
+			}, Duration.seconds(GunSpawnDelay + random.nextInt(GunSpawnDelay)));
 		getGameTimer().runAtInterval(() -> {
 			//spawn a machineGun after a base+random time
 			spawn("machineGun", random.nextInt(mySystemSettings.getWidth()), -100);
-			}, Duration.seconds(GunSpawnDelay + random.nextInt(++GunSpawnDelay)));
+			}, Duration.seconds(GunSpawnDelay + random.nextInt(GunSpawnDelay)));
 		player = spawn("player", 1000, 0);
 		factory.setPlayer(player);
 		

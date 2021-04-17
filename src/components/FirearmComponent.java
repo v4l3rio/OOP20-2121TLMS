@@ -11,6 +11,15 @@ public class FirearmComponent extends Component {
 	
 	/**
 	 * 
+	 * @param firearm the starting firearm of the Entity to which the component is attached
+	 */
+	public FirearmComponent(Firearm firearm) {
+		this.currentFirearm = firearm;
+		this.defaultFirearm = firearm;
+	}
+	
+	/**
+	 * 
 	 * @return whether the firearm has changed more than once, used for handling timers
 	 * @see FirearmCollisionFactoryImpl
 	 */
@@ -25,15 +34,6 @@ public class FirearmComponent extends Component {
 	 */
 	public void setChanged(boolean hasChanged) {
 		this.changed = hasChanged;
-	}
-
-	/**
-	 * 
-	 * @param firearm the starting firearm of the Entity to which the component is attached
-	 */
-	public FirearmComponent(Firearm firearm) {
-		this.currentFirearm = firearm;
-		this.defaultFirearm = firearm;
 	}
 	
 	/**
@@ -57,6 +57,6 @@ public class FirearmComponent extends Component {
 	 * @return whether the firearm is the default
 	 */
 	public boolean isDefault() {
-		return this.currentFirearm.getFirearmName() == defaultFirearm.getFirearmName();
+		return this.currentFirearm.getClass().equals(defaultFirearm.getClass());
 	}
 }

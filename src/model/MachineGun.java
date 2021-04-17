@@ -1,51 +1,20 @@
 package model;
 
-import javafx.scene.image.Image;
-
-public class MachineGun implements Firearm {
-	//this gun has unlimited bullets
-	
+public class MachineGun extends Firearm {
+	//although it's the model, after some thinking, this seems the best place for the texture placing
+	private final static String shotTexturePath = "assets/textures/machineGunShot.png";
+	private final static String gunTexturePath = "assets/textures/machineGunTexture.png";
 	private final static int MAXAMMO = 1;
 	private final static int SHOTDMG = 5;
 	private final static double SHOTSPEED = 1000;
-	
-	private final static String FIREARMNAME = "MachineGun";
-	
-	//although it's the model, after some thinking, this seems the best place for the texture placing
-	private final Image shotTexture = new Image("assets/textures/machineGunShot.png");
-	private final Image gunTexture = new Image("assets/textures/machineGunTexture.png");
-	
-	private int nAmmo = MAXAMMO;
-	
-	public Image getShotTexture() {
-		return shotTexture;
+
+	//this gun has unlimited bullets
+	public MachineGun() {
+		super(SHOTDMG, MAXAMMO, SHOTSPEED, shotTexturePath, gunTexturePath);
 	}
 
-	public static double getShotspeed() {
-		return SHOTSPEED;
+	@Override
+	public void shoot() {
+		//do nothing here, feature: unlimited ammo
 	}
-	
-	public int getNAmmo() {
-		return nAmmo;
-	}
-
-	public void decAmmo() {
-	}
-
-    public int getShotDamage() {
-        return SHOTDMG;
-    }
-	
-	public void recharge() {
-		nAmmo = MAXAMMO;
-	}
-
-	public Image getWeaponTexture() {
-		return this.gunTexture;
-	}
-
-	public String getFirearmName() {
-		return FIREARMNAME;
-	}
-	
 }

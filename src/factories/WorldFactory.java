@@ -23,9 +23,9 @@ import javafx.util.Duration;
 public class WorldFactory implements EntityFactory {
 	
 	private final double durationPointsText = 1.0;
-	private final double durationReloadText = 2.0;
+	private final double textDuration = 3.0;
 	private final int sizePointsText = 30;
-	private final int sizeReloadText = 70;
+	private final int sizeReloadText = 50;
 	private final int widthShiftText = 30;
 	
 	@Spawns("platform")
@@ -52,7 +52,7 @@ public class WorldFactory implements EntityFactory {
          
          var e = entityBuilder(data)
                  .view(FXGL.getUIFactoryService().newText(text, sizeReloadText))
-                 .with(new ExpireCleanComponent(Duration.seconds(durationReloadText)))
+                 .with(new ExpireCleanComponent(Duration.seconds(textDuration)))
                  .build();
 
          FXGL.animationBuilder()
