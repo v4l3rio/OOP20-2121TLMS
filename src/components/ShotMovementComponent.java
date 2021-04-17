@@ -5,12 +5,14 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
 
-import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
-import model.Bullet;
 
-public class BasicBulletComponent extends Component{
+public class ShotMovementComponent extends Component{
+	
+	private final static double SHOTSPEED = 500;
+	
+	private final static int NTEXTURES = 3;
 
 	private PhysicsComponent physics;
 
@@ -18,13 +20,12 @@ public class BasicBulletComponent extends Component{
 
 	private AnimationChannel animFire;
 	
-	private Bullet bullet;
 	private double direction;
 
-	public BasicBulletComponent(Bullet bullet, double direction) {
-		this.bullet = bullet;
+	public ShotMovementComponent(double direction, Image shotImage) {
 		this.direction = direction;
-		animFire = new AnimationChannel(bullet.getMovementTexture(), 3, 200, 120, Duration.seconds(0.30), 0, 2);
+		animFire = new AnimationChannel(shotImage, 3, (int) (shotImage.getWidth()/NTEXTURES)
+				, (int) shotImage.getHeight(), Duration.seconds(0.80), 0, NTEXTURES - 1);
 		texture = new AnimatedTexture(animFire);
 		texture.loop();
 	}
@@ -47,7 +48,7 @@ public class BasicBulletComponent extends Component{
 			}
 		}
 		//set movement direction, equals to player sign
-		this.physics.setVelocityX(this.bullet.getShotSpeed()*direction);
+		this.physics.setVelocityX(SHOTSPEED*direction);
 	}
 
 }

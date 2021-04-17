@@ -1,18 +1,38 @@
 package collisions;
 
+
+import com.almasb.fxgl.dsl.FXGL;
+import static com.almasb.fxgl.dsl.FXGL.*;
+
+import java.io.IOException;
+
+import com.almasb.fxgl.entity.Entity;
+import com.almasb.fxgl.physics.CollisionHandler;
 import static com.almasb.fxgl.dsl.FXGL.getGameTimer;
 
 import com.almasb.fxgl.entity.Entity;
 import components.PlayerComponent;
 import components.TextureComponent;
 import components.ComponentUtils;
+import controller.ScoreControllerImpl;
+import model.TLMSType;
+import model.score.JsonScore;
 import javafx.util.Duration;
 import model.PlayerTexture;
 
-public class PlayerZombieCollision implements Collision<Entity, Entity>{
+/**
+ * @version 2.2
+ * Manages collisions between players and zombies
+ */
+
+public class PlayerZombieCollision extends CollisionHandler{
+
+	public PlayerZombieCollision(TLMSType player, TLMSType zombie) {
+		super(player, zombie);
+	}
 
 	@Override
-	public void onCollision(Entity player, Entity zombie) {
+	public void onCollisionBegin(Entity player, Entity zombie) {
 		
 		player.getComponent(ComponentUtils.HEALTH_COMPONENT).damage(zombie.getComponent(ComponentUtils.DAMAGING_COMPONENT).getDamage());
 		
@@ -26,20 +46,30 @@ public class PlayerZombieCollision implements Collision<Entity, Entity>{
 		}
     	
     	player.getComponent(PlayerComponent.class).attacked();
-		
+    	zombie.getComponent(ComponentUtils.TEXTURE_COMPONENT).setAttacking(true);
+    	
+    	inc("playerLife", -0.1);
 		
 		System.out.println("Il player ha vita: " + player.getComponent(ComponentUtils.HEALTH_COMPONENT).getValue());
-		
-		zombie.getComponent(ComponentUtils.TEXTURE_COMPONENT).setAttack(true);		
+			
 	
 		if(player.getComponent(ComponentUtils.PLAYER_COMPONENT).isDead()) {
 			getGameTimer().runOnceAfter(() -> {			
 			    	player.removeFromWorld();
 					System.out.println("Hai perso!");
-					System.exit(0);				
+					try {
+						new ScoreControllerImpl().updateScore(
+								new JsonScore(getWorldProperties().intProperty("score").get())
+						);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					gameOver();		
 	    	}, Duration.seconds(1.7));
 		}
-		
 	}
-
+	
+	private void gameOver() {
+        getDialogService().showMessageBox("Game Over. Press OK to exit", getGameController()::exit);
+    }
 }

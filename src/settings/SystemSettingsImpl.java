@@ -1,6 +1,5 @@
 package settings;
 
-
 //controllare la risoluzione per schermi piu piccoli
 public class SystemSettingsImpl implements SystemSettings {
 	
