@@ -100,8 +100,7 @@ public class TLMSFactory implements EntityFactory{
 
         return entityBuilder(data)
                 .type(TLMSType.PLAYER)
-                .bbox(new HitBox(new Point2D(5,5), BoundingShape.circle(12))) //poligoni primitivi con una dimensione che si assegnano a una texture //testa
-                .bbox(new HitBox(new Point2D(10,25), BoundingShape.box(10, 17))) //x collisioni e x piattaforme. Immagini sono incollate sulle hitbox //busto
+                .bbox(new HitBox(new Point2D(15,7), BoundingShape.box(15, 30))) //x collisioni e x piattaforme. Immagini sono incollate sulle hitbox //busto
                 //point2D ti dice il punto di inizio in alto a sx, bounding shape ti da la forma del tuo player
                 //x,y
                 .with(physics)
@@ -116,7 +115,7 @@ public class TLMSFactory implements EntityFactory{
 	@Spawns("shot")
     public Entity newShot(SpawnData data) {
 		final Firearm currentFirearm = player.getComponent(ComponentUtils.FIREARM_COMPONENT).getCurrentFirearm();
-	 	final double direction = this.player.getScaleX();
+	 	final double direction = Math.signum(this.player.getScaleX());
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.KINEMATIC);
         
@@ -125,7 +124,7 @@ public class TLMSFactory implements EntityFactory{
                 .bbox(new HitBox(new Point2D(50,100), BoundingShape.box(130, 130)))
                 .with(physics)
                 .with(new CollidableComponent(true))
-                .with(new ShotMovementComponent(direction, currentFirearm.getShotIMG()))
+                .with(new ShotMovementComponent(direction, currentFirearm.getShotspeed(), currentFirearm.getShotIMG()))
                 .with(new DamagingComponent(currentFirearm.getShotDamage()))
                 .build();
     }

@@ -15,7 +15,7 @@ import model.TLMSType;
 public class FirearmCollisionFactoryImpl implements FirearmCollisionFactory {
 
 	@Override
-	public CollisionHandler createGunCollision(TLMSType firearmType, int delay) {
+	public CollisionHandler createGunCollision(TLMSType firearmType, double delay) {
 		return new CollisionHandler(TLMSType.PLAYER, firearmType) {
 
 			@Override

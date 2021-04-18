@@ -11,5 +11,5 @@ public interface FirearmCollisionFactory {
 	 * @param gunDuration seconds after which the gun has to be set back to default
 	 * @return a new Collision Player-Gun setting the "gun", to be dismounted after "gunDuration" seconds
 	 */
-	public CollisionHandler createGunCollision(TLMSType gunType, int gunDuration);
+	public CollisionHandler createGunCollision(TLMSType gunType, double gunDuration);
 }

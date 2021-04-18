@@ -6,10 +6,10 @@ import javafx.scene.image.Image;
 
 public abstract class Firearm extends Entity{
 	
-	//although it's the model, after some thinking, this seems the best place for the texture placing
 	private final int shotDMG;
 	private final int maxAmmo;
 	private final double shotSpeed;
+	//although it's the model, after some thinking, this seems the best place for the texture placing
 	private final Image gunIMG;
 	private final Image shotIMG;
 	

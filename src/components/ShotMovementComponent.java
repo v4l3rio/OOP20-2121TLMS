@@ -10,9 +10,8 @@ import javafx.util.Duration;
 
 public class ShotMovementComponent extends Component{
 	
-	private final static double SHOTSPEED = 500;
-	
 	private final static int NTEXTURES = 3;
+	private final static double SHOT_SCALE = 0.14;	
 
 	private PhysicsComponent physics;
 
@@ -21,12 +20,14 @@ public class ShotMovementComponent extends Component{
 	private AnimationChannel animFire;
 	
 	private double direction;
+	private double shotSpeed;
 
-	public ShotMovementComponent(double direction, Image shotImage) {
+	public ShotMovementComponent(double direction, double shotSpeed, Image shotImage) {
 		this.direction = direction;
 		animFire = new AnimationChannel(shotImage, 3, (int) (shotImage.getWidth()/NTEXTURES)
 				, (int) shotImage.getHeight(), Duration.seconds(0.80), 0, NTEXTURES - 1);
 		texture = new AnimatedTexture(animFire);
+		this.shotSpeed = shotSpeed;
 		texture.loop();
 	}
 
@@ -34,10 +35,10 @@ public class ShotMovementComponent extends Component{
 	public void onAdded() {
 		//get the entity to which the component connected, attaching the texture to it
 		getEntity().getViewComponent().addChild(texture);
-		//reduce bullet size, so to match player's one
-		getEntity().setScaleUniform(0.2);
 		//set image direction, taken from player
-		getEntity().setScaleX(getEntity().getScaleX()*direction);
+		getEntity().setScaleX(getEntity().getScaleX()*direction*SHOT_SCALE);
+		//reduce bullet size, so to match player's one
+		getEntity().setScaleY(getEntity().getScaleY()*SHOT_SCALE);
 	}
 
 	@Override
@@ -48,7 +49,7 @@ public class ShotMovementComponent extends Component{
 			}
 		}
 		//set movement direction, equals to player sign
-		this.physics.setVelocityX(SHOTSPEED*direction);
+		this.physics.setVelocityX(this.shotSpeed*direction);
 	}
 
 }
