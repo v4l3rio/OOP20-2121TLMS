@@ -1,7 +1,5 @@
 package settings;
 
-import java.awt.Toolkit;
-
 //controllare la risoluzione per schermi piu piccoli
 public class SystemSettingsImpl implements SystemSettings {
 	
@@ -16,13 +14,12 @@ public class SystemSettingsImpl implements SystemSettings {
 	@Override
 	public int getWidth() {
 		return WIDTH;
-		//return Toolkit.getDefaultToolkit().getScreenSize().width;
 	}
 
 	@Override
 	public int getHeight() {
 		return HEIGHT;
-		//return Toolkit.getDefaultToolkit().getScreenSize().height;
+
 	}
 	
 
