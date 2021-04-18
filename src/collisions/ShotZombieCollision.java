@@ -10,7 +10,6 @@ import components.ComponentUtils;
 import model.TLMSType;
 
 /**
- * @version 2.3
  * Manages collisions between bullet and zombies
  */
 

@@ -30,8 +30,6 @@ import model.PlayerImpl;
 import model.PlayerTexture;
 
 /**
- * 
- * @version 3.1
  * This factory creates various types of entities that can be spawned with the "spawn ()" method
  */
 
@@ -44,9 +42,9 @@ public class TLMSFactory implements EntityFactory{
 	}
 
 	/**
-	 * 
-	 * @param data, data to customize the creation of the zombie
-	 * @return
+	 * This method build "stupid" zombie, that moves randomly in the game
+	 * @param data - data to customize the creation of the zombie
+	 * @return entity - created entity
 	 */
 	@Spawns("stupidZombie")
     public Entity newStupidZombie(SpawnData data) {
@@ -65,10 +63,15 @@ public class TLMSFactory implements EntityFactory{
                 .with(new HealthIntComponent(zombie.getLife()))
                 .with(new CollidableComponent(true))
                 .with(new RandomMovementComponent(physics, zombie.getSpeed()))
-                .with(new ZombieTextureComponent(zombie.getTexture().getTextureMap()))
+                .with(new ZombieTextureComponent(zombie.getTexture().getTextureMap(), physics))
                 .build();
     }
 	
+	/**
+	 * This method build "follow" zombie, that follows the player in the game
+	 * @param data - data to customize the creation of the zombie
+	 * @return entity - created entity
+	 */
 	@Spawns("followingZombie")
     public Entity newFollowingZombie(SpawnData data) {
 		
@@ -86,7 +89,7 @@ public class TLMSFactory implements EntityFactory{
                 .with(new HealthIntComponent(zombie.getLife()))
                 .with(new CollidableComponent(true))
                 .with(new FollowPlayerComponent(this.player, physics, zombie.getSpeed()))
-                .with(new ZombieTextureComponent(zombie.getTexture().getTextureMap()))
+                .with(new ZombieTextureComponent(zombie.getTexture().getTextureMap(), physics))
                 .build();
     }
 	

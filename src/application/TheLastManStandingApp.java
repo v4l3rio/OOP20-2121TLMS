@@ -166,8 +166,8 @@ public class TheLastManStandingApp extends GameApplication {
 		    spawn("firePowerUp", random.nextInt(2000), 50);
 		}, Duration.seconds(2));
 		
-//		TLMSMusic music = new TLMSMusic(0.1);
-//		getAudioPlayer().loopMusic(music.getMusic());
+		TLMSMusic music = new TLMSMusic(0.1);
+		getAudioPlayer().loopMusic(music.getMusic());
 
 	}
 	

@@ -6,8 +6,6 @@ import static model.TLMSType.*;
 import java.util.UUID;
 
 /**
- * 
- * @version 2.0
  * This Class models a Female Zombie 
  */
 public class ZombieFemaleDecorator implements ZombieTextureDecorator{
@@ -15,8 +13,7 @@ public class ZombieFemaleDecorator implements ZombieTextureDecorator{
 	private Zombie zombie;
 	private Texture texture;
 
-	/**
-	 * 
+	/** 
 	 * @param model of zombie
 	 */
 	public ZombieFemaleDecorator(Zombie zombie) {
@@ -28,31 +25,30 @@ public class ZombieFemaleDecorator implements ZombieTextureDecorator{
 		this.texture.addTexture(DEAD, "assets/textures/zombie/zombie1/zombie_dead.png");
 		this.texture.addTexture(ATTACK, "assets/textures/zombie/zombie1/zombie_attack.png");
 	}
-
+	
+	@Override
 	public void setLife(int life) {
 		this.zombie.setLife(life);
 	}
-
+	
+	@Override
 	public UUID getUUID() {
 		return this.zombie.getUUID();
 	}
 
-
+	@Override
 	public int getSpeed() {
 		
 		return this.zombie.getSpeed();
 	}
 
-
+	@Override
 	public int getLife() {
 		
 		return this.zombie.getLife();
 	}
 	
-	/**
-	 * 
-	 * @return Texture of this zombie
-	 */
+	@Override
 	public Texture getTexture() {
 		return this.texture;
 	}

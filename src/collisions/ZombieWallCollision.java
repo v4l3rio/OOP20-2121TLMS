@@ -8,8 +8,15 @@ import com.almasb.fxgl.physics.CollisionHandler;
 import components.ComponentUtils;
 import model.TLMSType;
 
+/**
+ * Class used to manage the collision between a zombie and a wall, jump to climb over it
+ */
 public class ZombieWallCollision extends CollisionHandler{
 
+	/**
+	 * @param zombie 
+	 * @param wall
+	 */
 	public ZombieWallCollision(TLMSType zombie , TLMSType wall) {
 		super(zombie, wall);
 		

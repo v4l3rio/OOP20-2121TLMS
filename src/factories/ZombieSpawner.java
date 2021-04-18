@@ -15,8 +15,6 @@ import model.ZombieTextureDecorator;
 import model.ZombieTextureDecorator.GENDER;
 
 /**
- * 
- * @version 2.3
  * This class creates and spawn zombies with random stats
  */
 public class ZombieSpawner extends Thread {
@@ -35,6 +33,10 @@ public class ZombieSpawner extends Thread {
 		this.rnd = new Random();
 	}
 
+	/**
+	 * Method to start spwning zombies
+	 */
+	@Override
 	public void run() {
 		
 		getGameTimer().runAtInterval(() -> {
@@ -75,6 +77,7 @@ public class ZombieSpawner extends Thread {
 		}, Duration.seconds(SPAWN_TIME));
 
 	}
+
 
 	private Zombie getRandomZombie() {
 		int life = rnd.nextInt(10) + MINIMUM_LIFE;

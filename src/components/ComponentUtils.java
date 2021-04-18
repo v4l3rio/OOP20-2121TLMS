@@ -3,8 +3,6 @@ package components;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 
 /**
- * 
- * @version 2.0
  * Utility that defines the types of components used
  */
 
