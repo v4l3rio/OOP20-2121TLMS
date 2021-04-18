@@ -24,7 +24,7 @@ public class ZombieSpawner extends Thread {
 	private static final int INITIAL_SPAWN_Y = -100;
 	private static final int INITIAL_SPAWN_X = 500;
 	
-	private static final int SPAWN_TIME = 5;
+	private static final int SPAWN_TIME = 2;
 	private static final int MINIMUM_LIFE = 10;
 	private static final int MINIMUM_SPEED = 170;
 	private static final int MINIMUM_DAMAGE = 2;

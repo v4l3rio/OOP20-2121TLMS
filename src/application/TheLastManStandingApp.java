@@ -47,15 +47,10 @@ public class TheLastManStandingApp extends GameApplication {
     public static final String PATH_SCORE = "src/assets/score/score.json";
     public static final String PATH_USER = "src/assets/score/userName.json";
     private static final String PATH_MAP = "Cemetery.tmx";
-	private static final double GUN_LENGHT = 30;
-	private static final double SHOT_Y_AXIS_FIX = 60;
-	private static final double SHOT_X_AXIS_FIX = 48;
 	
 	private final SystemSettings mySystemSettings = new SystemSettingsImpl();
     private final ScoreController scoreController = new ScoreControllerImpl();
-	private int GunSpawnDelay = 7;
 	private Random random = new Random();
-    private boolean isReloading = false;
     private TLMSFactory factory;
     private Entity player;
 
@@ -67,8 +62,11 @@ public class TheLastManStandingApp extends GameApplication {
 		settings.setVersion(mySystemSettings.getVersion());
 		settings.setGameMenuEnabled(false);   //disable the default FXGL menu
 
-	}   
+	}  
 	
+	/**
+	 * manages game inputs therefore connecting each chosen button to his assigned behavior
+	 */
 	 @Override
 	    protected void initInput() {
 	    	
@@ -108,20 +106,15 @@ public class TheLastManStandingApp extends GameApplication {
 				protected void onActionBegin() {
 					final Firearm currentFirearm = player.getComponent(ComponentUtils.FIREARM_COMPONENT).getCurrentFirearm();
 					//is reloading? can't shoot rn, do nothing
-					if(isReloading) {
+					if(currentFirearm.isReloading()) {
 					} else if(currentFirearm.getNAmmo() > 0) {
 						// have the shot spawn facing coherently as player, with due distance from it
-						spawn("shot"
-								, player.getPosition().getX() - SHOT_X_AXIS_FIX + (GUN_LENGHT*player.getScaleX())
-								, player.getPosition().getY() - SHOT_Y_AXIS_FIX);
+						spawn("shot", player.getPosition().getX() - AppUtils.SHOT_X_AXIS_FIX 
+								+ (AppUtils.GUN_LENGTH*player.getScaleX())
+								, player.getPosition().getY() - AppUtils.SHOT_Y_AXIS_FIX);
 						currentFirearm.shoot();
 					} else {
-						isReloading = true;
-						spawn("text", new SpawnData(840,150).put("text", "RELOADING"));
-						runOnce(()->{
-							currentFirearm.reload();
-							isReloading = false;
-						}, Duration.seconds(FirearmFactoryImpl.RELOAD_TIME));
+						reload(currentFirearm);
 					}
 				}
 			}, KeyCode.L);
@@ -130,37 +123,49 @@ public class TheLastManStandingApp extends GameApplication {
 	            @Override
 	            protected void onActionBegin() {
 	            	final Firearm currentFirearm = player.getComponent(ComponentUtils.FIREARM_COMPONENT).getCurrentFirearm();
-	            	spawn("text", new SpawnData(840,150).put("text", "RELOADING"));
-	            	isReloading = true;
-	        		runOnce(() -> { 
-	        			currentFirearm.reload(); 
-	        			isReloading = false; 
-	        			}, Duration.seconds(FirearmFactoryImpl.RELOAD_TIME)
-	        		); 
+	            	reload(currentFirearm);
 	            }
 	        }, KeyCode.R);
 
-	 } 
+	 }
+	 /**
+	  * Reloads the firearm, keeping it busy for a reload time, while refilling the ammo
+	  * @param firearm
+	  */
+     private void reload(Firearm firearm) {
+    	 firearm.setReloading(true);
+			spawn("text", new SpawnData(840,150).put("text", "RELOADING"));
+			runOnce(()->{
+				firearm.reload();
+				firearm.setReloading(false);
+			}, Duration.seconds(Firearm.RELOAD_TIME));
+     }
 	
+    /**
+     * Initializes factories entities and everything necessary to the game world
+     */
 	@Override
 	protected void initGame() {
 		getGameWorld().addEntityFactory(new WorldFactory());
 		factory = new TLMSFactory();
 		getGameWorld().addEntityFactory(factory);
 		setLevelFromMap(PATH_MAP);
+		double delay = AppUtils.GUN_SPAWN_DELAY;
 		spawn("text", new SpawnData(mySystemSettings.getWidth()/3.3, mySystemSettings.getHeight()/8)
 				.put("text", "PRESS R FOR AN EARLY RELOAD"));
 		ZombieSpawner spawner = new ZombieSpawner();
 		spawner.start();
-		//spawn a magmaGun after a base+random delay, both incremental
+		//spawns a magmaGun after a base+random delay, both incremental
 		getGameTimer().runAtInterval(() -> {
 			spawn("magmaGun", random.nextInt(mySystemSettings.getWidth()), -100);
-			}, Duration.seconds(GunSpawnDelay + random.nextInt(GunSpawnDelay)));
+			}, Duration.seconds(delay + random.nextInt((int)delay)));
+		//spawns a machineGun after a base+random time
 		getGameTimer().runAtInterval(() -> {
-			//spawn a machineGun after a base+random time
 			spawn("machineGun", random.nextInt(mySystemSettings.getWidth()), -100);
-			}, Duration.seconds(GunSpawnDelay + random.nextInt(GunSpawnDelay)));
+			}, Duration.seconds(delay + random.nextInt((int)delay)));
+
 		player = spawn("player", 1000, 0);
+		//sets factory reference of player
 		factory.setPlayer(player);
 		
 		getGameTimer().runAtInterval(() -> {
@@ -172,15 +177,18 @@ public class TheLastManStandingApp extends GameApplication {
 
 	}
 	
+	/**
+	 * initialize application physics, e.g. collisions
+	 */
 	@Override
 	protected void initPhysics() {
 		
 		getPhysicsWorld().addCollisionHandler(new PlayerZombieCollision( TLMSType.PLAYER, TLMSType.ZOMBIE));
 		getPhysicsWorld().addCollisionHandler(new ShotZombieCollision( TLMSType.SHOT, TLMSType.ZOMBIE));
 		getPhysicsWorld().addCollisionHandler(new FirearmCollisionFactoryImpl()
-				.createGunCollision(TLMSType.MAGMAGUN, FirearmFactoryImpl.MGM_GUN_DURATION));
+				.createGunCollision(TLMSType.MAGMAGUN, FirearmFactoryImpl.MAGMA_GUN_DURATION));
 		getPhysicsWorld().addCollisionHandler(new FirearmCollisionFactoryImpl()
-				.createGunCollision(TLMSType.MACHINEGUN, FirearmFactoryImpl.MCH_GUN_DURATION));
+				.createGunCollision(TLMSType.MACHINEGUN, FirearmFactoryImpl.MACHINE_GUN_DURATION));
 		getPhysicsWorld().addCollisionHandler(new PlayerFirePowerCollision(TLMSType.PLAYER, TLMSType.FIREPOWER));
 
 	}

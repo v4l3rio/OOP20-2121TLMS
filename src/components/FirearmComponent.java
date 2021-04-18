@@ -2,16 +2,20 @@ package components;
 
 import com.almasb.fxgl.entity.component.Component;
 import model.Firearm;
-
+/**
+ * Implements a component to attach the entity to its firearm.
+ */
 public class FirearmComponent extends Component {
-
-	private boolean changed = false;
+	//tracking multiple changes in the component's firearm
+	private boolean isChanged = false;
+	//default firearm, native one
 	private Firearm defaultFirearm;
+	//current firearm, might differ from default one
 	private Firearm currentFirearm;
 	
 	/**
 	 * 
-	 * @param firearm the starting firearm of the Entity to which the component is attached
+	 * @param firearm the starting firearm of the Component to be attached to an Entity
 	 */
 	public FirearmComponent(Firearm firearm) {
 		this.currentFirearm = firearm;
@@ -23,17 +27,17 @@ public class FirearmComponent extends Component {
 	 * @return whether the firearm has changed more than once, used for handling timers
 	 * @see FirearmCollisionFactoryImpl
 	 */
-	public boolean hasChanged() {
-		return changed;
+	public boolean isChanged() {
+		return isChanged;
 	}
 
 	/**
-	 * 
-	 * @param hasChanged keeps track of multiple changes, used for handling timers
+	 * Sets isChanged field
+	 * @param isChanged keeps track of multiple changes, used for handling timers
 	 * @see FirearmCollisionFactoryImpl
 	 */
-	public void setChanged(boolean hasChanged) {
-		this.changed = hasChanged;
+	public void setChanged(boolean isChanged) {
+		this.isChanged = isChanged;
 	}
 	
 	/**
@@ -45,8 +49,8 @@ public class FirearmComponent extends Component {
 	}
 
 	/**
-	 * 
-	 * @param currentFirearm 
+	 * Changes current firearm
+	 * @param currentFirearm
 	 */
 	public void setCurrentFirearm(Firearm currentFirearm) {
 		this.currentFirearm = currentFirearm;
@@ -62,7 +66,7 @@ public class FirearmComponent extends Component {
 	
 	/**
 	 * 
-	 * @return default firearm
+	 * @return default firearm, to be clear it is the first firearm assigned
 	 */
 	public Firearm getDefaultFirearm() {
 		return this.defaultFirearm;

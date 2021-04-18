@@ -1,7 +1,12 @@
 package factories;
 
 import model.Firearm;
+import model.TLMSType;
 
+/**
+ * Organizes the creation of weapons
+ *
+ */
 public interface FirearmFactory{
 
 	/**
@@ -21,5 +26,10 @@ public interface FirearmFactory{
 	 * @return an instance of MachineGun
 	 */
 	public Firearm createMachineGun();
-	
+	/**
+	 * 
+	 * @param type firearm type
+	 * @return the matching firearm
+	 */
+	public Firearm firearmFromType(TLMSType type) throws IllegalArgumentException;
 }
