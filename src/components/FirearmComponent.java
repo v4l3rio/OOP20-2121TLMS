@@ -57,6 +57,14 @@ public class FirearmComponent extends Component {
 	 * @return whether the firearm is the default
 	 */
 	public boolean isDefault() {
-		return this.currentFirearm.getClass().equals(defaultFirearm.getClass());
+		return this.currentFirearm.isSameTypeAs(this.defaultFirearm);
+	}
+	
+	/**
+	 * 
+	 * @return default firearm
+	 */
+	public Firearm getDefaultFirearm() {
+		return this.defaultFirearm;
 	}
 }
