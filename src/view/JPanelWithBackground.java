@@ -16,18 +16,35 @@ import javax.swing.JPanel;
 public class JPanelWithBackground extends JPanel {
 
 	private static final long serialVersionUID = -5042514025454946591L;
-	private final Image backgroundImage;
+	private Image backgroundImage;
+	
+	private JPanelWithBackground() {
+	}
 
 	/**
-	 * 
 	 * @param fileName 
 	 * 		      the path of the image
 	 * @throws IOException
 	 * 		      if an I/O error occurs
+	 * @return the JPanel 
 	 */
-	public JPanelWithBackground(String fileName) throws IOException {
-		backgroundImage = ImageIO.read(new File(fileName));
-		this.setOpaque(false);
+	public static JPanelWithBackground createJPanelWithBackgroundFromPath(String fileName) throws IOException {
+		final JPanelWithBackground panel = new JPanelWithBackground();
+		panel.backgroundImage = ImageIO.read(new File(fileName));
+		panel.setOpaque(false);
+		return panel;
+	}
+	
+	/**
+	 * @param image
+	 * 	          the Image to put on background
+	 * @return the JPanel 
+	 */
+	public static JPanelWithBackground createJPanelWithBackgroundFromImage(Image image) {
+		final JPanelWithBackground panel = new JPanelWithBackground();
+		panel.backgroundImage = image;
+		panel.setOpaque(false);
+		return panel;
 	}
 	
 	 /**

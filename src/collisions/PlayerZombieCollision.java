@@ -1,16 +1,17 @@
 package collisions;
 
 
-import com.almasb.fxgl.dsl.FXGL;
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 import java.io.IOException;
 
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.CollisionHandler;
+
+import application.TheLastManStandingApp;
+
 import static com.almasb.fxgl.dsl.FXGL.getGameTimer;
 
-import com.almasb.fxgl.entity.Entity;
 import components.PlayerComponent;
 import components.TextureComponent;
 import components.ComponentUtils;
@@ -19,11 +20,6 @@ import model.TLMSType;
 import model.score.JsonScore;
 import javafx.util.Duration;
 import model.PlayerTexture;
-
-/**
- * @version 2.2
- * Manages collisions between players and zombies
- */
 
 public class PlayerZombieCollision extends CollisionHandler{
 
@@ -59,8 +55,11 @@ public class PlayerZombieCollision extends CollisionHandler{
 					System.out.println("Hai perso!");
 					try {
 						new ScoreControllerImpl().updateScore(
-								new JsonScore(getWorldProperties().intProperty("score").get())
-						);
+								new JsonScore.Builder()
+								    .nameFromPath(ScoreControllerImpl.PATH_USER)
+								    .score(getWorldProperties().intProperty("score").get())
+								    .build()
+					    );
 					} catch (IOException e) {
 						e.printStackTrace();
 					}

@@ -1,9 +1,7 @@
 package settings;
 
-import controller.ScoreController;
-
 /**
- * Implementation of {@link SystemSettings}
+ * SystemSettingsImpl implements {@link SystemSettings} interface
  */
 public class SystemSettingsImpl implements SystemSettings {
 	

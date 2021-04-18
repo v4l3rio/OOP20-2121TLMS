@@ -1,21 +1,24 @@
 package model.score;
 
 /**
- * model the
- * @param <U>       	
+ * The POJO Score interface provides getter and setter
+ * methods for user name and score.
+ * @param <U>
+ * 		      the left element type: the user name     	
  * @param <V>
+ * 		      the right element type: the score     	
  */
 public interface Score<U, V> {
 	
 	/**
 	 * @return
-	 * 	   the username 
+	 * 	   the user name 
 	 */
 	U getName();
 	
 	/**
 	 * @param name
-	 *     set the username
+	 *     set the user name
 	 */
 	void setName(U name);
 	

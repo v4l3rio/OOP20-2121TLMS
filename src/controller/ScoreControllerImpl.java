@@ -13,29 +13,27 @@ import java.util.stream.Stream;
 
 import application.TheLastManStandingApp;
 import model.score.Score;
+import model.score.ScoreModel;
+import model.score.ScoreModelImpl;
 
 /**
  * Implementation of {@link ScoreController} 
  */
 public class ScoreControllerImpl implements ScoreController {
+	
+	public static final String PATH_SCORE = "src/assets/score/score.json";
+    public static final String PATH_USER = "src/assets/score/userName.json";
+	
+	private final ScoreModel model= new ScoreModelImpl();
 
 	@Override
 	public void updateScore(Score<String, Integer> score) throws IOException {
 		
-		String strName = score.getName();
-		String strScore = String.valueOf(score.getScore());
-		Stream<String> stream = Files.lines(Paths.get(TheLastManStandingApp.PATH_SCORE));
-		List<String> list = new ArrayList<>(stream.collect(Collectors.toList()));
+		List<String> list = Files.lines(Paths.get(PATH_SCORE)).collect(Collectors.toList());
 		
-		stream.close();
-		if(isInTopThree(list.stream(), score.getScore())) {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(TheLastManStandingApp.PATH_SCORE)));
-			list.add(strScore + " " + strName);
-			list.sort((String s1, String s2) -> 
-				Integer.valueOf(s2.split(" ")[0])
-				.compareTo(Integer.valueOf(s1.split(" ")[0]))
-			);
-			list.remove(list.size() - 1);
+		if(model.isInTopThree(list.stream(), score.getScore())) {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(new File(PATH_SCORE)));
+			list = model.updateRanking(list, score);
 			writer.write(list.get(0) + "\n");
 			writer.append(list.get(1) + "\n");
 			writer.append(list.get(2));
@@ -47,7 +45,7 @@ public class ScoreControllerImpl implements ScoreController {
 	public List<String> getRanking() throws IOException {
 		
 		List<String> list = new ArrayList<>();
-		Stream<String> stream = Files.lines(Paths.get(TheLastManStandingApp.PATH_SCORE));
+		Stream<String> stream = Files.lines(Paths.get(PATH_SCORE));
 		
 		stream.forEach(l -> 
 			list.add( l.split(" ")[1] + " " + l.split(" ")[0])
@@ -55,19 +53,5 @@ public class ScoreControllerImpl implements ScoreController {
 		stream.close();
 		
 		return list;
-	}
-	
-	/**
-	 * @param stream
-	 *            the top three ranking stream
-	 * @param score
-	 *            the score to compare with the top3
-	 * @return
-	 *     true if the score is in the top3 and the ranking will be updated 
-	 */
-	private boolean isInTopThree(Stream<String> stream, Integer score) {	
-		return stream.map(l -> l.split(" "))
-				.map(s -> Integer.valueOf(s[0]))
-				.filter(n -> n>score).count()!=3;
 	}
 }

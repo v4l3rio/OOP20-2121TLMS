@@ -25,9 +25,8 @@ import controller.ScoreControllerImpl;
  */
 public class Menu {
 	
-	private final ScoreController controller;
-	private final int BACKGROUND_WIDTH = 1280;
-	private final int BACKGROUND_HEIGHT = 720;
+	private static final int BACKGROUND_WIDTH = 1280;
+	private static final int BACKGROUND_HEIGHT = 720;
 	private final JFrame mainWindow; 
 	private JPanelWithBackground mainPanel;
 	private JButton startButton;
@@ -39,6 +38,7 @@ public class Menu {
 	private final Font titleFont = new Font("Times New Roman", Font.PLAIN, 50);
 	private final float[] buttonColor = Color.RGBtoHSB(102, 199, 255, null); //color using RGB settings
 	private final List<JButton> buttonList = new ArrayList<>();
+	private final ScoreController controller;
 	
 	/**
 	 * @param args
@@ -117,12 +117,12 @@ public class Menu {
 	 * 		       if an I/O error occurs
 	 */
 	private void addBackground(JFrame frame, String path) throws IOException {
-		mainPanel = new JPanelWithBackground(path);
+		mainPanel = JPanelWithBackground.createJPanelWithBackgroundFromPath(path);
 		frame.getContentPane().add(mainPanel);		
 	}
 	
 	/**
-	 * init all buttons settings
+	 * initialize all buttons settings
 	 */
 	private void initButtons() {
 		startButton = new JButton("START");
@@ -162,12 +162,12 @@ public class Menu {
 	
 	/** 
 	 * @return 
-	 *     the last User saved in json file
+	 *     the last User saved in Json file
 	 * @throws IOException
 	 * 			  if an I/O error occurs
 	 */
 	private String readLastUser() throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader(TheLastManStandingApp.PATH_USER));
+		BufferedReader reader = new BufferedReader(new FileReader(ScoreControllerImpl.PATH_USER));
 	    String name = reader.readLine();
 	    reader.close();
 	    return name;
@@ -175,12 +175,12 @@ public class Menu {
 	
 	/**
 	 * @param user
-	 * 			  the user that will wrote on ranking json file
+	 * 			  the user that will wrote on ranking Json file
 	 * @throws IOException
 	 * 			   if an I/O error occurs
 	 */
 	private void writeUser(String user) throws IOException {
-		BufferedWriter writer = new BufferedWriter(new FileWriter(TheLastManStandingApp.PATH_USER));
+		BufferedWriter writer = new BufferedWriter(new FileWriter(ScoreControllerImpl.PATH_USER));
 	    writer.write(user.toUpperCase());
 	    writer.close();
 	}

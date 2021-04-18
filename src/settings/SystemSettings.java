@@ -1,7 +1,7 @@
 package settings;
 
 /**
-*  getter interface of system settings
+*  Pojo interface of system settings
  */
 public interface SystemSettings {
 	

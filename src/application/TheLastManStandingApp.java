@@ -2,45 +2,29 @@ package application;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
-import com.almasb.fxgl.audio.Music;
-import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.UserAction;
-import com.almasb.fxgl.physics.CollisionHandler;
-import com.almasb.fxgl.time.TimerAction;
 import com.almasb.fxgl.ui.UI;
 
 import collisions.ShotZombieCollision;
 import components.ComponentUtils;
-import controller.ScoreController;
-import controller.ScoreControllerImpl;
 import controller.VisorController;
 import collisions.FirearmCollisionFactoryImpl;
 import collisions.PlayerFirePowerCollision;
-import collisions.Collision;
 import collisions.PlayerZombieCollision;
 import components.PlayerComponent;
-import components.TextureComponent;
 import factories.TLMSFactory;
 import factories.WorldFactory;
-import javafx.beans.InvalidationListener;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 import model.Firearm;
-import model.PlayerTexture;
 import model.TLMSMusic;
 import model.TLMSType;
-import model.score.JsonScore;
 import settings.SystemSettingsImpl;
 import settings.SystemSettings;
 import factories.ZombieSpawner;
@@ -48,8 +32,6 @@ import factories.ZombieSpawner;
 
 public class TheLastManStandingApp extends GameApplication {
 	
-    public static final String PATH_SCORE = "src/assets/score/score.json";
-    public static final String PATH_USER = "src/assets/score/userName.json";
     private static final String PATH_MAP = "Cemetery.tmx";
 	private static final double WEAPONLENGHT = 25;
 	private int GunSpawnDelay = 5;
@@ -57,14 +39,7 @@ public class TheLastManStandingApp extends GameApplication {
     private boolean isRecharging = false;
 	private static final int MAGMAGUNDURATION = 5;
 	private static final int MACHINEGUNDURATION = 6;
-	private final SystemSettings mySystemSettings = new SystemSettingsImpl();
-    private final ScoreController scoreController = new ScoreControllerImpl();    
-//    private final Collision<Entity, Entity> bulletColZombie = new ShotZombieCollision();
-//	private final Collision<Entity, Entity> playerColZombie = new PlayerZombieCollision();
-//	private final Collision<Entity, Entity> playerMagmaGun = new FirearmCollisionFactoryImpl()
-//			.createGunCollision(TLMSType.MAGMAGUN, MAGMAGUNDURATION);
-//	private final Collision<Entity, Entity> playerMachineGun = new FirearmCollisionFactoryImpl()
-//			.createGunCollision(TLMSType.MACHINEGUN, MACHINEGUNDURATION);
+	private final SystemSettings mySystemSettings = new SystemSettingsImpl();   
     private TLMSFactory factory;
     private Entity player;
 
@@ -175,8 +150,8 @@ public class TheLastManStandingApp extends GameApplication {
 		    spawn("firePowerUp", random.nextInt(2000), 50);
 		}, Duration.seconds(2));
 		
-		//TLMSMusic music = new TLMSMusic(0.1);
-		//getAudioPlayer().loopMusic(music.getMusic());
+		TLMSMusic music = new TLMSMusic(0.1);
+		getAudioPlayer().loopMusic(music.getMusic());
 
 	}
 	

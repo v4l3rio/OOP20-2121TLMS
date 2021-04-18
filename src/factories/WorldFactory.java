@@ -11,18 +11,18 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
-import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 
-import components.DamagingComponent;
 import javafx.geometry.Point2D;
 import javafx.util.Duration;
 
 /**
  * 
- * factory for static (not dynamic) entities
+ * Factory for static (not dynamic) entities.
+ * This class must implements the FXGL EntityFactory
+ * to provide "Spawns" method to the FGXL GameApplication
  *
  */
 public class WorldFactory implements EntityFactory {
