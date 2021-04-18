@@ -60,7 +60,7 @@ public class FollowPlayerComponent extends Component implements Moveable{
 
 	@Override
 	public void jump() {
-		this.physics.setVelocityY(0); // incapace di saltare avendo messo 0 come valore
+		this.physics.setVelocityY(-500); 
 	}
 	
 

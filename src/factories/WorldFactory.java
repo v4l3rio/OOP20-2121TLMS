@@ -16,7 +16,7 @@ import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 
-import components.DamagingComponent;
+
 import javafx.geometry.Point2D;
 import javafx.util.Duration;
 
@@ -43,6 +43,7 @@ public class WorldFactory implements EntityFactory {
 		    .type(WALL)
             .bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"), data.<Integer>get("height"))))
             .with(new PhysicsComponent())
+            .with(new CollidableComponent(true))
             .build();
 	}
  	

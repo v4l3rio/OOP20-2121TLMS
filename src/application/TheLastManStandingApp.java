@@ -2,40 +2,37 @@ package application;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
-import java.util.HashMap;
+
 import java.util.Map;
 import java.util.Random;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
-import com.almasb.fxgl.audio.Music;
-import com.almasb.fxgl.dsl.FXGL;
+
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.UserAction;
-import com.almasb.fxgl.physics.CollisionHandler;
-import com.almasb.fxgl.time.TimerAction;
 import com.almasb.fxgl.ui.UI;
 
 import collisions.ShotZombieCollision;
+import collisions.ZombieWallCollision;
 import components.ComponentUtils;
 import controller.ScoreController;
 import controller.ScoreControllerImpl;
 import controller.VisorController;
 import collisions.FirearmCollisionFactoryImpl;
 import collisions.PlayerFirePowerCollision;
-import collisions.Collision;
+
 import collisions.PlayerZombieCollision;
 import components.PlayerComponent;
-import components.TextureComponent;
+
 import factories.TLMSFactory;
 import factories.WorldFactory;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 import model.Firearm;
-import model.PlayerTexture;
 import model.TLMSMusic;
 import model.TLMSType;
-import model.score.JsonScore;
+
 import settings.SystemSettingsImpl;
 import settings.SystemSettings;
 import factories.ZombieSpawner;
@@ -169,8 +166,8 @@ public class TheLastManStandingApp extends GameApplication {
 		    spawn("firePowerUp", random.nextInt(2000), 50);
 		}, Duration.seconds(2));
 		
-		//TLMSMusic music = new TLMSMusic(0.1);
-		//getAudioPlayer().loopMusic(music.getMusic());
+//		TLMSMusic music = new TLMSMusic(0.1);
+//		getAudioPlayer().loopMusic(music.getMusic());
 
 	}
 	
@@ -179,6 +176,7 @@ public class TheLastManStandingApp extends GameApplication {
 		
 		getPhysicsWorld().addCollisionHandler(new PlayerZombieCollision( TLMSType.PLAYER, TLMSType.ZOMBIE));
 		getPhysicsWorld().addCollisionHandler(new ShotZombieCollision( TLMSType.SHOT, TLMSType.ZOMBIE));
+		getPhysicsWorld().addCollisionHandler(new ZombieWallCollision( TLMSType.ZOMBIE, TLMSType.WALL));
 		getPhysicsWorld().addCollisionHandler(new FirearmCollisionFactoryImpl()
 				.createGunCollision(TLMSType.MAGMAGUN, MAGMAGUNDURATION));
 		getPhysicsWorld().addCollisionHandler(new FirearmCollisionFactoryImpl()

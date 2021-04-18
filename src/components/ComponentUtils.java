@@ -20,5 +20,9 @@ public final class ComponentUtils {
 	
 	public static final Class<FirearmComponent> FIREARM_COMPONENT = FirearmComponent.class;
 	
+	public static final Class<RandomMovementComponent> RANDOM_MOVEMENT_COMPONENT = RandomMovementComponent.class;
+	
+	public static final Class<FollowPlayerComponent> FOLLOW_MOVEMENT_COMPONENT = FollowPlayerComponent.class;
+	
 	private ComponentUtils() {}
 }

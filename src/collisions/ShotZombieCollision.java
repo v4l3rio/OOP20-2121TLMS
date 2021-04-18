@@ -1,3 +1,4 @@
+
 package collisions;
 
 
@@ -20,7 +21,7 @@ public class ShotZombieCollision extends CollisionHandler{
 		super(shot, zombie);
 
 	}
-
+	@Override
 	public void onCollisionBegin(Entity shot, Entity zombie) {		
 		zombie.getComponent(ComponentUtils.HEALTH_COMPONENT).damage(shot.getComponent(ComponentUtils.DAMAGING_COMPONENT).getDamage());
 		

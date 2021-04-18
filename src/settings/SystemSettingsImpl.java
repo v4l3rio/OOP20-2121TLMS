@@ -15,12 +15,14 @@ public class SystemSettingsImpl implements SystemSettings {
 
 	@Override
 	public int getWidth() {
-		return Toolkit. getDefaultToolkit(). getScreenSize().width;
+		return WIDTH;
+		//return Toolkit.getDefaultToolkit().getScreenSize().width;
 	}
 
 	@Override
 	public int getHeight() {
-		return Toolkit. getDefaultToolkit(). getScreenSize().height;
+		return HEIGHT;
+		//return Toolkit.getDefaultToolkit().getScreenSize().height;
 	}
 	
 
