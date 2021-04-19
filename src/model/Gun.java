@@ -17,9 +17,6 @@ public abstract class Gun extends Entity{
 	private final int shotDMG;
 	private final int maxAmmo;
 	private final double shotSpeed;
-	//although it's the model, after some thinking, this seems the best place for the texture placing
-//	private final Image gunIMG;
-//	private final Image shotIMG;
 	
 	private boolean isReloading = false;
 	private int nAmmo;
@@ -31,8 +28,6 @@ public abstract class Gun extends Entity{
 		this.maxAmmo = maxAmmo;
 		this.nAmmo = maxAmmo;
 		this.shotSpeed = shotSpeed;
-//		this.gunIMG = new Image(gunIMGPath);
-//		this.shotIMG = new Image(shotIMGPath);
 	}
 	/**
 	 * refills ammo, setting them back to the max capacity
@@ -68,20 +63,6 @@ public abstract class Gun extends Entity{
 	public double getShotspeed() {
 		return shotSpeed;
 	}
-//	/**
-//	 * 
-//	 * @return gun image
-//	 */
-//	public Image getGunIMG() {
-//		return this.gunIMG;
-//	}
-//	/**
-//	 * 
-//	 * @return shot image
-//	 */
-//	public Image getShotIMG() {
-//		return shotIMG;
-//	}
 	/**
 	 * 
 	 * @return current ammunition number
@@ -104,7 +85,5 @@ public abstract class Gun extends Entity{
 	public boolean isSameTypeAs(Gun otherGun) {
 		return this.shotDMG == otherGun.getShotDamage() 
 				&& this.shotSpeed == otherGun.getShotspeed();
-//				&& this.getShotIMG() == otherGun.getGunIMG()
-//				&& this.getGunIMG() == otherGun.getGunIMG();
 	}
 }

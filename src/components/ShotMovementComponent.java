@@ -31,7 +31,8 @@ public class ShotMovementComponent extends Component{
 	 * @param shotSpeed shot speed
 	 * @param shotImage the Image contatining NTEXTURES, used for animation
 	 */
-	public ShotMovementComponent(double direction, double shotSpeed, Image shotImage) {
+	public ShotMovementComponent(PhysicsComponent physics, double direction, double shotSpeed, Image shotImage) {
+		this.physics = physics;
 		this.direction = direction;
 		animShot = new AnimationChannel(shotImage, 3, (int) (shotImage.getWidth()/NTEXTURES)
 				, (int) shotImage.getHeight(), Duration.seconds(0.80), 0, NTEXTURES - 1);
