@@ -7,7 +7,7 @@ import com.almasb.fxgl.physics.CollisionHandler;
 
 import components.ComponentUtils;
 import components.GunComponent;
-import factories.GunFactoryImpl;
+import factories.TexturedGunFactoryImpl;
 import javafx.util.Duration;
 import model.TLMSType;
 /**
@@ -34,7 +34,7 @@ public class GunCollisionFactoryImpl implements GunCollisionFactory {
 					gunComponent.setChanged(true);
 				}
 				//I set MachineGun to be the new gun
-				gunComponent.setCurrentGun(new GunFactoryImpl().gunFromType(gunType));
+				gunComponent.setCurrentGun(new TexturedGunFactoryImpl().gunFromType(gunType));
 				//I remove the prop
 				gunProp.removeFromWorld();
 				//after a delay, set the gun back to default, but if there has been a multiple change, do nothing

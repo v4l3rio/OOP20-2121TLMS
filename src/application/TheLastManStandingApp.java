@@ -27,7 +27,7 @@ import collisions.Collision;
 import collisions.PlayerZombieCollision;
 import components.PlayerComponent;
 import components.TextureComponent;
-import factories.GunFactoryImpl;
+import factories.TexturedGunFactoryImpl;
 import factories.TLMSFactory;
 import factories.WorldFactory;
 import javafx.scene.input.KeyCode;
@@ -186,9 +186,9 @@ public class TheLastManStandingApp extends GameApplication {
 		getPhysicsWorld().addCollisionHandler(new PlayerZombieCollision( TLMSType.PLAYER, TLMSType.ZOMBIE));
 		getPhysicsWorld().addCollisionHandler(new ShotZombieCollision( TLMSType.SHOT, TLMSType.ZOMBIE));
 		getPhysicsWorld().addCollisionHandler(new GunCollisionFactoryImpl()
-				.createGunCollision(TLMSType.MAGMAGUN, GunFactoryImpl.MAGMA_GUN_DURATION));
+				.createGunCollision(TLMSType.MAGMAGUN, TexturedGunFactoryImpl.MAGMA_GUN_DURATION));
 		getPhysicsWorld().addCollisionHandler(new GunCollisionFactoryImpl()
-				.createGunCollision(TLMSType.MACHINEGUN, GunFactoryImpl.MACHINE_GUN_DURATION));
+				.createGunCollision(TLMSType.MACHINEGUN, TexturedGunFactoryImpl.MACHINE_GUN_DURATION));
 		getPhysicsWorld().addCollisionHandler(new PlayerFirePowerCollision(TLMSType.PLAYER, TLMSType.FIREPOWER));
 
 	}
