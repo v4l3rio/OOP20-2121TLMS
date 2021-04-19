@@ -104,7 +104,7 @@ public class TLMSFactory implements EntityFactory{
                 //point2D ti dice il punto di inizio in alto a sx, bounding shape ti da la forma del tuo player
                 //x,y
                 .with(physics)
-                .with(new FirearmComponent(new FirearmFactoryImpl().createBeretta92()))
+                .with(new GunComponent(new GunFactoryImpl().createBeretta92()))
                 .with(new CollidableComponent(true)) //può essere colpito e può atterrare su piattaforme
                 .with(new HealthIntComponent(playerAbility.getHealt())) //gli da i punti vita
                 .with(new PlayerComponent()) 
@@ -114,7 +114,7 @@ public class TLMSFactory implements EntityFactory{
 
 	@Spawns("shot")
     public Entity newShot(SpawnData data) {
-		final Firearm currentFirearm = player.getComponent(ComponentUtils.FIREARM_COMPONENT).getCurrentFirearm();
+		final Gun currentFirearm = player.getComponent(ComponentUtils.GUN_COMPONENT).getCurrentGun();
 	 	final double direction = Math.signum(this.player.getScaleX());
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.KINEMATIC);
@@ -131,7 +131,7 @@ public class TLMSFactory implements EntityFactory{
 	
 	@Spawns("magmaGun")
     public Entity newMagmaGun(SpawnData data) {
-		Firearm magmaGun = new FirearmFactoryImpl().createMagmaGun();
+		Gun magmaGun = new GunFactoryImpl().createMagmaGun();
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);        
         // this avoids player sticking to walls
@@ -148,7 +148,7 @@ public class TLMSFactory implements EntityFactory{
 
 	@Spawns("machineGun")
     public Entity newMachineGun(SpawnData data) {
-		Firearm machineGun = new FirearmFactoryImpl().createMachineGun();
+		Gun machineGun = new GunFactoryImpl().createMachineGun();
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
 

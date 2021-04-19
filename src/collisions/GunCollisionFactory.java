@@ -4,10 +4,10 @@ import com.almasb.fxgl.physics.CollisionHandler;
 
 import model.TLMSType;
 /**
- * It's a factory to manage collisions Player-Firearm (prop)
+ * It's a factory to manage collisions Player-Gun (prop)
  *
  */
-public interface FirearmCollisionFactory {
+public interface GunCollisionFactory {
 	/**
 	 * 
 	 * @param gun is the new gun to be set

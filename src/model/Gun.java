@@ -5,11 +5,11 @@ import com.almasb.fxgl.entity.Entity;
 import javafx.scene.image.Image;
 
 /**
- * Implements a firearm model, leaving only the abstract method shoot() to be defined
+ * Implements a gun model, leaving only the abstract method shoot() to be defined
  * in its implementations
  *
  */
-public abstract class Firearm extends Entity{
+public abstract class Gun extends Entity{
 
 	//reload time, not to over-complicate, the same for each gun
 	public final static double RELOAD_TIME = 1.5;
@@ -26,7 +26,7 @@ public abstract class Firearm extends Entity{
 
 	public abstract void shoot();
 	
-	public Firearm(int shotDMG, int maxAmmo, double shotSpeed, String gunIMGPath, String shotIMGPath) {
+	public Gun(int shotDMG, int maxAmmo, double shotSpeed, String gunIMGPath, String shotIMGPath) {
 		this.shotDMG = shotDMG;
 		this.maxAmmo = maxAmmo;
 		this.nAmmo = maxAmmo;
@@ -42,7 +42,7 @@ public abstract class Firearm extends Entity{
 	}
 	/**
 	 * 
-	 * @return if the firearm is being reloaded
+	 * @return if the gun is being reloaded
 	 */
 	public boolean isReloading() {
 		return isReloading;
@@ -98,13 +98,13 @@ public abstract class Firearm extends Entity{
 	}
 	/**
 	 * 
-	 * @param otherFirearm
-	 * @return whether this firearm is of the same type as the otherFirearm, comparing main fields
+	 * @param otherGun
+	 * @return whether this gun is of the same type as otherGun, comparing main fields
 	 */
-	public boolean isSameTypeAs(Firearm otherFirearm) {
-		return this.shotDMG == otherFirearm.getShotDamage() 
-				&& this.shotSpeed == otherFirearm.getShotspeed() 
-				&& this.getShotIMG() == otherFirearm.getGunIMG()
-				&& this.getGunIMG() == otherFirearm.getGunIMG();
+	public boolean isSameTypeAs(Gun otherGun) {
+		return this.shotDMG == otherGun.getShotDamage() 
+				&& this.shotSpeed == otherGun.getShotspeed() 
+				&& this.getShotIMG() == otherGun.getGunIMG()
+				&& this.getGunIMG() == otherGun.getGunIMG();
 	}
 }

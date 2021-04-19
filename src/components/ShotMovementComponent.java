@@ -7,9 +7,13 @@ import com.almasb.fxgl.texture.AnimationChannel;
 
 import javafx.scene.image.Image;
 import javafx.util.Duration;
-
+/**
+ * Implements a component managing shot movement, both graphically 
+ * and logically (also used to handle collisions)
+ */
 public class ShotMovementComponent extends Component{
 	
+	//Preset values, we want shot size to be SHOT_SCALE big, using NTEXTURES for its animation
 	private final static int NTEXTURES = 3;
 	private final static double SHOT_SCALE = 0.14;	
 
@@ -17,16 +21,21 @@ public class ShotMovementComponent extends Component{
 
 	private AnimatedTexture texture;
 
-	private AnimationChannel animFire;
+	private AnimationChannel animShot;
 	
 	private double direction;
 	private double shotSpeed;
-
+	/**
+	 * Constructor with necessary fields
+	 * @param direction where the shot movement is directed
+	 * @param shotSpeed shot speed
+	 * @param shotImage the Image contatining NTEXTURES, used for animation
+	 */
 	public ShotMovementComponent(double direction, double shotSpeed, Image shotImage) {
 		this.direction = direction;
-		animFire = new AnimationChannel(shotImage, 3, (int) (shotImage.getWidth()/NTEXTURES)
+		animShot = new AnimationChannel(shotImage, 3, (int) (shotImage.getWidth()/NTEXTURES)
 				, (int) shotImage.getHeight(), Duration.seconds(0.80), 0, NTEXTURES - 1);
-		texture = new AnimatedTexture(animFire);
+		texture = new AnimatedTexture(animShot);
 		this.shotSpeed = shotSpeed;
 		texture.loop();
 	}
@@ -37,15 +46,15 @@ public class ShotMovementComponent extends Component{
 		getEntity().getViewComponent().addChild(texture);
 		//set image direction, taken from player
 		getEntity().setScaleX(getEntity().getScaleX()*direction*SHOT_SCALE);
-		//reduce bullet size, so to match player's one
+		//reduce shot size, so to match player's one
 		getEntity().setScaleY(getEntity().getScaleY()*SHOT_SCALE);
 	}
 
 	@Override
 	public void onUpdate(double tpf) {
 		if (physics.isMovingX()) {
-			if (texture.getAnimationChannel() != animFire) {
-				texture.loopAnimationChannel(animFire);
+			if (texture.getAnimationChannel() != animShot) {
+				texture.loopAnimationChannel(animShot);
 			}
 		}
 		//set movement direction, equals to player sign

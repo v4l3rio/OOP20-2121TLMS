@@ -21,18 +21,18 @@ import components.ComponentUtils;
 import controller.ScoreController;
 import controller.ScoreControllerImpl;
 import controller.VisorController;
-import collisions.FirearmCollisionFactoryImpl;
+import collisions.GunCollisionFactoryImpl;
 import collisions.PlayerFirePowerCollision;
 import collisions.Collision;
 import collisions.PlayerZombieCollision;
 import components.PlayerComponent;
 import components.TextureComponent;
-import factories.FirearmFactoryImpl;
+import factories.GunFactoryImpl;
 import factories.TLMSFactory;
 import factories.WorldFactory;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
-import model.Firearm;
+import model.Gun;
 import model.PlayerTexture;
 import model.TLMSMusic;
 import model.TLMSType;
@@ -104,17 +104,17 @@ public class TheLastManStandingApp extends GameApplication {
 	        getInput().addAction(new UserAction("Shoot") {
 				@Override
 				protected void onActionBegin() {
-					final Firearm currentFirearm = player.getComponent(ComponentUtils.FIREARM_COMPONENT).getCurrentFirearm();
+					final Gun currentGun = player.getComponent(ComponentUtils.GUN_COMPONENT).getCurrentGun();
 					//is reloading? can't shoot rn, do nothing
-					if(currentFirearm.isReloading()) {
-					} else if(currentFirearm.getNAmmo() > 0) {
+					if(currentGun.isReloading()) {
+					} else if(currentGun.getNAmmo() > 0) {
 						// have the shot spawn facing coherently as player, with due distance from it
 						spawn("shot", player.getPosition().getX() - AppUtils.SHOT_X_AXIS_FIX 
 								+ (AppUtils.GUN_LENGTH*player.getScaleX())
 								, player.getPosition().getY() - AppUtils.SHOT_Y_AXIS_FIX);
-						currentFirearm.shoot();
+						currentGun.shoot();
 					} else {
-						reload(currentFirearm);
+						reload(currentGun);
 					}
 				}
 			}, KeyCode.L);
@@ -122,23 +122,23 @@ public class TheLastManStandingApp extends GameApplication {
 	        getInput().addAction(new UserAction("Reload") {
 	            @Override
 	            protected void onActionBegin() {
-	            	final Firearm currentFirearm = player.getComponent(ComponentUtils.FIREARM_COMPONENT).getCurrentFirearm();
-	            	reload(currentFirearm);
+	            	final Gun currentGun = player.getComponent(ComponentUtils.GUN_COMPONENT).getCurrentGun();
+	            	reload(currentGun);
 	            }
 	        }, KeyCode.R);
 
 	 }
 	 /**
-	  * Reloads the firearm, keeping it busy for a reload time, while refilling the ammo
-	  * @param firearm
+	  * Reloads the gun, keeping it busy for a reload time, while refilling the ammo
+	  * @param gun
 	  */
-     private void reload(Firearm firearm) {
-    	 firearm.setReloading(true);
+     private void reload(Gun gun) {
+    	 gun.setReloading(true);
 			spawn("text", new SpawnData(840,150).put("text", "RELOADING"));
 			runOnce(()->{
-				firearm.reload();
-				firearm.setReloading(false);
-			}, Duration.seconds(Firearm.RELOAD_TIME));
+				gun.reload();
+				gun.setReloading(false);
+			}, Duration.seconds(Gun.RELOAD_TIME));
      }
 	
     /**
@@ -185,10 +185,10 @@ public class TheLastManStandingApp extends GameApplication {
 		
 		getPhysicsWorld().addCollisionHandler(new PlayerZombieCollision( TLMSType.PLAYER, TLMSType.ZOMBIE));
 		getPhysicsWorld().addCollisionHandler(new ShotZombieCollision( TLMSType.SHOT, TLMSType.ZOMBIE));
-		getPhysicsWorld().addCollisionHandler(new FirearmCollisionFactoryImpl()
-				.createGunCollision(TLMSType.MAGMAGUN, FirearmFactoryImpl.MAGMA_GUN_DURATION));
-		getPhysicsWorld().addCollisionHandler(new FirearmCollisionFactoryImpl()
-				.createGunCollision(TLMSType.MACHINEGUN, FirearmFactoryImpl.MACHINE_GUN_DURATION));
+		getPhysicsWorld().addCollisionHandler(new GunCollisionFactoryImpl()
+				.createGunCollision(TLMSType.MAGMAGUN, GunFactoryImpl.MAGMA_GUN_DURATION));
+		getPhysicsWorld().addCollisionHandler(new GunCollisionFactoryImpl()
+				.createGunCollision(TLMSType.MACHINEGUN, GunFactoryImpl.MACHINE_GUN_DURATION));
 		getPhysicsWorld().addCollisionHandler(new PlayerFirePowerCollision(TLMSType.PLAYER, TLMSType.FIREPOWER));
 
 	}
