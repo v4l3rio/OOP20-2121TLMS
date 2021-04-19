@@ -100,18 +100,15 @@ public class TLMSFactory implements EntityFactory{
 
         return entityBuilder(data)
                 .type(TLMSType.PLAYER)
-              //  .bbox(new HitBox(new Point2D(5,5), BoundingShape.circle(12))) //poligoni primitivi con una dimensione che si assegnano a una texture //testa
                 .bbox(new HitBox(new Point2D(15,7), BoundingShape.box(15, 30))) //x collisioni e x piattaforme. Immagini sono incollate sulle hitbox //busto
-                //point2D ti dice il punto di inizio in alto a sx, bounding shape ti da la forma del tuo player
-                //x,y
                 .with(physics)
                 .with(new FirearmComponent(new Beretta92()))
                 .with(new CollidableComponent(true)) //può essere colpito e può atterrare su piattaforme
                 .with(new HealthIntComponent(playerAbility.getHealt())) //gli da i punti vita
                 .with(new PlayerComponent()) 
                 .with(new TextureComponent(pt.getTextureBlue().getTextureMap()))
-                .build();  //builda tutto quello che ho scritto
-    }
+                .build();
+        }
 
 	@Spawns("shot")
     public Entity newShot(SpawnData data) {

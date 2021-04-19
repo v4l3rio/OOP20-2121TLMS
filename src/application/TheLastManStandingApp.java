@@ -28,6 +28,7 @@ import factories.WorldFactory;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 import model.Firearm;
+import model.TLMSMusic;
 import model.TLMSType;
 import settings.SystemSettingsImpl;
 import settings.SystemSettings;
@@ -63,7 +64,6 @@ public class TheLastManStandingApp extends GameApplication {
 		settings.setTitle(mySystemSettings.getTitle());
 		settings.setVersion(mySystemSettings.getVersion());
 		settings.setGameMenuEnabled(false);   //disable the default FXGL menu
-
 	}   
 	
 	 @Override
@@ -155,6 +155,7 @@ public class TheLastManStandingApp extends GameApplication {
 			//spawn a machineGun after a base+random time
 			spawn("machineGun", random.nextInt(mySystemSettings.getWidth()), -100);
 			}, Duration.seconds(GunSpawnDelay + random.nextInt(++GunSpawnDelay)));
+		
 		player = spawn("player", 1000, 0);
 		factory.setPlayer(player);
 		
@@ -162,8 +163,8 @@ public class TheLastManStandingApp extends GameApplication {
 		    spawn("firePowerUp", random.nextInt(2000), 50);
 		}, Duration.seconds(2));
 		
-		//TLMSMusic music = new TLMSMusic(0.1);
-		//getAudioPlayer().loopMusic(music.getMusic());
+		TLMSMusic music = new TLMSMusic("thriller.wav", 0.1);
+		getAudioPlayer().loopMusic(music.getMusic());
 
 	}
 	

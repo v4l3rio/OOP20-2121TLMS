@@ -4,9 +4,10 @@ public class PlayerImpl implements Player {
 	private int speed;
 	private int jumpCounter;
 	private int maxJumps;
-	private int jumpsHeight;
+	private final int jumpsHeight;
 	private int healt;
 	private double dimension;
+	private PlayerColor color;
 	
 	public PlayerImpl() {
 		this.dimension = 1.7;
@@ -15,6 +16,7 @@ public class PlayerImpl implements Player {
 		this.maxJumps = 1;
 		this.jumpCounter = 1;
 		this.jumpsHeight = -600;
+		this.color = PlayerColor.BLUE;
 	}
 	
 	@Override
@@ -23,7 +25,7 @@ public class PlayerImpl implements Player {
 	}
 	
 	@Override
-	public void setSpeed(int speed) {
+	public void setSpeed(final int speed) {
 		this.speed = speed;
 	}
 	
@@ -33,7 +35,7 @@ public class PlayerImpl implements Player {
 	}
 
 	@Override
-	public void setHealt(int healt) {
+	public void setHealt(final int healt) {
 		this.healt = healt;
 	}
 
@@ -43,7 +45,7 @@ public class PlayerImpl implements Player {
 	}
 	
 	@Override
-	public void setMaxJumps(int maxJumps) {
+	public void setMaxJumps(final int maxJumps) {
 		this.maxJumps = maxJumps;		
 	}
 
@@ -65,6 +67,16 @@ public class PlayerImpl implements Player {
 	@Override
 	public double getDimension() {
 		return this.dimension;
+	}
+	
+	@Override
+	public PlayerColor getColor() {
+		return this.color;
+	}
+	
+	@Override
+	public void setColor(final PlayerColor color) {
+		this.color = color;
 	}
 	
 	

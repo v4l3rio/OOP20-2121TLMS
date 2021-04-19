@@ -17,7 +17,8 @@ public class PlayerTexture {
 		this.playerTextureRed.addTexture(TLMSType.IDLE, "Gunner_Red_Idle.png");
 		this.playerTextureRed.addTexture(TLMSType.RUN, "Gunner_Red_Run.png");
 		this.playerTextureRed.addTexture(TLMSType.JUMP, "Gunner_Red_Jump.png");
-		this.playerTextureRed.addTexture(TLMSType.DEAD, "Gunner_Red_Death.png");		
+		this.playerTextureRed.addTexture(TLMSType.DEAD, "Gunner_Red_Death.png");	
+		
 	}
 	
 	public Texture getTextureBlue() {

@@ -10,9 +10,9 @@ public class TLMSMusic {
 	private Music gameMusic;
 	private String backgroundSong;
 	
-	public TLMSMusic(double volume){
-		this.backgroundSong = "thriller.wav";
+	public TLMSMusic(final String songName, final double volume){
 		
+		this.backgroundSong = songName;		
 		this.gameMusic = getAssetLoader().loadMusic(this.backgroundSong);
 		getSettings().setGlobalMusicVolume(volume);		
 	}

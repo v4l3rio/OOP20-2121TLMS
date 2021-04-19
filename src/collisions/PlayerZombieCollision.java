@@ -18,6 +18,11 @@ import controller.ScoreControllerImpl;
 import model.TLMSType;
 import model.score.JsonScore;
 import javafx.util.Duration;
+import model.PlayerPowerUp;
+import model.Player;
+import model.PlayerColor;
+import model.PlayerImpl;
+import model.PlayerPowerUpProxy;
 import model.PlayerTexture;
 
 /**
@@ -35,17 +40,21 @@ public class PlayerZombieCollision extends CollisionHandler{
 	public void onCollisionBegin(Entity player, Entity zombie) {
 		
 		player.getComponent(ComponentUtils.HEALTH_COMPONENT).damage(zombie.getComponent(ComponentUtils.DAMAGING_COMPONENT).getDamage());
-		
-		PlayerTexture playerTexture = new PlayerTexture();
-		
-		if(player.getComponent(PlayerComponent.class).isRed()) {
+	
+		PlayerPowerUp playerPowerUp = new PlayerPowerUpProxy(player);
+
+		if(player.getComponent(ComponentUtils.PLAYER_COMPONENT).getPlayer().getColor()==PlayerColor.RED) {
+			playerPowerUp.transformation(PlayerColor.BLUE, 400, player.getComponent(ComponentUtils.PLAYER_COMPONENT).getPlayer().getHealt(), 1);
+			
 			getGameTimer().runOnceAfter(() -> {
-				player.removeComponent(TextureComponent.class);  
+				PlayerTexture playerTexture = new PlayerTexture();
+				player.removeComponent(ComponentUtils.PLAYERTEXTURE_COMPONENT);  
 				player.addComponent(new TextureComponent(playerTexture.getTextureBlue().getTextureMap()));		
 			}, Duration.seconds(0.8));
 		}
     	
-    	player.getComponent(PlayerComponent.class).attacked();
+		
+    	player.getComponent(ComponentUtils.PLAYER_COMPONENT).attacked();
     	zombie.getComponent(ComponentUtils.TEXTURE_COMPONENT).setAttacking(true);
     	
     	inc("playerLife", -0.1);

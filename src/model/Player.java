@@ -21,5 +21,9 @@ public interface Player {
 	int getJumpHeight();
 	
 	double getDimension();
+	
+	PlayerColor getColor();
+	
+	void setColor(PlayerColor color);
 
 }

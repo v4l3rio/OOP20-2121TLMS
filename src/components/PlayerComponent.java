@@ -42,7 +42,6 @@ public class PlayerComponent extends Component {
     }
 
     public void moveLeft() {
-
     	getEntity().setScaleX(-player.getDimension()); //direzione personaggio
         physics.setVelocityX(-player.getSpeed());
     }
@@ -60,7 +59,7 @@ public class PlayerComponent extends Component {
     
     public void attacked() {
     	this.isAttacked = true;
-    	this.toBlue();
+    	//this.toBlue();
     	this.player.setHealt(player.getHealt()-3);
     	
     	//if(entity.getComponent(ComponentUtils.HEALTH_COMPONENT).getValue()<=0) {
