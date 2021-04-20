@@ -14,10 +14,10 @@ public final class Launcher {
     /**
      * @param args
      * @throws IOException 
-     * 		       if an I/O error occurs 
+     *            if an I/O error occurs 
      */
     public static void main(final String[] args) throws IOException {
-    	
-    	new Menu(args);
+
+        new Menu(args);
     }
 }

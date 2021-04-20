@@ -5,13 +5,13 @@ package settings;
  */
 public class SystemSettingsImpl implements SystemSettings {
 	
-	private final int TILE_SIZE = 32;
-	private final int NUM_TILES_WIDTH = 62;
-	private final int NUM_TILES_HEIGHT = 35;
-	private final int WIDTH = NUM_TILES_WIDTH * TILE_SIZE; 
-    private final int HEIGHT = NUM_TILES_HEIGHT * TILE_SIZE; 
-    private final String title = "2021: The last man standing";
-    private final String version = "2.0";
+	private static final int TILE_SIZE = 32;
+	private static final int NUM_TILES_WIDTH = 62;
+	private static final int NUM_TILES_HEIGHT = 35;
+	private static final int WIDTH = NUM_TILES_WIDTH * TILE_SIZE; 
+    private static final int HEIGHT = NUM_TILES_HEIGHT * TILE_SIZE; 
+    private static final String TITLE = "2021: The last man standing";
+    private static final String VERSION = "2.0";
 
 	@Override
 	public int getWidth() {
@@ -26,11 +26,11 @@ public class SystemSettingsImpl implements SystemSettings {
 
 	@Override
 	public String getTitle() {
-		return this.title;
+		return TITLE;
 	}
 
 	@Override
 	public String getVersion() {
-		return this.version;
+		return VERSION;
 	}
 }

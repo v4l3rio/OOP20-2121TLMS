@@ -10,10 +10,10 @@ import javax.swing.JPanel;
 
 /**
  * 
- * Extends JPanel to create a Panel with background
+ * Extends JPanel to create a Panel with background.
  *
  */
-public class JPanelWithBackground extends JPanel {
+public final class JPanelWithBackground extends JPanel {
 
 	private static final long serialVersionUID = -5042514025454946591L;
 	private transient Image backgroundImage;
@@ -28,7 +28,7 @@ public class JPanelWithBackground extends JPanel {
 	 * 		      if an I/O error occurs
 	 * @return the JPanel 
 	 */
-	public static JPanelWithBackground createJPanelWithBackgroundFromURL(URL fileName) throws IOException {
+	public static JPanelWithBackground createJPanelWithBackgroundFromURL(final URL fileName) throws IOException {
 		final JPanelWithBackground panel = new JPanelWithBackground();
 		panel.backgroundImage = ImageIO.read(fileName);
 		panel.setOpaque(false);
@@ -40,7 +40,7 @@ public class JPanelWithBackground extends JPanel {
 	 * 	          the Image to put on background
 	 * @return the JPanel 
 	 */
-	public static JPanelWithBackground createJPanelWithBackgroundFromImage(Image image) {
+	public static JPanelWithBackground createJPanelWithBackgroundFromImage(final Image image) {
 		final JPanelWithBackground panel = new JPanelWithBackground();
 		panel.backgroundImage = image;
 		panel.setOpaque(false);
@@ -51,7 +51,7 @@ public class JPanelWithBackground extends JPanel {
 	  * {@inheritDoc}
 	  */
 	@Override
-	public void paintComponent(Graphics g) {
+	public void paintComponent(final Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(backgroundImage, 0, 0, this);
 	}

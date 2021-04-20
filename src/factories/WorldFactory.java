@@ -1,6 +1,7 @@
 package factories;
 
 import static com.almasb.fxgl.dsl.FXGL.entityBuilder;
+import static com.almasb.fxgl.dsl.FXGL.animationBuilder;
 import static model.TLMSType.PLATFORM;
 import static model.TLMSType.WALL;
 
@@ -27,11 +28,11 @@ import javafx.util.Duration;
  */
 public class WorldFactory implements EntityFactory {
 	
-	private final double durationPointsText = 1.0;
-	private final double durationReloadText = 2.0;
-	private final int sizePointsText = 30;
-	private final int sizeReloadText = 70;
-	private final int widthShiftText = 30;
+	private static final double DURATION_POINT_TEXT = 1.0;
+	private static final double DURATION_RELOAD_TEXT = 2.0;
+	private static final int SIZE_POINT_TEXT = 30;
+	private static final int SIZE_RELOAD_TEXT = 70;
+	private static final int WIDTH_SHIFT_TEXT = 30;
 	
 	/**
 	 * @param data
@@ -39,8 +40,8 @@ public class WorldFactory implements EntityFactory {
 	 *     a platform entity
 	 */
 	@Spawns("platform")
-	public Entity newPlatform(SpawnData data) {
-		return FXGL.entityBuilder(data)
+	public Entity newPlatform(final SpawnData data) {
+		return entityBuilder(data)
 		    .type(PLATFORM)
             .bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"), data.<Integer>get("height"))))
             .with(new PhysicsComponent())
@@ -53,8 +54,8 @@ public class WorldFactory implements EntityFactory {
 	 *     a wall entity
 	 */
 	@Spawns("wall")
-	public Entity newWall(SpawnData data) {
-		return FXGL.entityBuilder(data)
+	public Entity newWall(final SpawnData data) {
+		return entityBuilder(data)
 		    .type(WALL)
             .bbox(new HitBox(BoundingShape.box(data.<Integer>get("width"), data.<Integer>get("height"))))
             .with(new PhysicsComponent())
@@ -67,19 +68,19 @@ public class WorldFactory implements EntityFactory {
 	 *     a generic text entity on north-center of the window
 	 */
  	 @Spawns("text")
-     public Entity centralText(SpawnData data) {
-         String text = data.get("text");
+     public Entity centralText(final SpawnData data) {
+ 		final String text = data.get("text");
          
-         var e = entityBuilder(data)
-                 .view(FXGL.getUIFactoryService().newText(text, sizeReloadText))
-                 .with(new ExpireCleanComponent(Duration.seconds(durationReloadText)))
+ 		final var e = entityBuilder(data)
+                 .view(FXGL.getUIFactoryService().newText(text, SIZE_RELOAD_TEXT))
+                 .with(new ExpireCleanComponent(Duration.seconds(DURATION_RELOAD_TEXT)))
                  .build();
 
-         FXGL.animationBuilder()
+        animationBuilder()
                  .interpolator(Interpolators.EXPONENTIAL.EASE_OUT())
                  .translate(e)
                  .from(new Point2D(data.getX(), data.getY()))
-                 .to(new Point2D(data.getX(), data.getY() - widthShiftText))
+                 .to(new Point2D(data.getX(), data.getY() - WIDTH_SHIFT_TEXT))
                  .buildAndPlay();
 
          return e;
@@ -91,19 +92,19 @@ public class WorldFactory implements EntityFactory {
  	  *     the points text of the kill of a zombie on the zombie's head
  	  */
  	 @Spawns("zombiePoints")
-     public Entity newScoreText(SpawnData data) {
-         String text = data.get("zombiePoints");
+     public Entity newScoreText(final SpawnData data) {
+ 		final String text = data.get("zombiePoints");
 
-         var e = entityBuilder(data)
-                 .view(FXGL.getUIFactoryService().newText(text, sizePointsText))
-                 .with(new ExpireCleanComponent(Duration.seconds(durationPointsText)).animateOpacity())
+ 		final var e = entityBuilder(data)
+                 .view(FXGL.getUIFactoryService().newText(text, SIZE_POINT_TEXT))
+                 .with(new ExpireCleanComponent(Duration.seconds(DURATION_POINT_TEXT)).animateOpacity())
                  .build();
 
-         FXGL.animationBuilder()
+        animationBuilder()
                  .interpolator(Interpolators.EXPONENTIAL.EASE_OUT())
                  .translate(e)
                  .from(new Point2D(data.getX(), data.getY()))
-                 .to(new Point2D(data.getX(), data.getY() - widthShiftText))
+                 .to(new Point2D(data.getX(), data.getY() - WIDTH_SHIFT_TEXT))
                  .buildAndPlay();
          return e;
      }

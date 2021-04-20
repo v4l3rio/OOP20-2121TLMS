@@ -35,16 +35,15 @@ public class TheLastManStandingApp extends GameApplication {
     private static final String PATH_MAP = "Cemetery.tmx";
 	private static final double WEAPONLENGHT = 25;
 	private int GunSpawnDelay = 5;
-	private Random random = new Random();
-    private boolean isRecharging = false;
+	private final Random random = new Random();
+    private boolean isRecharging;
 	private static final int MAGMAGUNDURATION = 5;
 	private static final int MACHINEGUNDURATION = 6;
 	private final SystemSettings mySystemSettings = new SystemSettingsImpl();   
-    private TLMSFactory factory;
     private Entity player;
 
 	@Override
-	protected void initSettings(GameSettings settings) {
+	protected void initSettings(final GameSettings settings) {
 		settings.setWidth(mySystemSettings.getWidth());
 		settings.setHeight(mySystemSettings.getHeight());
 		settings.setTitle(mySystemSettings.getTitle());
@@ -127,12 +126,12 @@ public class TheLastManStandingApp extends GameApplication {
 	
 	@Override
 	protected void initGame() {
+	    final TLMSFactory factory = new TLMSFactory();
 		getGameWorld().addEntityFactory(new WorldFactory());
-		factory = new TLMSFactory();
 		getGameWorld().addEntityFactory(factory);
 		setLevelFromMap(PATH_MAP);
 
-		ZombieSpawner spawner = new ZombieSpawner();
+		final ZombieSpawner spawner = new ZombieSpawner();
 		spawner.start();
 		//spawn a magmaGun after a base+random delay, both incremental
 		getGameTimer().runAtInterval(() -> {
@@ -150,7 +149,7 @@ public class TheLastManStandingApp extends GameApplication {
 		    spawn("firePowerUp", random.nextInt(2000), 50);
 		}, Duration.seconds(2));
 		
-		TLMSMusic music = new TLMSMusic(0.1);
+		final TLMSMusic music = new TLMSMusic(0.1);
 		getAudioPlayer().loopMusic(music.getMusic());
 
 	}
@@ -169,7 +168,7 @@ public class TheLastManStandingApp extends GameApplication {
 	}
 
     @Override
-    protected void initGameVars(Map<String, Object> vars) {
+    protected void initGameVars(final Map<String, Object> vars) {
         vars.put("score", 0);
         vars.put("playerLife",0.0);
         
@@ -177,8 +176,8 @@ public class TheLastManStandingApp extends GameApplication {
     
     @Override
     protected void initUI() {
-    	VisorController visorController = new VisorController();
-    	UI ui = getAssetLoader().loadUI(visorController.getFxmlVisor(), visorController);
+    	final VisorController visorController = new VisorController();
+    	final UI ui = getAssetLoader().loadUI(visorController.getFxmlVisor(), visorController);
     	getGameScene().addUI(ui);
     	visorController.getLifeProgressProperty().bind(
             getWorldProperties()
@@ -192,7 +191,7 @@ public class TheLastManStandingApp extends GameApplication {
 
     }
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		launch(args);
 	}
 	

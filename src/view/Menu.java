@@ -1,6 +1,5 @@
 package view;
 
-
 import java.awt.Color;
 import java.awt.Font;
 import java.io.BufferedReader;
@@ -21,50 +20,48 @@ import controller.ScoreController;
 import controller.ScoreControllerImpl;
 
 /**
- * This class generates the view menu
+ * This class generates the view menu.
  */
 public class Menu {
-	
+
 	private static final int BACKGROUND_WIDTH = 1280;
 	private static final int BACKGROUND_HEIGHT = 720;
-	private final JFrame mainWindow; 
+	private final JFrame mainWindow;
 	private JPanelWithBackground mainPanel;
 	private JButton startButton;
 	private JButton usernameButton;
 	private JButton rankingButton;
 	private JButton controlsButton;
 	private JButton exitButton;
-	private JLabel title;
 	private final Font titleFont = new Font("Times New Roman", Font.PLAIN, 50);
-	private final float[] buttonColor = Color.RGBtoHSB(102, 199, 255, null); //color using RGB settings
+	private final float[] buttonColor = Color.RGBtoHSB(102, 199, 255, null); // color using RGB settings
 	private final List<JButton> buttonList = new ArrayList<>();
 	private final ScoreController controller;
-	
+
 	/**
 	 * @param args
-	 * @throws IOException 
-	 * 		       if an I/O error occurs
+	 * @throws IOException if an I/O error occurs
 	 */
-	public Menu(String[] args) throws IOException {
-		
+	public Menu(final String[] args) throws IOException {
+
 		this.controller = new ScoreControllerImpl();
 		this.controller.firstGame();
 		this.mainWindow = new JFrame("The Last Man Standing-Menu");
-		addBackground(mainWindow, "/assets/levels/menuBackground.png");		
+		addBackground(mainWindow, "/assets/levels/menuBackground.png");
 		addTitle("THE LAST MAN STANDING");
-		mainPanel.setLayout(null);  //disable LayoutManager to set buttons positions easier
+		mainPanel.setLayout(null); // disable LayoutManager to set buttons positions easier
 		initButtons();
-		String user = readLastUser();
-		
+		final String user = readLastUser();
+
 		startButton.addActionListener(l -> {
 			mainWindow.dispose();
 			TheLastManStandingApp.main(args);
 		});
-		
+
 		usernameButton.addActionListener(l -> {
-			String name = (String)JOptionPane.showInputDialog(
-		        mainWindow,"Insert Username:","", JOptionPane.QUESTION_MESSAGE, null, null, user);
-			if(name != null && !name.equals("")) {
+			final String name = (String) JOptionPane.showInputDialog(mainWindow, "Insert Username:", "",
+					JOptionPane.QUESTION_MESSAGE, null, null, user);
+			if (name != null && !name.equals("")) {
 				try {
 					writeUser(name);
 				} catch (IOException e) {
@@ -73,57 +70,47 @@ public class Menu {
 				}
 			}
 		});
-		
+
 		rankingButton.addActionListener(l -> {
 			try {
-				List<String> rankingList = controller.getRanking();
-				JOptionPane.showMessageDialog(mainWindow,	
-				    rankingList.get(0) + "\n" + 
-					rankingList.get(1) + "\n" + 		
-					rankingList.get(2),
-					"Ranking",
-					JOptionPane.INFORMATION_MESSAGE);
+				final List<String> rankingList = controller.getRanking();
+				JOptionPane.showMessageDialog(mainWindow,
+						rankingList.get(0) + "\n" + rankingList.get(1) + "\n" + rankingList.get(2), "Ranking",
+						JOptionPane.INFORMATION_MESSAGE);
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.out.println("Error Ranking file");
 			}
 		});
 		exitButton.addActionListener(l -> {
-			System.exit(0);
+			mainWindow.dispose();
 		});
-		
+
 		controlsButton.addActionListener(l -> {
-			JOptionPane.showMessageDialog(mainWindow,			    
-		        "A  -  left\n"
-		      + "D  -  right\n"
-		      + "W -  jump\n"
-		      + "L  -  shoot\n"
-		      + "R  -  reload\n",
-		      	"Controls",
-				JOptionPane.INFORMATION_MESSAGE);
-		});		
-		
+			JOptionPane.showMessageDialog(mainWindow,
+					"A  -  left\n" + "D  -  right\n" + "W -  jump\n" + "L  -  shoot\n" + "R  -  reload\n", "Controls",
+					JOptionPane.INFORMATION_MESSAGE);
+		});
+
 		mainWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		mainWindow.setSize(BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
 		mainWindow.setResizable(false);
 		mainWindow.setVisible(true);
-		
+
 	}
-	
+
 	/**
 	 * @param frame
-	 * @param path
-	 * 	          path of Background image 
-	 * @throws IOException
-	 * 		       if an I/O error occurs
+	 * @param path  path of Background image
+	 * @throws IOException if an I/O error occurs
 	 */
-	private void addBackground(JFrame frame, String path) throws IOException {
+	private void addBackground(final JFrame frame, final String path) throws IOException {
 		mainPanel = JPanelWithBackground.createJPanelWithBackgroundFromURL(getClass().getResource(path));
-		frame.getContentPane().add(mainPanel);		
+		frame.getContentPane().add(mainPanel);
 	}
-	
+
 	/**
-	 * initialize all buttons settings
+	 * initialize all buttons settings.
 	 */
 	private void initButtons() {
 		startButton = new JButton("START");
@@ -148,49 +135,44 @@ public class Menu {
 		usernameButton.setLocation(50, 585);
 		exitButton.setSize(100, 35);
 		exitButton.setLocation(1110, 585);
-		
-	}
-	
-	/**
-	 * @param buttons
-	 * 		      the buttons lists
-	 * @param color
-	 * 		      the color array
-	 */
-	private void setButtonColor(List<JButton> buttons, float[] color) {
-		buttons.forEach(b -> b.setBackground(Color.getHSBColor(color[0], color[1], color[2])));		
-	}	
-	
-	/** 
-	 * @return 
-	 *     the last User saved in Json file
-	 * @throws IOException
-	 * 			  if an I/O error occurs
-	 */
-	private String readLastUser() throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader(ScoreControllerImpl.FILE_NAME_USER));
-	    String name = reader.readLine();
-	    reader.close();
-	    return name;
-	}
-	
-	/**
-	 * @param user
-	 * 			  the user that will wrote on ranking Json file
-	 * @throws IOException
-	 * 			   if an I/O error occurs
-	 */
-	private void writeUser(String user) throws IOException {
-		BufferedWriter writer = new BufferedWriter(new FileWriter(ScoreControllerImpl.FILE_NAME_USER));
-	    writer.write(user.toUpperCase());
-	    writer.close();
 	}
 
 	/**
-	 * @param titleName
-	 * 	          the window title
+	 * @param buttons the buttons lists
+	 * @param color   the color array
 	 */
-	private void addTitle(String titleName) {
+	private void setButtonColor(final List<JButton> buttons, final float[] color) {
+		buttons.forEach(b -> b.setBackground(Color.getHSBColor(color[0], color[1], color[2])));
+	}
+
+	/**
+	 * @return the last User saved in Json file
+	 * @throws IOException if an I/O error occurs
+	 */
+	private String readLastUser() throws IOException {
+		try (BufferedReader reader = new BufferedReader(new FileReader(ScoreControllerImpl.FILE_NAME_USER))) {
+			final String name = reader.readLine();
+			reader.close();
+			return name;
+		}
+	}
+
+	/**
+	 * @param user the user that will wrote on ranking Json file
+	 * @throws IOException if an I/O error occurs
+	 */
+	private void writeUser(final String user) throws IOException {
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(ScoreControllerImpl.FILE_NAME_USER))) {
+			final String upperCaseUser = user.toUpperCase();
+			writer.write(upperCaseUser);
+		}
+	}
+
+	/**
+	 * @param titleName the window title
+	 */
+	private void addTitle(final String titleName) {
+		final JLabel title;
 		title = new JLabel(titleName);
 		mainPanel.add(title);
 		title.setSize(800, 100);
@@ -198,8 +180,5 @@ public class Menu {
 		title.setForeground(Color.white);
 		title.setFont(titleFont);
 	}
-	
-}
 
-	
-	
+}

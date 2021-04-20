@@ -1,8 +1,10 @@
 package model.score;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+
 
 
 /**
@@ -18,7 +20,7 @@ import java.io.IOException;
  * }</pre>
  * 
  */
-public class JsonScore implements Score<String, Integer> {
+public final class JsonScore implements Score<String, Integer> {
 
 	private String name;
 	private Integer score;
@@ -31,7 +33,7 @@ public class JsonScore implements Score<String, Integer> {
 	 * @throws IOException
 	 *             if an I/O error occurs
 	 */
-	public JsonScore(final String name, final Integer score) throws IOException {
+	public JsonScore(final String name, final Integer score) {
 	    this.name = name;
 	    this.score = score;
 	}
@@ -42,7 +44,7 @@ public class JsonScore implements Score<String, Integer> {
 	}
 
 	@Override
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
@@ -52,7 +54,7 @@ public class JsonScore implements Score<String, Integer> {
 	}
 
 	@Override
-	public void setScore(Integer score) {
+	public void setScore(final Integer score) {
 		this.score = score;
 	}
 
@@ -66,56 +68,60 @@ public class JsonScore implements Score<String, Integer> {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
-		if (obj == null || getClass() != obj.getClass())
+		}
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
-		JsonScore other = (JsonScore) obj;
+		}
+		final JsonScore other = (JsonScore) obj;
 		return name.equals(other.name) 
 		    && score.equals(other.score);	
 	}
 	
 	public static class Builder {
-		
+
 		private String name;
 		private Integer score;
-		
+
 		/**
 		 * @param name
 		 * 	          A string with the user name
 		 * @return
 		 *		  The {@link Builder} builder with user name
 		 */
-		public Builder nameFromString(String name) {
+		public Builder nameFromString(final String name) {
 			this.name = name;
 			return this;
 		}
-		
+
 		/**
 		 * @param path
 		 * 	          A string with the path of the user name file
 		 * @return The {@link Builder} builder with user name
+		 * @throws FileNotFoundException 
+		 * 		        if the named file does not exist
 		 * @throws IOException
 		 * 		       if an I/O error occurs
 		 */
-		public Builder nameFromPath(String path) throws IOException {
-			BufferedReader reader = new BufferedReader(new FileReader(path));
-			this.name = reader.readLine();
-			reader.close();
+		public Builder nameFromPath(final String path) throws FileNotFoundException, IOException {
+			try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+				this.name = reader.readLine();
+			}
 			return this;
 		}
-		
+
 		/**
 		 * @param score
 		 * 		    The integer score of the game
 		 * @return The {@link Builder} builder with score
 		 */
-		public Builder score(Integer score) {
+		public Builder score(final Integer score) {
 			this.score = score;
 			return this;
 		}
-		
+
 		/**
 		 * 
 		 * @return A {@link Score} only if there are not exceptions
@@ -124,8 +130,8 @@ public class JsonScore implements Score<String, Integer> {
 		 * @throws IOException
 		 *             if an I/O error occurs
 		 */
-		public Score<String,Integer> build() throws IllegalStateException, IOException {
-			if(this.name == null || this.score == null) {
+		public Score<String, Integer> build() {
+			if (this.name == null || this.score == null) {
 				System.out.println(name);
 				System.out.println(score);
 				throw new IllegalStateException();
