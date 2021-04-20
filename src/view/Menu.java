@@ -50,7 +50,7 @@ public class Menu {
 		this.controller = new ScoreControllerImpl();
 		this.controller.firstGame();
 		this.mainWindow = new JFrame("The Last Man Standing-Menu");
-		addBackground(mainWindow, "src/assets/levels/menuBackground.png");		
+		addBackground(mainWindow, "/assets/levels/menuBackground.png");		
 		addTitle("THE LAST MAN STANDING");
 		mainPanel.setLayout(null);  //disable LayoutManager to set buttons positions easier
 		initButtons();
@@ -118,7 +118,7 @@ public class Menu {
 	 * 		       if an I/O error occurs
 	 */
 	private void addBackground(JFrame frame, String path) throws IOException {
-		mainPanel = JPanelWithBackground.createJPanelWithBackgroundFromPath(path);
+		mainPanel = JPanelWithBackground.createJPanelWithBackgroundFromURL(getClass().getResource(path));
 		frame.getContentPane().add(mainPanel);		
 	}
 	
