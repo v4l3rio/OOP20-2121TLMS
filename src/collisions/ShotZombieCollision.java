@@ -1,3 +1,4 @@
+
 package collisions;
 
 
@@ -9,7 +10,6 @@ import components.ComponentUtils;
 import model.TLMSType;
 
 /**
- * @version 2.3
  * Manages collisions between bullet and zombies
  */
 
@@ -20,7 +20,7 @@ public class ShotZombieCollision extends CollisionHandler{
 		super(shot, zombie);
 
 	}
-
+	@Override
 	public void onCollisionBegin(Entity shot, Entity zombie) {		
 		zombie.getComponent(ComponentUtils.HEALTH_COMPONENT).damage(shot.getComponent(ComponentUtils.DAMAGING_COMPONENT).getDamage());
 		

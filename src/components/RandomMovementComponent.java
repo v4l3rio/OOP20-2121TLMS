@@ -8,17 +8,24 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 
 import model.Moveable;
 
+/**
+ * This component attached to an entity makes it move randomly
+ */
 public class RandomMovementComponent extends Component implements Moveable {
 
 	private double seconds = 0.0;
 
-
-	Random rnd = new Random();
+	private Random rnd = new Random();
 
 	int speed;
 
-	PhysicsComponent physics;
+	private PhysicsComponent physics;
 
+	/**
+	 * 
+	 * @param physics - PhysicsComponent
+	 * @param speed - movement speed
+	 */
 	public RandomMovementComponent(PhysicsComponent physics, int speed) {
 		this.physics = physics;
 		this.speed = speed;
@@ -30,7 +37,7 @@ public class RandomMovementComponent extends Component implements Moveable {
 
 		if (getGameTimer().getNow() > seconds) {
 
-			switch (getRandomDirections()) {
+			switch (DIRECTIONS.getRandom()) {
 			case LEFT:
 				left();
 				seconds = seconds + rnd.nextDouble();
@@ -56,9 +63,6 @@ public class RandomMovementComponent extends Component implements Moveable {
 
 	}
 
-	public DIRECTIONS getRandomDirections() {
-		return DIRECTIONS.values()[rnd.nextInt(DIRECTIONS.values().length)];
-	}
 
 	public void left() {
 		getEntity().setScaleX(-1);
@@ -76,6 +80,6 @@ public class RandomMovementComponent extends Component implements Moveable {
 
 	@Override
 	public void jump() {
-		this.physics.setVelocityY(0); // incapace di saltare avendo messo 0 come valore
+		this.physics.setVelocityY(-500);
 	}
 }

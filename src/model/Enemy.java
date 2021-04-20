@@ -3,8 +3,6 @@ package model;
 import java.util.UUID;
 
 /**
- * 
- * @version 1.0
  * This class models a generic Enemy
  */
 public interface Enemy {
@@ -12,35 +10,34 @@ public interface Enemy {
 	 * 
 	 * @return speed of this enemy
 	 */
-	int getSpeed();
+	public int getSpeed();
+	
+	/**
+	 * @param life - life of enemy
+	 */
+	public void setLife(int life);
 	
 	/**
 	 * 
 	 * @return life of this enemy
 	 */
-	void setLife(int life);
-	
-	/**
-	 * 
-	 * @return life of this enemy
-	 */
-	int getLife();
+	public int getLife();
 	
 	/**
 	 * 
 	 * @return UUID of this enemy
 	 */
-	UUID getUUID();
+	public UUID getUUID();
 	
 	/**
 	 * 
-	 * @param dmg, set damage dealt by the enemy
+	 * @param dmg - set damage dealt by the enemy
 	 */
-	void setDamage(int dmg);
+	public void setDamage(int dmg);
 	
 	/**
 	 * 
 	 * @return damage dealt by the enemy
 	 */
-	int getDamage();
+	public int getDamage();
 }

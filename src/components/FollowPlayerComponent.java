@@ -10,18 +10,26 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 
 import model.Moveable;
 
+/**
+ * This component attached to an entity will make it follow the player
+ */
 public class FollowPlayerComponent extends Component implements Moveable{
 	
-	Entity player;
-	PhysicsComponent physics;
+	private Entity player;
+	private PhysicsComponent physics;
 	int speed;
 	
 	private double seconds = 0.0;
 
 
-	Random rnd = new Random();
+	private Random rnd = new Random();
 
-	
+	/**
+	 * 
+	 * @param player - player to follow
+	 * @param physics - PhysicsComponent
+	 * @param speed - movement speed
+	 */
 	public FollowPlayerComponent(Entity player, PhysicsComponent physics, int speed) {
 		this.player = player;
 		this.physics = physics;
@@ -60,7 +68,7 @@ public class FollowPlayerComponent extends Component implements Moveable{
 
 	@Override
 	public void jump() {
-		this.physics.setVelocityY(0); // incapace di saltare avendo messo 0 come valore
+		this.physics.setVelocityY(-500); 
 	}
 	
 

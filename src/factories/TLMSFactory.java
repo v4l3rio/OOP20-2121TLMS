@@ -17,6 +17,7 @@ import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import components.*;
 import javafx.geometry.Point2D;
+import javafx.scene.image.Image;
 import model.*;
 import components.PlayerComponent;
 import components.FirePowerComponent;
@@ -30,8 +31,6 @@ import model.PlayerImpl;
 import model.PlayerTexture;
 
 /**
- * 
- * @version 3.1
  * This factory creates various types of entities that can be spawned with the "spawn ()" method
  */
 
@@ -44,9 +43,9 @@ public class TLMSFactory implements EntityFactory{
 	}
 
 	/**
-	 * 
-	 * @param data, data to customize the creation of the zombie
-	 * @return
+	 * This method build "stupid" zombie, that moves randomly in the game
+	 * @param data - data to customize the creation of the zombie
+	 * @return entity - created entity
 	 */
 	@Spawns("stupidZombie")
     public Entity newStupidZombie(SpawnData data) {
@@ -65,10 +64,15 @@ public class TLMSFactory implements EntityFactory{
                 .with(new HealthIntComponent(zombie.getLife()))
                 .with(new CollidableComponent(true))
                 .with(new RandomMovementComponent(physics, zombie.getSpeed()))
-                .with(new ZombieTextureComponent(zombie.getTexture().getTextureMap()))
+                .with(new ZombieTextureComponent(zombie.getTexture().getTextureMap(), physics))
                 .build();
     }
 	
+	/**
+	 * This method build "follow" zombie, that follows the player in the game
+	 * @param data - data to customize the creation of the zombie
+	 * @return entity - created entity
+	 */
 	@Spawns("followingZombie")
     public Entity newFollowingZombie(SpawnData data) {
 		
@@ -86,7 +90,7 @@ public class TLMSFactory implements EntityFactory{
                 .with(new HealthIntComponent(zombie.getLife()))
                 .with(new CollidableComponent(true))
                 .with(new FollowPlayerComponent(this.player, physics, zombie.getSpeed()))
-                .with(new ZombieTextureComponent(zombie.getTexture().getTextureMap()))
+                .with(new ZombieTextureComponent(zombie.getTexture().getTextureMap(), physics))
                 .build();
     }
 	
@@ -100,12 +104,11 @@ public class TLMSFactory implements EntityFactory{
 
         return entityBuilder(data)
                 .type(TLMSType.PLAYER)
-                .bbox(new HitBox(new Point2D(5,5), BoundingShape.circle(12))) //poligoni primitivi con una dimensione che si assegnano a una texture //testa
-                .bbox(new HitBox(new Point2D(10,25), BoundingShape.box(10, 17))) //x collisioni e x piattaforme. Immagini sono incollate sulle hitbox //busto
+                .bbox(new HitBox(new Point2D(15,7), BoundingShape.box(15, 30))) //x collisioni e x piattaforme. Immagini sono incollate sulle hitbox //busto
                 //point2D ti dice il punto di inizio in alto a sx, bounding shape ti da la forma del tuo player
                 //x,y
                 .with(physics)
-                .with(new FirearmComponent(new Beretta92()))
+                .with(new GunComponent(new TexturedGunFactoryImpl().createBeretta92()))
                 .with(new CollidableComponent(true)) //può essere colpito e può atterrare su piattaforme
                 .with(new HealthIntComponent(playerAbility.getHealt())) //gli da i punti vita
                 .with(new PlayerComponent()) 
@@ -115,8 +118,8 @@ public class TLMSFactory implements EntityFactory{
 
 	@Spawns("shot")
     public Entity newShot(SpawnData data) {
-		final Firearm currentFirearm = player.getComponent(ComponentUtils.FIREARM_COMPONENT).getCurrentFirearm();
-	 	final double direction = this.player.getScaleX();
+		final TexturedGun currentGun = player.getComponent(ComponentUtils.GUN_COMPONENT).getCurrentGun();
+	 	final double direction = Math.signum(this.player.getScaleX());
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.KINEMATIC);
         
@@ -125,14 +128,15 @@ public class TLMSFactory implements EntityFactory{
                 .bbox(new HitBox(new Point2D(50,100), BoundingShape.box(130, 130)))
                 .with(physics)
                 .with(new CollidableComponent(true))
-                .with(new ShotMovementComponent(direction, currentFirearm.getShotTexture()))
-                .with(new DamagingComponent(currentFirearm.getShotDamage()))
+                .with(new ShotMovementComponent(physics, direction, currentGun.getShotspeed(), 
+                		new Image(currentGun.getTextureMap().get(TLMSType.SHOT))))
+                .with(new DamagingComponent(currentGun.getShotDamage()))
                 .build();
     }
 	
 	@Spawns("magmaGun")
     public Entity newMagmaGun(SpawnData data) {
-		Firearm magmaGun = new MagmaGun();
+		TexturedGun magmaGun = new TexturedGunFactoryImpl().createMagmaGun();
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);        
         // this avoids player sticking to walls
@@ -143,13 +147,13 @@ public class TLMSFactory implements EntityFactory{
                 .bbox(new HitBox(new Point2D(35,130), BoundingShape.box(160, 100)))
                 .with(new CollidableComponent(true))
                 .with(physics)
-                .with(new PropComponent(magmaGun.getWeaponTexture()))
+                .with(new PropComponent(new Image(magmaGun.getTextureMap().get(TLMSType.GUN))))
                 .build();
     }
 
 	@Spawns("machineGun")
     public Entity newMachineGun(SpawnData data) {
-		Firearm machineGun = new MachineGun();
+		TexturedGun machineGun = new TexturedGunFactoryImpl().createMachineGun();
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
 
@@ -158,7 +162,7 @@ public class TLMSFactory implements EntityFactory{
                 .bbox(new HitBox(new Point2D(35,130), BoundingShape.box(160, 100)))
                 .with(new CollidableComponent(true))
                 .with(physics)
-                .with(new PropComponent(machineGun.getWeaponTexture()))
+                .with(new PropComponent(new Image(machineGun.getTextureMap().get(TLMSType.GUN))))
                 .build();
     }
 	

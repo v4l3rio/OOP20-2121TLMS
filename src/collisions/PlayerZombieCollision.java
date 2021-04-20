@@ -21,6 +21,9 @@ import model.score.JsonScore;
 import javafx.util.Duration;
 import model.PlayerTexture;
 
+/**
+ * Manages collisions between players and zombies
+ */
 public class PlayerZombieCollision extends CollisionHandler{
 
 	public PlayerZombieCollision(TLMSType player, TLMSType zombie) {
