@@ -48,6 +48,7 @@ public class Menu {
 	public Menu(String[] args) throws IOException {
 		
 		this.controller = new ScoreControllerImpl();
+		this.controller.firstGame();
 		this.mainWindow = new JFrame("The Last Man Standing-Menu");
 		addBackground(mainWindow, "src/assets/levels/menuBackground.png");		
 		addTitle("THE LAST MAN STANDING");
@@ -167,7 +168,7 @@ public class Menu {
 	 * 			  if an I/O error occurs
 	 */
 	private String readLastUser() throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader(ScoreControllerImpl.PATH_USER));
+		BufferedReader reader = new BufferedReader(new FileReader(ScoreControllerImpl.FILE_NAME_USER));
 	    String name = reader.readLine();
 	    reader.close();
 	    return name;
@@ -180,7 +181,7 @@ public class Menu {
 	 * 			   if an I/O error occurs
 	 */
 	private void writeUser(String user) throws IOException {
-		BufferedWriter writer = new BufferedWriter(new FileWriter(ScoreControllerImpl.PATH_USER));
+		BufferedWriter writer = new BufferedWriter(new FileWriter(ScoreControllerImpl.FILE_NAME_USER));
 	    writer.write(user.toUpperCase());
 	    writer.close();
 	}

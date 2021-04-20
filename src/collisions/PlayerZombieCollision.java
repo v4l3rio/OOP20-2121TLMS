@@ -56,7 +56,7 @@ public class PlayerZombieCollision extends CollisionHandler{
 					try {
 						new ScoreControllerImpl().updateScore(
 								new JsonScore.Builder()
-								    .nameFromPath(ScoreControllerImpl.PATH_USER)
+								    .nameFromPath(ScoreControllerImpl.FILE_NAME_USER)
 								    .score(getWorldProperties().intProperty("score").get())
 								    .build()
 					    );

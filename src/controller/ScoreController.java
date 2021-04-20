@@ -11,6 +11,11 @@ import model.score.Score;
 public interface ScoreController {
 	
 	/**
+	 * @throws IOException 
+	 * 
+	 */
+	void firstGame() throws IOException;
+	/**
 	 * @param score
 	 *            The new score to insert in ranking
 	 * @throws IOException
