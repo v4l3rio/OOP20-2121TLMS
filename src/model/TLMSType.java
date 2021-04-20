@@ -66,7 +66,6 @@ public enum TLMSType {
 	
 	/**
 	 * Defines MACHINEGUN type, used to spawn gun prop
-	 * @see TLMSFactory
 	 * 
 	 * but also to build a textured gun from type
 	 * @see TexturedGunFactoryImpl
@@ -75,7 +74,6 @@ public enum TLMSType {
 	
 	/**
 	 * Defines MAGMAGUN type, used to spawn gun prop
-	 * @see TLMSFactory
 	 * 
 	 * but also to build a textured gun from type
 	 * @see TexturedGunFactoryImpl

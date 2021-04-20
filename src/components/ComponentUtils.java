@@ -14,6 +14,8 @@ public final class ComponentUtils {
 	
 	public static final Class<PlayerComponent> PLAYER_COMPONENT = PlayerComponent.class;
 	
+	public static final Class<TextureComponent> PLAYERTEXTURE_COMPONENT = TextureComponent.class;
+	
 	public static final Class<ZombieTextureComponent> TEXTURE_COMPONENT = ZombieTextureComponent.class;
 	
 	public static final Class<GunComponent> GUN_COMPONENT = GunComponent.class;
@@ -21,6 +23,8 @@ public final class ComponentUtils {
 	public static final Class<RandomMovementComponent> RANDOM_MOVEMENT_COMPONENT = RandomMovementComponent.class;
 	
 	public static final Class<FollowPlayerComponent> FOLLOW_MOVEMENT_COMPONENT = FollowPlayerComponent.class;
+	
+	public static final Class<FirePowerComponent> FIREPOWER_COMPONENT = FirePowerComponent.class;
 	
 	private ComponentUtils() {}
 }

@@ -1,15 +1,17 @@
 package collisions;
 
-import static com.almasb.fxgl.dsl.FXGL.getGameTimer;
+import static com.almasb.fxgl.dsl.FXGL.*;
 
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.CollisionHandler;
 
-import components.FirePowerComponent;
-import components.PlayerComponent;
+import components.ComponentUtils;
 import components.TextureComponent;
 import javafx.util.Duration;
-import model.PlayerTexture;
+import model.PlayerColor;
+import model.PlayerPowerUp;
+import model.PlayerPowerUpProxy;
+import model.PlayerTextures;
 import model.TLMSType;
 
 public class PlayerFirePowerCollision extends CollisionHandler{
@@ -22,23 +24,23 @@ public class PlayerFirePowerCollision extends CollisionHandler{
 	@Override
 	public void onCollisionBegin(Entity player, Entity firepower) {
 		
+		firepower.removeFromWorld();
+		PlayerTextures playerTexture = new PlayerTextures(PlayerColor.RED);
+		PlayerPowerUp playerPowerUp = new PlayerPowerUpProxy(player);
+		set("playerLife", 1.0);
 		
+		if(player.getComponent(ComponentUtils.PLAYER_COMPONENT).getPlayer().getColor()==PlayerColor.BLUE) {
+			playerPowerUp.transformation(PlayerColor.RED, 650, 
+					player.getComponent(ComponentUtils.PLAYER_COMPONENT).getPlayer().getMaxHeath(), 5);
+				getGameTimer().runOnceAfter(() -> {					
+					player.removeComponent(ComponentUtils.PLAYERTEXTURE_COMPONENT);  
+					player.addComponent(new TextureComponent(playerTexture.getTexture().getTextureMap()));		
+				}, Duration.seconds(0.8));
 		
-		if(!player.getComponent(PlayerComponent.class).isRed()) {
-			PlayerTexture playerTexture = new PlayerTexture();
-			
-			firepower.getComponent(FirePowerComponent.class).collide();
-			firepower.removeFromWorld();
-			getGameTimer().runOnceAfter(() -> {
-				player.getComponent(PlayerComponent.class).toRed();	
-				player.removeComponent(TextureComponent.class);  
-				player.addComponent(new TextureComponent(playerTexture.getTextureRed().getTextureMap()));		
-			}, Duration.seconds(0.8));
+			}
 			
 		}
-		
-		
-		
+	
 	}
 
-}
+

@@ -20,16 +20,16 @@ import collisions.PlayerFirePowerCollision;
 import collisions.PlayerZombieCollision;
 import components.PlayerComponent;
 import factories.TexturedGunFactoryImpl;
-
-
 import factories.TLMSFactory;
 import factories.WorldFactory;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 import model.Gun;
+import model.PlayerSpeed;
+import model.PlayerSpeedStrategy;
+import model.PlayerSpeedTurnsAround;
 import model.TLMSMusic;
 import model.TLMSType;
-
 import settings.SystemSettingsImpl;
 import settings.SystemSettings;
 import factories.ZombieSpawner;
@@ -49,8 +49,8 @@ public class TheLastManStandingApp extends GameApplication {
 		settings.setTitle(mySystemSettings.getTitle());
 		settings.setVersion(mySystemSettings.getVersion());
 		settings.setGameMenuEnabled(false);   //disable the default FXGL menu
-
 	}  
+
 	
 	/**
 	 * manages game inputs therefore connecting each chosen button to his assigned behavior
@@ -61,33 +61,63 @@ public class TheLastManStandingApp extends GameApplication {
 	    	getInput().addAction(new UserAction("Left") {
 	            @Override
 	            protected void onAction() {
-	                player.getComponent(PlayerComponent.class).moveLeft();
+	            	PlayerSpeedStrategy strategy = new PlayerSpeed(player);
+	                player.getComponent(ComponentUtils.PLAYER_COMPONENT).moveLeft(strategy);
 	            }
 
 	            @Override
 	            protected void onActionEnd() {
-	                player.getComponent(PlayerComponent.class).stop();
+	                player.getComponent(ComponentUtils.PLAYER_COMPONENT).stop();
 	            }
 	        }, KeyCode.A);
+	    	
+	    	getInput().addAction(new UserAction("TurnLeft") {
+	            @Override
+	            protected void onActionBegin() {
+	            	PlayerSpeedStrategy strategy = new PlayerSpeedTurnsAround();
+	                player.getComponent(ComponentUtils.PLAYER_COMPONENT).moveLeft(strategy);;
+	            }
+	        }, KeyCode.Q);
 
 	        getInput().addAction(new UserAction("Right") {
 	            @Override
 	            protected void onAction() {
-	                player.getComponent(PlayerComponent.class).moveRight();
+	            	PlayerSpeedStrategy strategy = new PlayerSpeed(player);
+	                player.getComponent(ComponentUtils.PLAYER_COMPONENT).moveRight(strategy);
 	            }
 
 	            @Override
 	            protected void onActionEnd() {
-	                player.getComponent(PlayerComponent.class).stop();
+	                player.getComponent(ComponentUtils.PLAYER_COMPONENT).stop();
 	            }
 	        }, KeyCode.D);
+	        
+	        getInput().addAction(new UserAction("TurnRight") {
+	            @Override
+	            protected void onActionBegin() {
+	            	PlayerSpeedStrategy strategy = new PlayerSpeedTurnsAround();
+	                player.getComponent(ComponentUtils.PLAYER_COMPONENT).moveRight(strategy);;
+	            }
+	        }, KeyCode.E);
 
 	        getInput().addAction(new UserAction("Jump") {
 	            @Override
 	            protected void onActionBegin() {
-	                player.getComponent(PlayerComponent.class).jump();
+	                player.getComponent(ComponentUtils.PLAYER_COMPONENT).jump();
 	            }
 	        }, KeyCode.W);
+	        
+	        getInput().addAction(new UserAction("Aerodynamics") {
+	            @Override
+	            protected void onAction() {
+	                player.getComponent(ComponentUtils.PLAYER_COMPONENT).aerodynamics();
+	                }
+
+	            @Override
+	            protected void onActionEnd() {
+	                player.getComponent(ComponentUtils.PLAYER_COMPONENT).stop();
+	            }
+	        }, KeyCode.S);
 	        
 	        getInput().addAction(new UserAction("Shoot") {
 				@Override
@@ -158,7 +188,7 @@ public class TheLastManStandingApp extends GameApplication {
 		player = spawn("player", 1000, 0);
 		//sets factory reference of player
 		factory.setPlayer(player);
-		inc("playerLife", ((double)player.getComponent(ComponentUtils.HEALTH_COMPONENT).getValue()) / 10);
+		inc("playerLife", ((double)player.getComponent(ComponentUtils.PLAYER_COMPONENT).getPlayer().getHealt() / 10));
 		
 		getGameTimer().runAtInterval(() -> {
 		    spawn("firePowerUp", random.nextInt(2000), 50);
@@ -215,4 +245,3 @@ public class TheLastManStandingApp extends GameApplication {
 	}
 	
 }
-

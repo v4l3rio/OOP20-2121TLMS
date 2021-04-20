@@ -22,7 +22,7 @@ public class ZombieSpawner extends Thread {
 	private static final int INITIAL_SPAWN_Y = -100;
 	private static final int INITIAL_SPAWN_X = 500;
 	
-	private static final int SPAWN_TIME = 2;
+	private static final int SPAWN_TIME = 4;
 	private static final int MINIMUM_LIFE = 10;
 	private static final int MINIMUM_SPEED = 170;
 	private static final int MINIMUM_DAMAGE = 2;
@@ -82,7 +82,7 @@ public class ZombieSpawner extends Thread {
 	private Zombie getRandomZombie() {
 		int life = rnd.nextInt(10) + MINIMUM_LIFE;
 		int speed = rnd.nextInt(80) + MINIMUM_SPEED;
-		int damage = rnd.nextInt(4) + MINIMUM_DAMAGE;
+		int damage = MINIMUM_DAMAGE;
 		
 		return new Zombie(life, speed, damage);
 	}

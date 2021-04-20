@@ -51,7 +51,7 @@ public class ZombieTextureComponent extends Component {
 	public void onAdded() {
 		entity.getTransformComponent().setScaleOrigin(new Point2D(16, 21));
 		entity.getViewComponent().addChild(texture);
-		entity.setScaleUniform(1);
+		entity.setScaleUniform(0.8);
 	}
 
 	public void setAttacking(boolean attacking) {

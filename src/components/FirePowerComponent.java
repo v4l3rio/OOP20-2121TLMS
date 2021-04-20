@@ -3,7 +3,6 @@ package components;
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 import com.almasb.fxgl.entity.component.Component;
-import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
 
@@ -12,15 +11,10 @@ import javafx.util.Duration;
 
 public class FirePowerComponent extends Component{
 	
-	private PhysicsComponent physics;
 	private AnimationChannel animFire;
 	private AnimatedTexture animTexture;
-	private boolean used;
-	
 	
 	public FirePowerComponent() {
-		physics = new PhysicsComponent();
-		this.used = false;
 		this.animFire = new AnimationChannel(image("FirePower.png"), 4, 141, 138, Duration.seconds(1), 0, 3);
 		animTexture = new AnimatedTexture(animFire);
 	}
@@ -32,19 +26,9 @@ public class FirePowerComponent extends Component{
 	}
 	
 	 @Override
-	 public void onUpdate(double tpf) { 
-//		 if(!this.used) {
-//			getGameTimer().runOnceAfter(() -> {
-//	 			entity.removeFromWorld();
-//	     	}, Duration.seconds(5));	  
-//		 }
-		 
+	 public void onUpdate(double tpf) { 	 
 		 if (animTexture.getAnimationChannel() != animFire) {
              animTexture.loopAnimationChannel(animFire);
          }
-	 }
-	 
-	 public void collide() {
-		 used = true;
 	 }
 }

@@ -28,7 +28,7 @@ import components.ZombieTextureComponent;
 import model.TLMSType;
 import model.Player;
 import model.PlayerImpl;
-import model.PlayerTexture;
+
 
 /**
  * This factory creates various types of entities that can be spawned with the "spawn ()" method
@@ -94,10 +94,14 @@ public class TLMSFactory implements EntityFactory{
                 .build();
     }
 	
+	/**
+	 * 
+	 * @param data
+	 * @return a new entity player
+	 */
 	@Spawns("player")
     public Entity newPlayer(SpawnData data) {
-		Player playerAbility = new PlayerImpl();
-		PlayerTexture pt = new PlayerTexture();
+		PlayerTextures texture = new PlayerTextures(PlayerColor.BLUE);
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
         physics.addGroundSensor(new HitBox("GROUND_SENSOR", new Point2D(16, 38), BoundingShape.box(6, 8)));
@@ -105,16 +109,13 @@ public class TLMSFactory implements EntityFactory{
         return entityBuilder(data)
                 .type(TLMSType.PLAYER)
                 .bbox(new HitBox(new Point2D(15,7), BoundingShape.box(15, 30))) //x collisioni e x piattaforme. Immagini sono incollate sulle hitbox //busto
-                //point2D ti dice il punto di inizio in alto a sx, bounding shape ti da la forma del tuo player
-                //x,y
                 .with(physics)
                 .with(new GunComponent(new TexturedGunFactoryImpl().createBeretta92()))
                 .with(new CollidableComponent(true)) //può essere colpito e può atterrare su piattaforme
-                .with(new HealthIntComponent(playerAbility.getHealt())) //gli da i punti vita
                 .with(new PlayerComponent()) 
-                .with(new TextureComponent(pt.getTextureBlue().getTextureMap()))
-                .build();  //builda tutto quello che ho scritto
-    }
+                .with(new TextureComponent(texture.getTexture().getTextureMap()))
+                .build();
+        }
 
 	@Spawns("shot")
     public Entity newShot(SpawnData data) {

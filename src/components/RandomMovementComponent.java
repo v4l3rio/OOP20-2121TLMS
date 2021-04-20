@@ -65,12 +65,12 @@ public class RandomMovementComponent extends Component implements Moveable {
 
 
 	public void left() {
-		getEntity().setScaleX(-1);
+		getEntity().setScaleX(-0.8);
 		this.physics.setVelocityX(-(this.speed));
 	}
 
 	public void right() {
-		getEntity().setScaleX(1);
+		getEntity().setScaleX(0.8);
 		this.physics.setVelocityX(this.speed);
 	}
 

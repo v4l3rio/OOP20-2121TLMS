@@ -12,14 +12,16 @@ import application.TheLastManStandingApp;
 
 import static com.almasb.fxgl.dsl.FXGL.getGameTimer;
 
-import components.PlayerComponent;
 import components.TextureComponent;
 import components.ComponentUtils;
 import controller.ScoreControllerImpl;
 import model.TLMSType;
 import model.score.JsonScore;
 import javafx.util.Duration;
-import model.PlayerTexture;
+import model.PlayerPowerUp;
+import model.PlayerColor;
+import model.PlayerPowerUpProxy;
+import model.PlayerTextures;
 
 /**
  * Manages collisions between players and zombies
@@ -33,24 +35,13 @@ public class PlayerZombieCollision extends CollisionHandler{
 	@Override
 	public void onCollisionBegin(Entity player, Entity zombie) {
 		
-		player.getComponent(ComponentUtils.HEALTH_COMPONENT).damage(zombie.getComponent(ComponentUtils.DAMAGING_COMPONENT).getDamage());
-		
-		PlayerTexture playerTexture = new PlayerTexture();
-		
-		if(player.getComponent(PlayerComponent.class).isRed()) {
-			getGameTimer().runOnceAfter(() -> {
-				player.removeComponent(TextureComponent.class);  
-				player.addComponent(new TextureComponent(playerTexture.getTextureBlue().getTextureMap()));		
-			}, Duration.seconds(0.8));
-		}
-    	
-    	player.getComponent(PlayerComponent.class).attacked();
-    	zombie.getComponent(ComponentUtils.TEXTURE_COMPONENT).setAttacking(true);
-    	
-    	inc("playerLife", -((double)(zombie.getComponent(ComponentUtils.DAMAGING_COMPONENT).getDamage())) / 10);
-		
-		System.out.println("Il player ha vita: " + player.getComponent(ComponentUtils.HEALTH_COMPONENT).getValue());
-			
+		zombie.getComponent(ComponentUtils.TEXTURE_COMPONENT).setAttacking(true);
+		//player.getComponent(ComponentUtils.HEALTH_COMPONENT).damage(zombie.getComponent(ComponentUtils.DAMAGING_COMPONENT).getDamage());
+		player.getComponent(ComponentUtils.PLAYER_COMPONENT).attacked(zombie.getComponent(ComponentUtils.DAMAGING_COMPONENT).getDamage());
+	
+		PlayerPowerUp playerPowerUp = new PlayerPowerUpProxy(player);
+
+    	inc("playerLife", - ((double)zombie.getComponent(ComponentUtils.DAMAGING_COMPONENT).getDamage()) / 10);			
 	
 		if(player.getComponent(ComponentUtils.PLAYER_COMPONENT).isDead()) {
 			getGameTimer().runOnceAfter(() -> {			
@@ -68,6 +59,16 @@ public class PlayerZombieCollision extends CollisionHandler{
 					}
 					gameOver();		
 	    	}, Duration.seconds(1.7));
+		}
+		
+		if(player.getComponent(ComponentUtils.PLAYER_COMPONENT).getPlayer().getColor()==PlayerColor.RED) {
+			playerPowerUp.transformation(PlayerColor.BLUE, 400, player.getComponent(ComponentUtils.PLAYER_COMPONENT).getPlayer().getHealt(), 1);
+			
+			getGameTimer().runOnceAfter(() -> {
+				PlayerTextures playerTextures = new PlayerTextures(PlayerColor.BLUE);
+				player.removeComponent(ComponentUtils.PLAYERTEXTURE_COMPONENT);  
+				player.addComponent(new TextureComponent(playerTextures.getTexture().getTextureMap()));
+			}, Duration.seconds(0.8));
 		}
 	}
 	

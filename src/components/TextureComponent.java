@@ -12,13 +12,20 @@ import javafx.geometry.Point2D;
 import javafx.util.Duration;
 import model.TLMSType;
 
+/**
+ * 
+ * this class is used to create, set and manage the player's texture
+ */
 public class TextureComponent extends Component{
 	
 	private AnimatedTexture animTexture;
     private AnimationChannel animIdle, animRun, animJump, animDeath, animDamage;
     private PhysicsComponent physics;
     
-    public TextureComponent (Map<TLMSType, String> textures) {   	
+    /**
+     * @param a map of textures
+     */
+    public TextureComponent (final Map<TLMSType, String> textures) {   	
     	this.animIdle = new AnimationChannel(image(textures.get(TLMSType.IDLE)), 5, 48, 48, Duration.seconds(1), 0, 4);
     	this.animRun = new AnimationChannel(image(textures.get(TLMSType.RUN)), 6, 48, 48, Duration.seconds(1), 0, 5);
     	this.animJump = new AnimationChannel(image(textures.get(TLMSType.JUMP)), 2, 48, 48, Duration.seconds(1.7), 1, 1);
@@ -32,16 +39,16 @@ public class TextureComponent extends Component{
     public void onAdded() { //appena entità viene aggiunto al mondo, viene eseguito
         entity.getTransformComponent().setScaleOrigin(new Point2D(16, 21));
         entity.getViewComponent().addChild(animTexture);
-        getEntity().setScaleUniform(entity.getComponent(PlayerComponent.class).getPlayer().getDimension()); //setta la grandezza iniziale in percentuale
+        getEntity().setScaleUniform(entity.getComponent(ComponentUtils.PLAYER_COMPONENT).getPlayer().getDimension()); //setta la grandezza iniziale in percentuale
     }
     
     @Override
     public void onUpdate(double tpf) { 
-    	if(entity.getComponent(PlayerComponent.class).isDead()) {
+    	if(entity.getComponent(ComponentUtils.PLAYER_COMPONENT).isDead()) {
     		if (animTexture.getAnimationChannel() != animDeath) {
     			animTexture.loopAnimationChannel(animDeath); 
     		}    			
-    	} else if (entity.getComponent(PlayerComponent.class).isAttacked()) {
+    	} else if (entity.getComponent(ComponentUtils.PLAYER_COMPONENT).isAttacked()) {
     		if(animTexture.getAnimationChannel() != animDamage) {
     			animTexture.loopAnimationChannel(animDamage); 
     		}
@@ -64,9 +71,8 @@ public class TextureComponent extends Component{
     
     @Override
     public void onRemoved() {
-    	if(!entity.getComponent(PlayerComponent.class).isDead()) {
+    	if(!entity.getComponent(ComponentUtils.PLAYER_COMPONENT).isDead()) {
     		entity.getViewComponent().removeChild(animTexture);
     	}
     }
-
 }

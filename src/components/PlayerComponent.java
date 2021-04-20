@@ -5,7 +5,9 @@ import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import javafx.util.Duration;
 import model.Player;
+import model.PlayerColor;
 import model.PlayerImpl;
+import model.PlayerSpeedStrategy;
 
 public class PlayerComponent extends Component {
     
@@ -15,15 +17,16 @@ public class PlayerComponent extends Component {
     
     private boolean isAttacked = false;
     private boolean isDead = false;
-    private boolean isRed = false;
 
+    /**
+     * generation of all the initial values of the player
+     */
     public PlayerComponent() {
     	this.player = new PlayerImpl();
     }
 
     @Override
-    public void onAdded() { //appena entità viene aggiunto al mondo, viene eseguito
-    	
+    public void onAdded() { //appena entità viene aggiunto al mondo, viene eseguito   	
         physics.onGroundProperty().addListener((obs, old, isOnGround) -> { //obs(observer) //old??
         	if (isOnGround) {
 	        	player.resetNJumps();
@@ -31,26 +34,42 @@ public class PlayerComponent extends Component {
         });
     }
     
+    /**
+     * 
+     * @return player with all his values
+     */
     public Player getPlayer() {
     	return this.player;
     }
 
-    public void moveRight() {
-    	
+    /**
+     * player right movement
+     * @param strategy
+     */
+    public void moveRight(final PlayerSpeedStrategy strategy) {
     	getEntity().setScaleX(player.getDimension()); //direzione personaggio
-        physics.setVelocityX(player.getSpeed());
+        physics.setVelocityX(strategy.getVelocity());
     }
 
-    public void moveLeft() {
-
+    /**
+     * player left movement
+     * @param strategy
+     */
+    public void moveLeft(final PlayerSpeedStrategy strategy) {
     	getEntity().setScaleX(-player.getDimension()); //direzione personaggio
-        physics.setVelocityX(-player.getSpeed());
+        physics.setVelocityX(-strategy.getVelocity());
     }
     
+    /**
+     * this method set player's speed to 0
+     */
     public void stop() {
         physics.setVelocityX(0);
     }
     
+    /**
+     * management of player jumps
+     */
     public void jump() {
         if (player.getNJumps() > 0) {
 	        physics.setVelocityY(player.getJumpHeight());
@@ -58,12 +77,39 @@ public class PlayerComponent extends Component {
         }
     }
     
-    public void attacked() {
+    /**
+     * the ability to land faster
+     */
+    public void aerodynamics() {
+    	if (this.player.getColor()==PlayerColor.RED) {
+    		physics.setVelocityY(-player.getJumpHeight()*2);
+    	}
+    }
+    
+    /**
+     * 
+     * @return true if he is attacked
+     */
+    public boolean isAttacked() {
+    	return this.isAttacked;
+    }
+    
+    /**
+     * 
+     * @return true if he is dead
+     */
+    public boolean isDead() {
+    	return this.isDead;
+    }
+    
+    /**
+     * @param damage
+     */
+    public void attacked(int damage) {
     	this.isAttacked = true;
-    	this.toBlue();
-    	this.player.setHealt(player.getHealt()-3);
     	
-    	//if(entity.getComponent(ComponentUtils.HEALTH_COMPONENT).getValue()<=0) {
+    	this.player.setHealt(player.getHealt()-damage);
+
     	if(player.getHealt()<=0) {
     		this.dead();
     	}    	
@@ -74,34 +120,11 @@ public class PlayerComponent extends Component {
     	
     }
     
-    public boolean isAttacked() {
-    	return this.isAttacked;
-    }
-    
-    public boolean isDead() {
-    	return this.isDead;
-    }
-    
-    public void dead() {
+    /**
+     * this method set a boolean, telling the player's death
+     */
+    void dead() {
     	this.isDead = true;
     }
-    
-    public boolean isRed() {
-    	return this.isRed;
-    }
-    
-    public void toRed () {
-    	this.isRed = true;
-    	this.player.setSpeed(350);
-    	this.player.setHealt(10);
-    	this.player.setMaxJumps(4);
-    	this.player.resetNJumps();
-    }
-    
-    public void toBlue() {
-    	this.isRed = false;
-    	this.player.setSpeed(300);
-    	this.player.setMaxJumps(1);
-    	this.player.resetNJumps();
-    }
+  
 }
