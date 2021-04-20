@@ -12,12 +12,19 @@ import javafx.geometry.Point2D;
 import javafx.util.Duration;
 import model.TLMSType;
 
+/**
+ * 
+ * this class is used to create, set and manage the player's texture
+ */
 public class TextureComponent extends Component{
 	
 	private AnimatedTexture animTexture;
     private AnimationChannel animIdle, animRun, animJump, animDeath, animDamage;
     private PhysicsComponent physics;
     
+    /**
+     * @param a map of textures
+     */
     public TextureComponent (final Map<TLMSType, String> textures) {   	
     	this.animIdle = new AnimationChannel(image(textures.get(TLMSType.IDLE)), 5, 48, 48, Duration.seconds(1), 0, 4);
     	this.animRun = new AnimationChannel(image(textures.get(TLMSType.RUN)), 6, 48, 48, Duration.seconds(1), 0, 5);
@@ -64,9 +71,8 @@ public class TextureComponent extends Component{
     
     @Override
     public void onRemoved() {
-    	if(!entity.getComponent(PlayerComponent.class).isDead()) {
+    	if(!entity.getComponent(ComponentUtils.PLAYER_COMPONENT).isDead()) {
     		entity.getViewComponent().removeChild(animTexture);
     	}
     }
-
 }

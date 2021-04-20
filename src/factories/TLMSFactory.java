@@ -27,7 +27,7 @@ import components.ZombieTextureComponent;
 import model.TLMSType;
 import model.Player;
 import model.PlayerImpl;
-import model.PlayerTexture;
+
 
 /**
  * 
@@ -90,10 +90,14 @@ public class TLMSFactory implements EntityFactory{
                 .build();
     }
 	
+	/**
+	 * 
+	 * @param data
+	 * @return a new entity player
+	 */
 	@Spawns("player")
     public Entity newPlayer(SpawnData data) {
-		Player playerAbility = new PlayerImpl();
-		PlayerTexture pt = new PlayerTexture();
+		PlayerTextures texture = new PlayerTextures(PlayerColor.BLUE);
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
         physics.addGroundSensor(new HitBox("GROUND_SENSOR", new Point2D(16, 38), BoundingShape.box(6, 8)));
@@ -104,9 +108,8 @@ public class TLMSFactory implements EntityFactory{
                 .with(physics)
                 .with(new FirearmComponent(new Beretta92()))
                 .with(new CollidableComponent(true)) //può essere colpito e può atterrare su piattaforme
-                .with(new HealthIntComponent(playerAbility.getHealt())) //gli da i punti vita
                 .with(new PlayerComponent()) 
-                .with(new TextureComponent(pt.getTextureBlue().getTextureMap()))
+                .with(new TextureComponent(texture.getTexture().getTextureMap()))
                 .build();
         }
 

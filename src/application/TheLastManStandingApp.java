@@ -28,6 +28,9 @@ import factories.WorldFactory;
 import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 import model.Firearm;
+import model.PlayerSpeed;
+import model.PlayerSpeedStrategy;
+import model.PlayerSpeedTurnsAround;
 import model.TLMSMusic;
 import model.TLMSType;
 import settings.SystemSettingsImpl;
@@ -72,33 +75,63 @@ public class TheLastManStandingApp extends GameApplication {
 	    	getInput().addAction(new UserAction("Left") {
 	            @Override
 	            protected void onAction() {
-	                player.getComponent(PlayerComponent.class).moveLeft();
+	            	PlayerSpeedStrategy strategy = new PlayerSpeed(player);
+	                player.getComponent(ComponentUtils.PLAYER_COMPONENT).moveLeft(strategy);
 	            }
 
 	            @Override
 	            protected void onActionEnd() {
-	                player.getComponent(PlayerComponent.class).stop();
+	                player.getComponent(ComponentUtils.PLAYER_COMPONENT).stop();
 	            }
 	        }, KeyCode.A);
+	    	
+	    	getInput().addAction(new UserAction("TurnLeft") {
+	            @Override
+	            protected void onActionBegin() {
+	            	PlayerSpeedStrategy strategy = new PlayerSpeedTurnsAround();
+	                player.getComponent(ComponentUtils.PLAYER_COMPONENT).moveLeft(strategy);;
+	            }
+	        }, KeyCode.Q);
 
 	        getInput().addAction(new UserAction("Right") {
 	            @Override
 	            protected void onAction() {
-	                player.getComponent(PlayerComponent.class).moveRight();
+	            	PlayerSpeedStrategy strategy = new PlayerSpeed(player);
+	                player.getComponent(ComponentUtils.PLAYER_COMPONENT).moveRight(strategy);
 	            }
 
 	            @Override
 	            protected void onActionEnd() {
-	                player.getComponent(PlayerComponent.class).stop();
+	                player.getComponent(ComponentUtils.PLAYER_COMPONENT).stop();
 	            }
 	        }, KeyCode.D);
+	        
+	        getInput().addAction(new UserAction("TurnRight") {
+	            @Override
+	            protected void onActionBegin() {
+	            	PlayerSpeedStrategy strategy = new PlayerSpeedTurnsAround();
+	                player.getComponent(ComponentUtils.PLAYER_COMPONENT).moveRight(strategy);;
+	            }
+	        }, KeyCode.E);
 
 	        getInput().addAction(new UserAction("Jump") {
 	            @Override
 	            protected void onActionBegin() {
-	                player.getComponent(PlayerComponent.class).jump();
+	                player.getComponent(ComponentUtils.PLAYER_COMPONENT).jump();
 	            }
 	        }, KeyCode.W);
+	        
+	        getInput().addAction(new UserAction("Aerodynamics") {
+	            @Override
+	            protected void onAction() {
+	                player.getComponent(ComponentUtils.PLAYER_COMPONENT).aerodynamics();
+	                }
+
+	            @Override
+	            protected void onActionEnd() {
+	                player.getComponent(ComponentUtils.PLAYER_COMPONENT).stop();
+	            }
+	        }, KeyCode.S);
 	        
 	        getInput().addAction(new UserAction("Shoot") {
 				@Override
@@ -163,7 +196,7 @@ public class TheLastManStandingApp extends GameApplication {
 		    spawn("firePowerUp", random.nextInt(2000), 50);
 		}, Duration.seconds(2));
 		
-		TLMSMusic music = new TLMSMusic("thriller.wav", 0.1);
+		TLMSMusic music = new TLMSMusic("thriller.mp3", 0.1);
 		getAudioPlayer().loopMusic(music.getMusic());
 
 	}

@@ -1,21 +1,30 @@
 package model;
 
+/**
+ * 
+ *	This class contains the main values ​​of the player and the methods to manage them
+ */
 public class PlayerImpl implements Player {
 	private int speed;
 	private int jumpCounter;
 	private int maxJumps;
 	private final int jumpsHeight;
-	private int healt;
+	private int health;
+	private int maxHealth;
 	private double dimension;
 	private PlayerColor color;
 	
+	/**
+	 * this constructor assigns all player variables their initial values
+	 */
 	public PlayerImpl() {
 		this.dimension = 1.7;
-		this.healt = 10;
+		this.maxHealth = 15;
+		this.health = this.maxHealth;
 		this.speed = 400;
 		this.maxJumps = 1;
-		this.jumpCounter = 1;
-		this.jumpsHeight = -600;
+		this.jumpCounter = this.maxJumps;
+		this.jumpsHeight = -550;
 		this.color = PlayerColor.BLUE;
 	}
 	
@@ -31,12 +40,17 @@ public class PlayerImpl implements Player {
 	
 	@Override
 	public int getHealt() {
-		return healt;
+		return health;
 	}
 
 	@Override
 	public void setHealt(final int healt) {
-		this.healt = healt;
+		this.health = healt;
+	}
+	
+	@Override
+	public int getMaxHeath() {
+		return this.maxHealth;		
 	}
 
 	@Override
@@ -78,6 +92,5 @@ public class PlayerImpl implements Player {
 	public void setColor(final PlayerColor color) {
 		this.color = color;
 	}
-	
 	
 }

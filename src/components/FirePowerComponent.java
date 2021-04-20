@@ -3,7 +3,6 @@ package components;
 import static com.almasb.fxgl.dsl.FXGL.*;
 
 import com.almasb.fxgl.entity.component.Component;
-import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.texture.AnimatedTexture;
 import com.almasb.fxgl.texture.AnimationChannel;
 
@@ -14,7 +13,6 @@ public class FirePowerComponent extends Component{
 	
 	private AnimationChannel animFire;
 	private AnimatedTexture animTexture;
-	
 	
 	public FirePowerComponent() {
 		this.animFire = new AnimationChannel(image("FirePower.png"), 4, 141, 138, Duration.seconds(1), 0, 3);
@@ -33,5 +31,4 @@ public class FirePowerComponent extends Component{
              animTexture.loopAnimationChannel(animFire);
          }
 	 }
-
 }
