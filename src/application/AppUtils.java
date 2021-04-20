@@ -11,6 +11,6 @@ public final class AppUtils {
 	public static final double SHOT_X_AXIS_FIX = 48;
 	//gun prop spawn delay
 	public static final double GUN_SPAWN_DELAY = 6;
-	
+
 	private AppUtils() {};
 }
