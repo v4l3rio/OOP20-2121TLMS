@@ -26,8 +26,9 @@ import model.score.ScoreModelImpl;
 public class ScoreControllerImpl implements ScoreController {
 	
     private static final String SEPARATOR = File.separator;
-    public static final String FILE_NAME_RANKING = System.getProperty("user.home") + SEPARATOR + "ranking.json";
-    public static final String FILE_NAME_USER = System.getProperty("user.home") + SEPARATOR + "userName.json";
+	private static final String FOLDER_NAME = System.getProperty("user.home") + SEPARATOR + "TLMS";
+    public static final String FILE_NAME_RANKING = FOLDER_NAME + SEPARATOR + "ranking.json";
+    public static final String FILE_NAME_USER = FOLDER_NAME + SEPARATOR + "userName.json";
 	
 	private final ScoreModel model= new ScoreModelImpl();
 	private List<String> list = new ArrayList<>();
@@ -41,9 +42,14 @@ public class ScoreControllerImpl implements ScoreController {
 			String userName = reader.readLine(); //unused but useful to know if it's the firt game ever
 		    reader.close();
 		} catch (IOException e) {
+			createFolder(FOLDER_NAME);
 			createRankingFile(FILE_NAME_RANKING);
 			createUserNameFile(FILE_NAME_USER);
 		}	
+	}
+
+	private void createFolder(String folderName) throws IOException {
+		Files.createDirectories(Paths.get(folderName));
 	}
 
 	private void createUserNameFile(String fileNameUser) throws IOException {
