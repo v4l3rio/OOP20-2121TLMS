@@ -19,6 +19,7 @@ public class SystemSettingsImpl implements SystemSettings {
 	@Override
 	public int getHeight() {
 		return HEIGHT;
+
 	}
 	
 

@@ -6,22 +6,29 @@ import java.util.Map;
 import java.util.Random;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
+
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.ui.UI;
 
 import collisions.ShotZombieCollision;
+import collisions.ZombieWallCollision;
 import components.ComponentUtils;
 import controller.ScoreController;
 import controller.ScoreControllerImpl;
 import controller.VisorController;
 import collisions.GunCollisionFactoryImpl;
 import collisions.PlayerFirePowerCollision;
+
 import collisions.PlayerZombieCollision;
 import components.PlayerComponent;
 import components.TextureComponent;
 import factories.TexturedGunFactoryImpl;
+
+import collisions.PlayerZombieCollision;
+import components.PlayerComponent;
+
 import factories.TLMSFactory;
 import factories.WorldFactory;
 import javafx.scene.input.KeyCode;
@@ -30,7 +37,7 @@ import model.Gun;
 import model.PlayerTexture;
 import model.TLMSMusic;
 import model.TLMSType;
-import model.score.JsonScore;
+
 import settings.SystemSettingsImpl;
 import settings.SystemSettings;
 import factories.ZombieSpawner;
@@ -166,8 +173,8 @@ public class TheLastManStandingApp extends GameApplication {
 		    spawn("firePowerUp", random.nextInt(2000), 50);
 		}, Duration.seconds(2));
 		
-		//TLMSMusic music = new TLMSMusic(0.1);
-		//getAudioPlayer().loopMusic(music.getMusic());
+		TLMSMusic music = new TLMSMusic(0.1);
+		getAudioPlayer().loopMusic(music.getMusic());
 
 	}
 	
@@ -183,6 +190,7 @@ public class TheLastManStandingApp extends GameApplication {
 				.createGunCollision(TLMSType.MAGMAGUN, TexturedGunFactoryImpl.MAGMA_GUN_DURATION));
 		getPhysicsWorld().addCollisionHandler(new GunCollisionFactoryImpl()
 				.createGunCollision(TLMSType.MACHINEGUN, TexturedGunFactoryImpl.MACHINE_GUN_DURATION));
+		getPhysicsWorld().addCollisionHandler(new ZombieWallCollision( TLMSType.ZOMBIE, TLMSType.WALL));
 		getPhysicsWorld().addCollisionHandler(new PlayerFirePowerCollision(TLMSType.PLAYER, TLMSType.FIREPOWER));
 
 	}

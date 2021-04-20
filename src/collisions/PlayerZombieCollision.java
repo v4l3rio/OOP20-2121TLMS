@@ -21,7 +21,6 @@ import javafx.util.Duration;
 import model.PlayerTexture;
 
 /**
- * @version 2.2
  * Manages collisions between players and zombies
  */
 

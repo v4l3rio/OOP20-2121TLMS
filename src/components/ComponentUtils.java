@@ -3,8 +3,6 @@ package components;
 import com.almasb.fxgl.dsl.components.HealthIntComponent;
 
 /**
- * 
- * @version 2.0
  * Utility that defines the types of components used
  */
 
@@ -19,6 +17,10 @@ public final class ComponentUtils {
 	public static final Class<ZombieTextureComponent> TEXTURE_COMPONENT = ZombieTextureComponent.class;
 	
 	public static final Class<GunComponent> GUN_COMPONENT = GunComponent.class;
+	
+	public static final Class<RandomMovementComponent> RANDOM_MOVEMENT_COMPONENT = RandomMovementComponent.class;
+	
+	public static final Class<FollowPlayerComponent> FOLLOW_MOVEMENT_COMPONENT = FollowPlayerComponent.class;
 	
 	private ComponentUtils() {}
 }
