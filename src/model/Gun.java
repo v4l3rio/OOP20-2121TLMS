@@ -2,8 +2,6 @@ package model;
 
 import com.almasb.fxgl.entity.Entity;
 
-import javafx.scene.image.Image;
-
 /**
  * Implements a gun model, leaving only the abstract method shoot() to be defined
  * in its implementations
