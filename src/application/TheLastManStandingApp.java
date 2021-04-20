@@ -2,18 +2,13 @@ package application;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
-import com.almasb.fxgl.audio.Music;
-import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.UserAction;
-import com.almasb.fxgl.physics.CollisionHandler;
-import com.almasb.fxgl.time.TimerAction;
 import com.almasb.fxgl.ui.UI;
 
 import collisions.ShotZombieCollision;
@@ -23,7 +18,6 @@ import controller.ScoreControllerImpl;
 import controller.VisorController;
 import collisions.GunCollisionFactoryImpl;
 import collisions.PlayerFirePowerCollision;
-import collisions.Collision;
 import collisions.PlayerZombieCollision;
 import components.PlayerComponent;
 import components.TextureComponent;
