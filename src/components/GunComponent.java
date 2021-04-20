@@ -1,7 +1,6 @@
 package components;
 
 import com.almasb.fxgl.entity.component.Component;
-import model.Gun;
 import model.TexturedGun;
 /**
  * Implements a component to attach the entity to its gun.

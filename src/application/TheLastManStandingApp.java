@@ -179,7 +179,7 @@ public class TheLastManStandingApp extends GameApplication {
 	}
 	
 	/**
-	 * initialize application physics, e.g. collisions
+	 * initializes application physics, e.g. collisions
 	 */
 	@Override
 	protected void initPhysics() {
