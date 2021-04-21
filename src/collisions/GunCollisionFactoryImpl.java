@@ -18,14 +18,14 @@ public class GunCollisionFactoryImpl implements GunCollisionFactory {
 	 * creates a collisionHandler from gun type, setting the new gun for a delay time
 	 */
 	@Override
-	public CollisionHandler createGunCollision(TLMSType gunType, double delay) {
+	public final CollisionHandler createGunCollision(final TLMSType gunType, final  double delay) {
 		return new CollisionHandler(TLMSType.PLAYER, gunType) {
 			/**
 			 * manages behavior to be executed on collision
 			 */
 			@Override
-			public void onCollision(Entity player, Entity gunProp) {
-				GunComponent gunComponent = player.getComponent(ComponentUtils.GUN_COMPONENT);
+			public void onCollision(final Entity player, final Entity gunProp) {
+				final GunComponent gunComponent = player.getComponent(ComponentUtils.GUN_COMPONENT);
 				//if current gun isn't the default one, there's another timer running,
 				//this way I have him know there has been a multiple gun change, so that its timer
 				//has to be disabled.

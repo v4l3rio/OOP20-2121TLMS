@@ -17,21 +17,21 @@ public class ShotMovementComponent extends Component{
 	private final static int NTEXTURES = 3;
 	private final static double SHOT_SCALE = 0.14;	
 
-	private PhysicsComponent physics;
+	private final PhysicsComponent physics;
 
-	private AnimatedTexture texture;
+	private final AnimatedTexture texture;
 
-	private AnimationChannel animShot;
+	private final AnimationChannel animShot;
 	
-	private double direction;
-	private double shotSpeed;
+	private final double direction;
+	private final double shotSpeed;
 	/**
 	 * Constructor with necessary fields
 	 * @param direction where the shot movement is directed
 	 * @param shotSpeed shot speed
 	 * @param shotImage the Image contatining NTEXTURES, used for animation
 	 */
-	public ShotMovementComponent(PhysicsComponent physics, double direction, double shotSpeed, Image shotImage) {
+	public ShotMovementComponent(final PhysicsComponent physics, final double direction, final double shotSpeed, final Image shotImage) {
 		this.physics = physics;
 		this.direction = direction;
 		animShot = new AnimationChannel(shotImage, 3, (int) (shotImage.getWidth()/NTEXTURES)
@@ -52,11 +52,9 @@ public class ShotMovementComponent extends Component{
 	}
 
 	@Override
-	public void onUpdate(double tpf) {
-		if (physics.isMovingX()) {
-			if (texture.getAnimationChannel() != animShot) {
-				texture.loopAnimationChannel(animShot);
-			}
+	public void onUpdate(final double tpf) {
+		if (physics.isMovingX() && texture.getAnimationChannel() != animShot) {
+			texture.loopAnimationChannel(animShot);
 		}
 		//set movement direction, equals to player sign
 		this.physics.setVelocityX(this.shotSpeed*direction);

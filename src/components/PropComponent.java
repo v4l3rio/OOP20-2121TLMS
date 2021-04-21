@@ -16,15 +16,14 @@ public class PropComponent extends Component {
 	private final static double PROPDEFAULTSCALE = 0.3;
 	private final static double PROPDEFAULTCHANNELDURATION = 0.3;
 
-	private AnimatedTexture propTexture;
-	private AnimationChannel propChannel;
+	private final AnimatedTexture propTexture;
 	
 	/**
 	 * 
 	 * @param propIMG is the image containing prop's textures to set animation
 	 */
-	public PropComponent(Image propIMG) {
-		propChannel = new AnimationChannel(propIMG, 3, (int) (propIMG.getWidth()/PROPDEFAULTNTEXTURES)
+	public PropComponent(final Image propIMG) {
+		final AnimationChannel propChannel = new AnimationChannel(propIMG, 3, (int) (propIMG.getWidth()/PROPDEFAULTNTEXTURES)
 				, (int) propIMG.getHeight(), Duration.seconds(PROPDEFAULTCHANNELDURATION), 0, PROPDEFAULTNTEXTURES - 1);
 		propTexture = new AnimatedTexture(propChannel);
 		propTexture.loop();

@@ -37,7 +37,7 @@ public class TexturedGunFactoryImpl implements TexturedGunFactory{
 	 * and standard shoot implementation
 	 */
 	public TexturedGun createBeretta92() {
-		var texturePaths = new HashMap<TLMSType, String>();
+		final var texturePaths = new HashMap<TLMSType, String>();
 		texturePaths.put(TLMSType.GUN, BRT_GUN_IMG_PATH);
 		texturePaths.put(TLMSType.SHOT, BRT_SHOT_IMG_PATH);
 		return new TexturedGun(BRT_DMG, BRT_MAXAMMO, BRT_SHOT_SPEED, texturePaths) {
@@ -52,7 +52,7 @@ public class TexturedGunFactoryImpl implements TexturedGunFactory{
 	 * and standard shoot implementation
 	 */
 	public TexturedGun createMagmaGun() {
-		var texturePaths = new HashMap<TLMSType, String>();
+		final var texturePaths = new HashMap<TLMSType, String>();
 		texturePaths.put(TLMSType.GUN, MGM_GUN_IMG_PATH);
 		texturePaths.put(TLMSType.SHOT, MGM_SHOT_IMG_PATH);
 		return new TexturedGun(MGM_DMG, MGM_MAXAMMO, MGM_SHOT_SPEED, texturePaths) {
@@ -68,7 +68,7 @@ public class TexturedGunFactoryImpl implements TexturedGunFactory{
 	 * method shoot doesn't decrement ammo, therefore setting them unlimited
 	 */
 	public TexturedGun createMachineGun() {
-		var texturePaths = new HashMap<TLMSType, String>();
+		final var texturePaths = new HashMap<TLMSType, String>();
 		texturePaths.put(TLMSType.GUN, MCH_GUN_IMG_PATH);
 		texturePaths.put(TLMSType.SHOT, MCH_SHOT_IMG_PATH);
 		return new TexturedGun(MCH_DMG, MCH_MAXAMMO, MCH_SHOT_SPEED, texturePaths) {
@@ -81,7 +81,7 @@ public class TexturedGunFactoryImpl implements TexturedGunFactory{
 	
 
 	@Override
-	public TexturedGun gunFromType(TLMSType type) throws IllegalArgumentException {
+	public TexturedGun gunFromType(final TLMSType type){
 		if(type.equals(TLMSType.MACHINEGUN)) {
 			return createMachineGun();
 		} else if(type.equals(TLMSType.MAGMAGUN)) {

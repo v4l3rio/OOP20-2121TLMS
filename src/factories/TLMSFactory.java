@@ -118,10 +118,10 @@ public class TLMSFactory implements EntityFactory{
         }
 
 	@Spawns("shot")
-    public Entity newShot(SpawnData data) {
+    public Entity newShot(final SpawnData data) {
 		final TexturedGun currentGun = player.getComponent(ComponentUtils.GUN_COMPONENT).getCurrentGun();
 	 	final double direction = Math.signum(this.player.getScaleX());
-        PhysicsComponent physics = new PhysicsComponent();
+	 	final PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.KINEMATIC);
         
         return entityBuilder(data)
@@ -130,15 +130,15 @@ public class TLMSFactory implements EntityFactory{
                 .with(physics)
                 .with(new CollidableComponent(true))
                 .with(new ShotMovementComponent(physics, direction, currentGun.getShotspeed(), 
-                		new Image(currentGun.getTextureMap().get(TLMSType.SHOT))))
+                		new Image(currentGun.getTextureMap().get(SHOT))))
                 .with(new DamagingComponent(currentGun.getShotDamage()))
                 .build();
     }
 	
 	@Spawns("magmaGun")
-    public Entity newMagmaGun(SpawnData data) {
-		TexturedGun magmaGun = new TexturedGunFactoryImpl().createMagmaGun();
-        PhysicsComponent physics = new PhysicsComponent();
+    public Entity newMagmaGun(final SpawnData data) {
+		final TexturedGun magmaGun = new TexturedGunFactoryImpl().createMagmaGun();
+		final PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);        
         // this avoids player sticking to walls
         physics.setFixtureDef(new FixtureDef().friction(0.0f));
@@ -148,14 +148,14 @@ public class TLMSFactory implements EntityFactory{
                 .bbox(new HitBox(new Point2D(35,130), BoundingShape.box(160, 100)))
                 .with(new CollidableComponent(true))
                 .with(physics)
-                .with(new PropComponent(new Image(magmaGun.getTextureMap().get(TLMSType.GUN))))
+                .with(new PropComponent(new Image(magmaGun.getTextureMap().get(GUN))))
                 .build();
     }
 
 	@Spawns("machineGun")
-    public Entity newMachineGun(SpawnData data) {
-		TexturedGun machineGun = new TexturedGunFactoryImpl().createMachineGun();
-        PhysicsComponent physics = new PhysicsComponent();
+    public Entity newMachineGun(final SpawnData data) {
+		final TexturedGun machineGun = new TexturedGunFactoryImpl().createMachineGun();
+        final PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
 
         return entityBuilder(data)
@@ -163,7 +163,7 @@ public class TLMSFactory implements EntityFactory{
                 .bbox(new HitBox(new Point2D(35,130), BoundingShape.box(160, 100)))
                 .with(new CollidableComponent(true))
                 .with(physics)
-                .with(new PropComponent(new Image(machineGun.getTextureMap().get(TLMSType.GUN))))
+                .with(new PropComponent(new Image(machineGun.getTextureMap().get(GUN))))
                 .build();
     }
 	

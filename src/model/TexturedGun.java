@@ -1,14 +1,13 @@
 package model;
 
-import java.util.HashMap;
 import java.util.Map;
 
 //adds texture to gun logics
 public abstract class TexturedGun extends Gun {
 
-	Texture texture = new Texture();
+	private final Texture texture = new Texture();
 	//calls super constructor and adds all textures to textures
-	public TexturedGun(int shotDMG, int maxAmmo, double shotSpeed, HashMap<TLMSType, String> texturePaths) {
+	public TexturedGun(final int shotDMG, final int maxAmmo, final double shotSpeed, final Map<TLMSType, String> texturePaths) {
 		super(shotDMG, maxAmmo, shotSpeed);
 		texturePaths.entrySet().forEach(e->{
 			texture.addTexture(e.getKey(), e.getValue());

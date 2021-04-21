@@ -151,7 +151,7 @@ public class TheLastManStandingApp extends GameApplication {
 	  * Reloads the gun, keeping it busy for a reload time, while refilling the ammo
 	  * @param gun
 	  */
-     private void reload(Gun gun) {
+     private void reload(final Gun gun) {
     	 gun.setReloading(true);
 			spawn("text", new SpawnData(840,150).put("text", "RELOADING"));
 			runOnce(()->{
@@ -170,7 +170,7 @@ public class TheLastManStandingApp extends GameApplication {
 		getGameWorld().addEntityFactory(factory);
 		setLevelFromMap(PATH_MAP);
 
-		double delay = AppUtils.GUN_SPAWN_DELAY;
+		final double delay = AppUtils.GUN_SPAWN_DELAY;
 		spawn("text", new SpawnData(mySystemSettings.getWidth()/3.3, mySystemSettings.getHeight()/8)
 				.put("text", "PRESS R FOR AN EARLY RELOAD"));
 		final ZombieSpawner spawner = new ZombieSpawner();

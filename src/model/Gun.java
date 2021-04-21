@@ -16,16 +16,17 @@ public abstract class Gun extends Entity{
 	private final int maxAmmo;
 	private final double shotSpeed;
 	
-	private boolean isReloading = false;
+	private boolean isReloading;
 	private int nAmmo;
 
 	public abstract void shoot();
 	
-	public Gun(int shotDMG, int maxAmmo, double shotSpeed) {
+	public Gun(final int shotDMG, final int maxAmmo, final double shotSpeed) {
 		this.shotDMG = shotDMG;
 		this.maxAmmo = maxAmmo;
 		this.nAmmo = maxAmmo;
 		this.shotSpeed = shotSpeed;
+		this.isReloading = false;
 	}
 	/**
 	 * refills ammo, setting them back to the max capacity
@@ -44,7 +45,7 @@ public abstract class Gun extends Entity{
 	 * 
 	 * @param isReloading set the current reload state
 	 */
-	public void setReloading(boolean isReloading) {
+	public void setReloading(final boolean isReloading) {
 		this.isReloading = isReloading;
 	}
 	/**
@@ -72,7 +73,7 @@ public abstract class Gun extends Entity{
 	 * 
 	 * @param nAmmo sets current ammunition number
 	 */
-	public void setNAmmo(int nAmmo) {
+	public void setNAmmo(final int nAmmo) {
 		this.nAmmo = nAmmo;
 	}
 	/**
@@ -80,7 +81,7 @@ public abstract class Gun extends Entity{
 	 * @param otherGun
 	 * @return whether this gun is of the same type as otherGun, comparing main fields
 	 */
-	public boolean isSameTypeAs(Gun otherGun) {
+	public boolean isSameTypeAs(final Gun otherGun) {
 		return this.shotDMG == otherGun.getShotDamage() 
 				&& this.shotSpeed == otherGun.getShotspeed();
 	}

@@ -7,9 +7,9 @@ import model.TexturedGun;
  */
 public class GunComponent extends Component {
 	//tracking multiple changes in the component's gun
-	private boolean isChanged = false;
+	private boolean isChanged;
 	//default gun, native one
-	private TexturedGun defaultGun;
+	private final TexturedGun defaultGun;
 	//current gun, might differ from default one
 	private TexturedGun currentGun;
 	
@@ -17,9 +17,10 @@ public class GunComponent extends Component {
 	 * 
 	 * @param gun the starting firearm of the Component to be attached to an Entity
 	 */
-	public GunComponent(TexturedGun gun) {
+	public GunComponent(final TexturedGun gun) {
 		this.currentGun = gun;
 		this.defaultGun = gun;
+		isChanged = false;
 	}
 	
 	/**
@@ -36,7 +37,7 @@ public class GunComponent extends Component {
 	 * @param isChanged keeps track of multiple changes, used for handling timers
 	 * @see GunCollisionFactoryImpl
 	 */
-	public void setChanged(boolean isChanged) {
+	public void setChanged(final boolean isChanged) {
 		this.isChanged = isChanged;
 	}
 	
@@ -52,7 +53,7 @@ public class GunComponent extends Component {
 	 * Changes current gun
 	 * @param currentGun
 	 */
-	public void setCurrentGun(TexturedGun currentGun) {
+	public void setCurrentGun(final TexturedGun currentGun) {
 		this.currentGun = currentGun;
 	}
 	

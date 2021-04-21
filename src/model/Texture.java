@@ -11,7 +11,7 @@ public class Texture {
 	/**
 	 * Map that associates an enum to a string
 	 */
-	private Map<TLMSType, String> textureMap;
+	private final Map<TLMSType, String> textureMap;
 	
 	public Texture() {
 		this.textureMap = new HashMap<>();
@@ -29,7 +29,7 @@ public class Texture {
 	 * 
 	 * @param path - Path to texture file
 	 */
-	public void addTexture(TLMSType type, String path) {
+	public void addTexture(final TLMSType type, final String path) {
 		this.textureMap.put(type, path);
 	}
 	
