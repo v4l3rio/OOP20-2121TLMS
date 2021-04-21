@@ -26,7 +26,7 @@ public class ScoreModelImpl implements ScoreModel {
 			Integer.valueOf(s2.split(" ")[0])
 			.compareTo(Integer.valueOf(s1.split(" ")[0]))
 		);
-		newList.remove(list.size() - 1);
+		newList.remove(newList.size() - 1);
 		return newList;
 	}
 
