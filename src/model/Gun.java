@@ -1,13 +1,11 @@
 package model;
 
-import com.almasb.fxgl.entity.Entity;
-
 /**
  * Implements a gun model, leaving only the abstract method shoot() to be defined
  * in its implementations
  *
  */
-public abstract class Gun extends Entity{
+public abstract class Gun implements Weapon{
 
 	//reload time, not to over-complicate, the same for each gun
 	public final static double RELOAD_TIME = 1.5;
@@ -15,7 +13,6 @@ public abstract class Gun extends Entity{
 	private final int shotDMG;
 	private final int maxAmmo;
 	private final double shotSpeed;
-	
 	private boolean isReloading;
 	private int nAmmo;
 
@@ -52,7 +49,7 @@ public abstract class Gun extends Entity{
 	 * 
 	 * @return shot damage
 	 */
-    public int getShotDamage() {
+    public int getDamage() {
         return shotDMG;
     }
 	/**
@@ -78,11 +75,19 @@ public abstract class Gun extends Entity{
 	}
 	/**
 	 * 
+	 * @return max ammunition capacity
+	 */
+	public int getMaxAmmo() {
+		return this.maxAmmo;
+	}
+	/**
+	 * 
 	 * @param otherGun
 	 * @return whether this gun is of the same type as otherGun, comparing main fields
 	 */
 	public boolean isSameTypeAs(final Gun otherGun) {
-		return this.shotDMG == otherGun.getShotDamage() 
-				&& this.shotSpeed == otherGun.getShotspeed();
+		return this.shotDMG == otherGun.getDamage() 
+				&& this.shotSpeed == otherGun.getShotspeed()
+				&& this.getMaxAmmo() == otherGun.getMaxAmmo();
 	}
 }

@@ -131,7 +131,7 @@ public class TLMSFactory implements EntityFactory{
                 .with(new CollidableComponent(true))
                 .with(new ShotMovementComponent(physics, direction, currentGun.getShotspeed(), 
                 		new Image(currentGun.getTextureMap().get(SHOT))))
-                .with(new DamagingComponent(currentGun.getShotDamage()))
+                .with(new DamagingComponent(currentGun.getDamage()))
                 .build();
     }
 	
