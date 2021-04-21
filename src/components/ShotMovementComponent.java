@@ -15,7 +15,7 @@ public class ShotMovementComponent extends Component{
 	
 	//Preset values, we want shot size to be SHOT_SCALE big, using NTEXTURES for its animation
 	private final static int NTEXTURES = 3;
-	private final static double SHOT_SCALE = 0.14;	
+	private final static double SHOT_SCALE = 0.20;	
 
 	private final PhysicsComponent physics;
 
