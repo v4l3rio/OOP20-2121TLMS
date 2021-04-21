@@ -1,4 +1,12 @@
+
 bin/
 doc/
 .log
 .pdf
+.classpath
+logs/
+system/
+.DS_Store
+
+
+
