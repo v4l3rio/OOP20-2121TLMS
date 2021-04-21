@@ -6,14 +6,10 @@ package model;
  *
  */
 public abstract class Gun implements Weapon{
-
-	//reload time, not to over-complicate, the same for each gun
-	public final static double RELOAD_TIME = 1.5;
 	
 	private final int shotDMG;
 	private final int maxAmmo;
 	private final double shotSpeed;
-	private boolean isReloading;
 	private int nAmmo;
 
 	public abstract void shoot();
@@ -23,27 +19,12 @@ public abstract class Gun implements Weapon{
 		this.maxAmmo = maxAmmo;
 		this.nAmmo = maxAmmo;
 		this.shotSpeed = shotSpeed;
-		this.isReloading = false;
 	}
 	/**
 	 * refills ammo, setting them back to the max capacity
 	 */
 	public void reload() {
 		nAmmo = maxAmmo;
-	}
-	/**
-	 * 
-	 * @return if the gun is being reloaded
-	 */
-	public boolean isReloading() {
-		return isReloading;
-	}
-	/**
-	 * 
-	 * @param isReloading set the current reload state
-	 */
-	public void setReloading(final boolean isReloading) {
-		this.isReloading = isReloading;
 	}
 	/**
 	 * 

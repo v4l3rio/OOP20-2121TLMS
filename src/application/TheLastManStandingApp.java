@@ -14,6 +14,7 @@ import com.almasb.fxgl.ui.UI;
 import collisions.ShotZombieCollision;
 import collisions.ZombieWallCollision;
 import components.ComponentUtils;
+import components.GunComponent;
 import controller.VisorController;
 import collisions.GunCollisionFactoryImpl;
 import collisions.PlayerFirePowerCollision;
@@ -122,9 +123,10 @@ public class TheLastManStandingApp extends GameApplication {
 	        getInput().addAction(new UserAction("Shoot") {
 				@Override
 				protected void onActionBegin() {
-					final Gun currentGun = player.getComponent(ComponentUtils.GUN_COMPONENT).getCurrentGun();
+					final var gunComponent = player.getComponent(ComponentUtils.GUN_COMPONENT);
+					final Gun currentGun = gunComponent.getCurrentGun();
 					//is reloading? can't shoot rn, do nothing
-					if(!currentGun.isReloading()) {
+					if(!gunComponent.isReloading()) {
 						if(currentGun.getNAmmo() > 0) {
 							// have the shot spawn facing coherently as player, with due distance from it
 							spawn("shot", player.getPosition().getX() - AppUtils.SHOT_X_AXIS_FIX 
@@ -132,7 +134,7 @@ public class TheLastManStandingApp extends GameApplication {
 									, player.getPosition().getY() - AppUtils.SHOT_Y_AXIS_FIX);
 							currentGun.shoot();
 						} else {
-							reload(currentGun);
+							reload(gunComponent);
 						}	
 					}
 				}
@@ -141,8 +143,7 @@ public class TheLastManStandingApp extends GameApplication {
 	        getInput().addAction(new UserAction("Reload") {
 	            @Override
 	            protected void onActionBegin() {
-	            	final Gun currentGun = player.getComponent(ComponentUtils.GUN_COMPONENT).getCurrentGun();
-	            	reload(currentGun);
+	            	reload(player.getComponent(ComponentUtils.GUN_COMPONENT));
 	            }
 	        }, KeyCode.R);
 
@@ -151,13 +152,13 @@ public class TheLastManStandingApp extends GameApplication {
 	  * Reloads the gun, keeping it busy for a reload time, while refilling the ammo
 	  * @param gun
 	  */
-     private void reload(final Gun gun) {
-    	 gun.setReloading(true);
+     private void reload(final GunComponent gunComponent) {
+    	 gunComponent.setReloading(true);
 			spawn("text", new SpawnData(840,150).put("text", "RELOADING"));
 			runOnce(()->{
-				gun.reload();
-				gun.setReloading(false);
-			}, Duration.seconds(Gun.RELOAD_TIME));
+				gunComponent.getCurrentGun().reload();
+				gunComponent.setReloading(false);
+			}, Duration.seconds(AppUtils.RELOAD_TIME));
      }
 	
     /**
