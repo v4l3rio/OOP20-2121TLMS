@@ -20,52 +20,38 @@ public abstract class AbstractGun implements Gun{
 		this.nAmmo = maxAmmo;
 		this.shotSpeed = shotSpeed;
 	}
-	/**
-	 * refills ammo, setting them back to the max capacity
-	 */
+
+	@Override
 	public void reload() {
 		nAmmo = maxAmmo;
 	}
-	/**
-	 * 
-	 * @return shot damage
-	 */
+
+	@Override
     public int getDamage() {
         return shotDMG;
     }
-	/**
-	 * 
-	 * @return shot speed
-	 */
+
+	@Override
 	public double getShotspeed() {
 		return shotSpeed;
 	}
-	/**
-	 * 
-	 * @return current ammunition number
-	 */
+
+	@Override
 	public int getNAmmo() {
 		return nAmmo;
 	}
-	/**
-	 * 
-	 * @param nAmmo sets current ammunition number
-	 */
+
+	@Override
 	public void setNAmmo(final int nAmmo) {
 		this.nAmmo = nAmmo;
 	}
-	/**
-	 * 
-	 * @return max ammunition capacity
-	 */
+
+	@Override
 	public int getMaxAmmo() {
 		return this.maxAmmo;
 	}
-	/**
-	 * 
-	 * @param otherGun
-	 * @return whether this gun is of the same type as otherGun, comparing main fields
-	 */
+
+	@Override
 	public boolean isSameTypeAs(final Gun otherGun) {
 		return this.shotDMG == otherGun.getDamage() 
 				&& this.shotSpeed == otherGun.getShotspeed()
