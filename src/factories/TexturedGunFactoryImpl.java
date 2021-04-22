@@ -18,7 +18,7 @@ public class TexturedGunFactoryImpl implements TexturedGunFactory{
 	private final static String BRT_GUN_IMG_PATH = "assets/textures/beretta92Gun.png";
 	private final static String BRT_SHOT_IMG_PATH = "assets/textures/beretta92Shot.png";
 	//Magmagun preset specifications
-	private final static int MGM_DMG = 7;
+	private final static int MGM_DMG = 100;
 	private final static int MGM_MAXAMMO = 7;
 	private final static double MGM_SHOT_SPEED = 650;
 	private final static String MGM_GUN_IMG_PATH = "assets/textures/magmaGun.png";

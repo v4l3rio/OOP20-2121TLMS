@@ -61,15 +61,7 @@ public class PlayerZombieCollision extends CollisionHandler{
 	    	}, Duration.seconds(1.7));
 		}
 		
-		if(player.getComponent(ComponentUtils.PLAYER_COMPONENT).getPlayer().getColor()==PlayerColor.RED) {
 			playerPowerUp.transformation(PlayerColor.BLUE, 400, player.getComponent(ComponentUtils.PLAYER_COMPONENT).getPlayer().getHealt(), 1);
-			
-			getGameTimer().runOnceAfter(() -> {
-				final PlayerTextures playerTextures = new PlayerTextures(PlayerColor.BLUE);
-				player.removeComponent(ComponentUtils.PLAYERTEXTURE_COMPONENT);  
-				player.addComponent(new TextureComponent(playerTextures.getTexture().getTextureMap()));
-			}, Duration.seconds(0.8));
-		}
 	}
 	
 	private void gameOver() {
