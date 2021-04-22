@@ -11,7 +11,7 @@ public interface ZombieTextureDecorator extends Enemy{
 	 * Enum with 2 types of sex {@link MALE} {@link FEMALE},
 	 * and static method that return random gender
 	 */
-	public static enum GENDER {
+	enum Gender {
 		
 		/**
 		 * Male gender
@@ -26,14 +26,14 @@ public interface ZombieTextureDecorator extends Enemy{
 		/**
 		 * Static method that return random gender
 		 */
-		public static GENDER getRandom() {
-			return GENDER.values()[new Random().nextInt(GENDER.values().length)];
+		public static Gender getRandom() {
+			return Gender.values()[new Random().nextInt(Gender.values().length)];
 		}
 	}
 	
 	/**
 	 * @return Texture map of this zombie
 	 */
-	public Texture getTexture();
+	Texture getTexture();
 	
 }

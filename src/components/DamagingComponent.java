@@ -7,12 +7,12 @@ import com.almasb.fxgl.entity.component.Component;
  */
 public class DamagingComponent extends Component {
 	
-	private int damageOfComponent = 0;
+	final private int damageOfComponent;
 	
 	/**
 	 * @param damageOfComponent, damage value of this specific entity
 	 */
-	public DamagingComponent(int damageOfComponent) {
+	public DamagingComponent(final int damageOfComponent) {
 		this.damageOfComponent = damageOfComponent;
 	}
 	

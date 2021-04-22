@@ -1,16 +1,16 @@
 package collisions;
 
 
-import static com.almasb.fxgl.dsl.FXGL.*;
+import static com.almasb.fxgl.dsl.FXGL.getGameTimer;
+import static com.almasb.fxgl.dsl.FXGL.inc;
+import static com.almasb.fxgl.dsl.FXGL.getWorldProperties;
+import static com.almasb.fxgl.dsl.FXGL.getGameController;
+import static com.almasb.fxgl.dsl.FXGL.getDialogService;
 
 import java.io.IOException;
 
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.CollisionHandler;
-
-import application.TheLastManStandingApp;
-
-import static com.almasb.fxgl.dsl.FXGL.getGameTimer;
 
 import components.TextureComponent;
 import components.ComponentUtils;
@@ -28,18 +28,18 @@ import model.PlayerTextures;
  */
 public class PlayerZombieCollision extends CollisionHandler{
 
-	public PlayerZombieCollision(TLMSType player, TLMSType zombie) {
+	public PlayerZombieCollision(final TLMSType player, final TLMSType zombie) {
 		super(player, zombie);
 	}
 
 	@Override
-	public void onCollisionBegin(Entity player, Entity zombie) {
+	public void onCollisionBegin(final Entity player, final Entity zombie) {
 		
 		zombie.getComponent(ComponentUtils.TEXTURE_COMPONENT).setAttacking(true);
 		//player.getComponent(ComponentUtils.HEALTH_COMPONENT).damage(zombie.getComponent(ComponentUtils.DAMAGING_COMPONENT).getDamage());
 		player.getComponent(ComponentUtils.PLAYER_COMPONENT).attacked(zombie.getComponent(ComponentUtils.DAMAGING_COMPONENT).getDamage());
 	
-		PlayerPowerUp playerPowerUp = new PlayerPowerUpProxy(player);
+		final PlayerPowerUp playerPowerUp = new PlayerPowerUpProxy(player);
 
     	inc("playerLife", - ((double)zombie.getComponent(ComponentUtils.DAMAGING_COMPONENT).getDamage()) / 10);			
 	
@@ -65,7 +65,7 @@ public class PlayerZombieCollision extends CollisionHandler{
 			playerPowerUp.transformation(PlayerColor.BLUE, 400, player.getComponent(ComponentUtils.PLAYER_COMPONENT).getPlayer().getHealt(), 1);
 			
 			getGameTimer().runOnceAfter(() -> {
-				PlayerTextures playerTextures = new PlayerTextures(PlayerColor.BLUE);
+				final PlayerTextures playerTextures = new PlayerTextures(PlayerColor.BLUE);
 				player.removeComponent(ComponentUtils.PLAYERTEXTURE_COMPONENT);  
 				player.addComponent(new TextureComponent(playerTextures.getTexture().getTextureMap()));
 			}, Duration.seconds(0.8));

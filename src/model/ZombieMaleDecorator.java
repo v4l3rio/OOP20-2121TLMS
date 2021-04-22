@@ -1,6 +1,9 @@
 package model;
 
-import static model.TLMSType.*;
+import static model.TLMSType.IDLE;
+import static model.TLMSType.WALK;
+import static model.TLMSType.DEAD;
+import static model.TLMSType.ATTACK;
 
 import java.util.UUID;
 
@@ -10,13 +13,13 @@ import java.util.UUID;
  */
 public class ZombieMaleDecorator implements ZombieTextureDecorator{
 
-	private Zombie zombie;
-	private Texture texture;
+	final private Zombie zombie;
+	final private Texture texture;
 	
 	/**
 	 * @param model of zombie
 	 */
-	public ZombieMaleDecorator(Zombie zombie) {
+	public ZombieMaleDecorator(final Zombie zombie) {
 		this.zombie = zombie;
 		this.texture = new Texture();
 	
@@ -27,8 +30,20 @@ public class ZombieMaleDecorator implements ZombieTextureDecorator{
 	}
 	
 	@Override
-	public void setLife(int life) {
+	public void setLife(final int life) {
 		this.zombie.setLife(life);
+	}
+
+	@Override
+	public void setSpeed(final int spd) {
+		this.zombie.setSpeed(spd);
+		
+	}
+
+	@Override
+	public void setDamage(final int dmg) {
+		this.zombie.setDamage(dmg);
+		
 	}
 
 	@Override
@@ -49,12 +64,6 @@ public class ZombieMaleDecorator implements ZombieTextureDecorator{
 	@Override
 	public Texture getTexture() {
 		return this.texture;
-	}
-
-	@Override
-	public void setDamage(int dmg) {
-		this.zombie.setDamage(dmg);
-		
 	}
 
 	@Override

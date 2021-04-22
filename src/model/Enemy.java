@@ -10,34 +10,40 @@ public interface Enemy {
 	 * 
 	 * @return speed of this enemy
 	 */
-	public int getSpeed();
+	int getSpeed();
+	
+	/**
+	 * 
+	 * @param spd, speed of this enemy
+	 */
+	void setSpeed(int spd);
 	
 	/**
 	 * @param life - life of enemy
 	 */
-	public void setLife(int life);
+	void setLife(int life);
 	
 	/**
 	 * 
 	 * @return life of this enemy
 	 */
-	public int getLife();
+	int getLife();
 	
 	/**
 	 * 
 	 * @return UUID of this enemy
 	 */
-	public UUID getUUID();
+	UUID getUUID();
 	
 	/**
 	 * 
 	 * @param dmg - set damage dealt by the enemy
 	 */
-	public void setDamage(int dmg);
+	void setDamage(int dmg);
 	
 	/**
 	 * 
 	 * @return damage dealt by the enemy
 	 */
-	public int getDamage();
+	int getDamage();
 }

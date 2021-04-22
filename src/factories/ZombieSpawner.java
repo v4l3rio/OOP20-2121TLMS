@@ -1,18 +1,19 @@
 package factories;
 
-import static com.almasb.fxgl.dsl.FXGL.*;
+import static com.almasb.fxgl.dsl.FXGL.getGameTimer;
+import static com.almasb.fxgl.dsl.FXGL.spawn;
 
 import java.util.Random;
 
 import com.almasb.fxgl.entity.SpawnData;
 
 import javafx.util.Duration;
-import model.Moveable.TYPE_OF_MOVEMENT;
+import model.Moveable.TypeOfMovement;
 import model.Zombie;
 import model.ZombieFemaleDecorator;
 import model.ZombieMaleDecorator;
 import model.ZombieTextureDecorator;
-import model.ZombieTextureDecorator.GENDER;
+import model.ZombieTextureDecorator.Gender;
 
 /**
  * This class creates and spawn zombies with random stats
@@ -27,7 +28,7 @@ public class ZombieSpawner extends Thread {
 	private static final int MINIMUM_SPEED = 170;
 	private static final int MINIMUM_DAMAGE = 2;
 
-	private Random rnd;
+	final private Random rnd;
 
 	public ZombieSpawner() {
 		this.rnd = new Random();
@@ -41,12 +42,12 @@ public class ZombieSpawner extends Thread {
 		
 		getGameTimer().runAtInterval(() -> {
 			
-			int x = rnd.nextInt(700) + INITIAL_SPAWN_X;
+			final int x = rnd.nextInt(700) + INITIAL_SPAWN_X;
 			
-			SpawnData zombieStats = new SpawnData(x, INITIAL_SPAWN_Y);
+			final SpawnData zombieStats = new SpawnData(x, INITIAL_SPAWN_Y);
 			
 			ZombieTextureDecorator zombieTexturized;
-			switch (GENDER.getRandom()) {
+			switch (Gender.getRandom()) {
 			case MALE:
 				zombieTexturized = new ZombieMaleDecorator(getRandomZombie());
 				break;
@@ -61,7 +62,7 @@ public class ZombieSpawner extends Thread {
 			zombieStats.put("zombie", zombieTexturized);
 
 			
-			switch (TYPE_OF_MOVEMENT.getRandom()) {
+			switch (TypeOfMovement.getRandom()) {
 			case RANDOM:
 				spawn("stupidZombie", zombieStats);
 				break;
@@ -80,9 +81,9 @@ public class ZombieSpawner extends Thread {
 
 
 	private Zombie getRandomZombie() {
-		int life = rnd.nextInt(10) + MINIMUM_LIFE;
-		int speed = rnd.nextInt(80) + MINIMUM_SPEED;
-		int damage = MINIMUM_DAMAGE;
+		final int life = rnd.nextInt(10) + MINIMUM_LIFE;
+		final int speed = rnd.nextInt(80) + MINIMUM_SPEED;
+		final int damage = MINIMUM_DAMAGE;
 		
 		return new Zombie(life, speed, damage);
 	}

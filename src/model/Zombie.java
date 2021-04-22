@@ -6,7 +6,7 @@ import java.util.UUID;
  * Model Generic Zombie
  */
 public class Zombie implements Enemy{
-	private UUID uuid;
+	final private UUID uuid;
 	private int life;
 	private int speed;
 	private int damage;
@@ -16,7 +16,7 @@ public class Zombie implements Enemy{
 	 * @param speed, speed of this zombie
 	 * @param damage, damage that the zombie does in contact with the player
 	 */
-	public Zombie(int life, int speed, int damage) {
+	public Zombie(final int life, final int speed, final int damage) {
 		this.uuid = UUID.randomUUID();
 		this.life = life;
 		this.speed = speed;
@@ -24,12 +24,19 @@ public class Zombie implements Enemy{
 	}
 
 
-	public void setLife(int life) {
+	public void setLife(final int life) {
 		this.life = life;
 	}
 	
-	public void setDamage(int dmg) {
+	public void setDamage(final int dmg) {
 		this.damage = dmg;
+	}
+
+
+	@Override
+	public void setSpeed(final int spd) {
+		this.speed = spd;
+		
 	}
 
 
