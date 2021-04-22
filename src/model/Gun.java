@@ -1,74 +1,55 @@
 package model;
 
 /**
- * Implements a gun model, leaving only the abstract method shoot() to be defined
- * in its implementations
+ * Gun interface: sets the stage for gun general behavior
  *
  */
-public abstract class Gun implements Weapon{
+public interface Gun{
 	
-	private final int shotDMG;
-	private final int maxAmmo;
-	private final double shotSpeed;
-	private int nAmmo;
-
-	public abstract void shoot();
+	/**
+	 * defines guns behavior when asked to shoot
+	 */
+	void shoot();
 	
-	public Gun(final int shotDMG, final int maxAmmo, final double shotSpeed) {
-		this.shotDMG = shotDMG;
-		this.maxAmmo = maxAmmo;
-		this.nAmmo = maxAmmo;
-		this.shotSpeed = shotSpeed;
-	}
 	/**
 	 * refills ammo, setting them back to the max capacity
 	 */
-	public void reload() {
-		nAmmo = maxAmmo;
-	}
+	void reload();
+	
+	/**
+	 * @return shot damage value
+	 */
+    int getDamage();
+    
 	/**
 	 * 
-	 * @return shot damage
+	 * @return shot speed value
 	 */
-    public int getDamage() {
-        return shotDMG;
-    }
-	/**
-	 * 
-	 * @return shot speed
-	 */
-	public double getShotspeed() {
-		return shotSpeed;
-	}
+    
+	double getShotspeed();
+	
 	/**
 	 * 
 	 * @return current ammunition number
 	 */
-	public int getNAmmo() {
-		return nAmmo;
-	}
+	int getNAmmo();
+	
 	/**
 	 * 
 	 * @param nAmmo sets current ammunition number
 	 */
-	public void setNAmmo(final int nAmmo) {
-		this.nAmmo = nAmmo;
-	}
+	void setNAmmo(final int nAmmo);
+	
 	/**
 	 * 
 	 * @return max ammunition capacity
 	 */
-	public int getMaxAmmo() {
-		return this.maxAmmo;
-	}
+	int getMaxAmmo();
+	
 	/**
 	 * 
 	 * @param otherGun
 	 * @return whether this gun is of the same type as otherGun, comparing main fields
 	 */
-	public boolean isSameTypeAs(final Gun otherGun) {
-		return this.shotDMG == otherGun.getDamage() 
-				&& this.shotSpeed == otherGun.getShotspeed()
-				&& this.getMaxAmmo() == otherGun.getMaxAmmo();
-	}
+	boolean isSameTypeAs(final Gun otherGun);
 }
