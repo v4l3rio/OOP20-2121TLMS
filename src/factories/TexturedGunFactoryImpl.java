@@ -43,7 +43,11 @@ public class TexturedGunFactoryImpl implements TexturedGunFactory{
 		return new TexturedGun(BRT_DMG, BRT_MAXAMMO, BRT_SHOT_SPEED, texturePaths) {
 			@Override
 			public void shoot() {
-				super.setNAmmo(super.getNAmmo() - 1);
+				if(this.getNAmmo() <= 0) {
+					throw new IllegalStateException();
+				} else {
+					super.setNAmmo(super.getNAmmo() - 1);
+				}
 			}
 		};
 	}
@@ -58,9 +62,12 @@ public class TexturedGunFactoryImpl implements TexturedGunFactory{
 		return new TexturedGun(MGM_DMG, MGM_MAXAMMO, MGM_SHOT_SPEED, texturePaths) {
 			@Override
 			public void shoot() {
-				super.setNAmmo(super.getNAmmo() - 1);
+				if(this.getNAmmo() <= 0) {
+					throw new IllegalStateException();
+				} else {
+					super.setNAmmo(super.getNAmmo() - 1);
+				}
 			}
-			
 		};
 	}
 	/**
