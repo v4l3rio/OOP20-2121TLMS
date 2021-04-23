@@ -2,6 +2,7 @@ package application;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Random;
 import com.almasb.fxgl.app.GameApplication;
@@ -15,6 +16,8 @@ import collisions.ShotZombieCollision;
 import collisions.ZombieWallCollision;
 import components.ComponentUtils;
 import components.GunComponent;
+import controller.MapController;
+import controller.MapControllerImpl;
 import controller.VisorController;
 import collisions.GunCollisionFactoryImpl;
 import collisions.PlayerFirePowerCollision;
@@ -38,9 +41,9 @@ import factories.ZombieSpawner;
 
 public class TheLastManStandingApp extends GameApplication {
 	
-    private static final String PATH_MAP = "Cemetery.tmx";
 	private final Random random = new Random();
 	private final SystemSettings mySystemSettings = new SystemSettingsImpl();   
+	private MapController mapController = new MapControllerImpl();
     private Entity player;
 
 	@Override
@@ -169,7 +172,11 @@ public class TheLastManStandingApp extends GameApplication {
 	    final TLMSFactory factory = new TLMSFactory();
 		getGameWorld().addEntityFactory(new WorldFactory());
 		getGameWorld().addEntityFactory(factory);
-		setLevelFromMap(PATH_MAP);
+		try {
+			setLevelFromMap(mapController.readMapTMX());
+		} catch (IOException e) {
+			System.out.println("Error reading tmx file map");
+		}
 
 		final double delay = AppUtils.GUN_SPAWN_DELAY;
 		spawn("text", new SpawnData(mySystemSettings.getWidth()/3.3, mySystemSettings.getHeight()/8)
@@ -195,8 +202,8 @@ public class TheLastManStandingApp extends GameApplication {
 		    spawn("firePowerUp", random.nextInt(2000), 50);
 		}, Duration.seconds(2));
 		
-//		final TLMSMusic music = new TLMSMusic(0.1);
-//		getAudioPlayer().loopMusic(music.getMusic());
+		final TLMSMusic music = new TLMSMusic("thriller.mp3", 0.1);
+		getAudioPlayer().loopMusic(music.getMusic());
 
 	}
 	

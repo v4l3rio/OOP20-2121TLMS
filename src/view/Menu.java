@@ -3,22 +3,24 @@ package view;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import application.TheLastManStandingApp;
+import controller.MapController;
+import controller.MapControllerImpl;
 import controller.ScoreController;
 import controller.ScoreControllerImpl;
+import model.score.Pair;
 
 /**
  * This class generates the view menu.
@@ -27,6 +29,8 @@ public class Menu {
 
 	private static final int BACKGROUND_WIDTH = 1280;
 	private static final int BACKGROUND_HEIGHT = 720;
+	private static final double RESIZE_BUTTONS_WIDTH = 0.15;
+	private static final double RESIZE_BUTTONS_HEIGHT = 0.10;
 	private final JFrame mainWindow;
 	private JPanelWithBackground mainPanel;
 	private JButton startButton;
@@ -34,10 +38,20 @@ public class Menu {
 	private JButton rankingButton;
 	private JButton controlsButton;
 	private JButton exitButton;
+	private JButton mapButton;
 	private final Font titleFont = new Font("Times New Roman", Font.PLAIN, 50);
 	private final float[] buttonColor = Color.RGBtoHSB(102, 199, 255, null); // color using RGB settings
 	private final List<JButton> buttonList = new ArrayList<>();
-	private final ScoreController controller;
+	private final ScoreController scoreController;
+	private final MapController mapController;
+	private final double buttonsWidth;
+	private final double buttonsHeight;
+	private final double buttonsLeftPositionWidth;
+	private final double buttonsRightPositionWidth;
+	private final double buttonsFirstRawHeight;
+	private final double buttonsSecondRawHeight;
+	private final double buttonsThirdRawHeight;
+	
 
 	/**
 	 * @param args
@@ -45,14 +59,26 @@ public class Menu {
 	 */
 	public Menu(final String[] args) throws IOException {
 
-		this.controller = new ScoreControllerImpl();
-		this.controller.firstGame();
+		this.scoreController = new ScoreControllerImpl();
+		this.mapController= new MapControllerImpl(); 
+		this.scoreController.firstGame();
+		this.mapController.firstGame();
 		this.mainWindow = new JFrame("The Last Man Standing-Menu");
 		addBackground(mainWindow, "/assets/levels/menuBackground.png");
+		final BufferedImage img = ImageIO.read(getClass().getResource("/assets/levels/menuBackground.png"));
+		final int imgBackgroundWidth = img.getWidth();
+		final int imgBackgroundHeight = img.getHeight();
+		buttonsWidth = imgBackgroundWidth * RESIZE_BUTTONS_WIDTH;
+		buttonsHeight = imgBackgroundHeight * RESIZE_BUTTONS_HEIGHT;
+		buttonsLeftPositionWidth = imgBackgroundWidth * 0.05;
+		buttonsRightPositionWidth = imgBackgroundWidth * 0.75;
+		buttonsFirstRawHeight = imgBackgroundHeight * 0.15;
+		buttonsSecondRawHeight = imgBackgroundHeight * 0.40;
+		buttonsThirdRawHeight = imgBackgroundHeight * 0.65;
 		addTitle("THE LAST MAN STANDING");
 		mainPanel.setLayout(null); // disable LayoutManager to set buttons positions easier
 		initButtons();
-		final String user = readLastUser();
+		final String user = scoreController.readUser();
 
 		startButton.addActionListener(l -> {
 			mainWindow.dispose();
@@ -64,7 +90,7 @@ public class Menu {
 					JOptionPane.QUESTION_MESSAGE, null, null, user);
 			if (name != null && !name.equals("")) {
 				try {
-					writeUser(name);
+					scoreController.writeUser(name);
 				} catch (IOException e) {
 					e.printStackTrace();
 					System.out.println("Error Username file");
@@ -74,9 +100,11 @@ public class Menu {
 
 		rankingButton.addActionListener(l -> {
 			try {
-				final List<String> rankingList = controller.getRanking();
+				
+				final List<Pair<String,List<String>>> rankingList = scoreController.getRanking();
 				JOptionPane.showMessageDialog(mainWindow,
-						rankingList.get(0) + "\n" + rankingList.get(1) + "\n" + rankingList.get(2), "Ranking",
+						createStringRanking(rankingList),
+						"Ranking",
 						JOptionPane.INFORMATION_MESSAGE);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -89,8 +117,39 @@ public class Menu {
 
 		controlsButton.addActionListener(l -> {
 			JOptionPane.showMessageDialog(mainWindow,
-					"A  -  left\n" + "D  -  right\n" + "W -  jump\n" + "L  -  shoot\n" + "R  -  reload\n", "Controls",
+					"MOVEMENT\n"
+				  + "A  -  left\n" 
+				  + "D  -  right\n" 
+				  + "W -  jump\n"
+				  + "Q  -  look right\n"
+				  + "E  -  look right\n"
+				  + "------------------------------\n"
+				  + "ACTIONS\n"
+				  + "L  -  shoot\n" 
+				  + "R  -  reload\n"
+				  + "S  -  fly down (when player is red)"
+				  , "Controls",
 					JOptionPane.INFORMATION_MESSAGE);
+		});
+		
+		mapButton.addActionListener(l -> {
+			final Object[] possibilities = {"Cemetery", "Pyramid", "Canyon"};
+			final String map = (String)JOptionPane.showInputDialog(
+			                    mainWindow,
+			                    "Choose the map:",
+			                    "",
+			                    JOptionPane.PLAIN_MESSAGE,
+			                    null,
+			                    possibilities,
+			                    "Cemetery");
+			if (map != null && !map.equals("")) {
+				try {
+					mapController.writeMap(map);
+				} catch (IOException e) {
+					e.printStackTrace();
+					System.out.println("Error Map file");
+				}
+			}
 		});
 
 		mainWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -119,23 +178,23 @@ public class Menu {
 		rankingButton = new JButton("RANKING");
 		controlsButton = new JButton("CONTROLS");
 		exitButton = new JButton("EXIT");
+		mapButton = new JButton("MAPS");
 		buttonList.add(startButton);
 		buttonList.add(controlsButton);
 		buttonList.add(exitButton);
 		buttonList.add(usernameButton);
 		buttonList.add(rankingButton);
+		buttonList.add(mapButton);
 		setButtonColor(buttonList, buttonColor);
 		buttonList.forEach(b -> mainPanel.add(b));
-		controlsButton.setSize(200, 70);
-		controlsButton.setLocation(230, 550);
-		startButton.setSize(200, 70);
-		startButton.setLocation(530, 550);
-		rankingButton.setSize(200, 70);
-		rankingButton.setLocation(830, 550);
-		usernameButton.setSize(100, 35);
-		usernameButton.setLocation(50, 585);
-		exitButton.setSize(100, 35);
-		exitButton.setLocation(1110, 585);
+		buttonList.forEach(b -> b.setSize((int)buttonsWidth, (int)buttonsHeight));
+		startButton.setLocation((int)buttonsLeftPositionWidth, (int)buttonsFirstRawHeight);
+		controlsButton.setLocation((int)buttonsLeftPositionWidth, (int)buttonsSecondRawHeight);
+		mapButton.setLocation((int)buttonsLeftPositionWidth, (int)buttonsThirdRawHeight);
+		rankingButton.setLocation((int)buttonsRightPositionWidth, (int)buttonsFirstRawHeight);
+		usernameButton.setLocation((int)buttonsRightPositionWidth, (int)buttonsSecondRawHeight);
+		exitButton.setLocation((int)buttonsRightPositionWidth, (int)buttonsThirdRawHeight);
+		
 	}
 
 	/**
@@ -144,29 +203,6 @@ public class Menu {
 	 */
 	private void setButtonColor(final List<JButton> buttons, final float[] color) {
 		buttons.forEach(b -> b.setBackground(Color.getHSBColor(color[0], color[1], color[2])));
-	}
-
-	/**
-	 * @return the last User saved in Json file
-	 * @throws IOException if an I/O error occurs
-	 */
-	private String readLastUser() throws IOException {
-		try (BufferedReader reader = new BufferedReader(new FileReader(ScoreControllerImpl.FILE_NAME_USER))) {
-			final String name = reader.readLine();
-			reader.close();
-			return name;
-		}
-	}
-
-	/**
-	 * @param user the user that will wrote on ranking Json file
-	 * @throws IOException if an I/O error occurs
-	 */
-	private void writeUser(final String user) throws IOException {
-		try (BufferedWriter writer = new BufferedWriter(new FileWriter(ScoreControllerImpl.FILE_NAME_USER))) {
-			final String upperCaseUser = user.toUpperCase();
-			writer.write(upperCaseUser);
-		}
 	}
 
 	/**
@@ -180,6 +216,22 @@ public class Menu {
 		title.setLocation(300, 5);
 		title.setForeground(Color.white);
 		title.setFont(titleFont);
+	}
+	
+	/**
+	 * Creates a string of all of rankings for a more intuitive view.
+	 * @param rankingList
+	 *            the list of rankings, one for each map
+	 * @return
+	 *      the string of all of rankings
+	 */
+	private String createStringRanking(final List<Pair<String,List<String>>> rankingList) {
+		final List<String> list = new ArrayList<>(); 
+		rankingList.forEach( l -> list.add(l.getX() + ":\n"
+				+ l.getY().get(0) + "\n"
+				+ l.getY().get(1) + "\n"
+			    + l.getY().get(2) + "\n\n"));
+		return list.stream().collect(Collectors.joining());
 	}
 
 }

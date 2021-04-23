@@ -30,4 +30,22 @@ public class ScoreModelImpl implements ScoreModel {
 		return newList;
 	}
 
+	@Override
+	public List<Pair<String, List<String>>> rankingListRefactor(final List<String> rankingList) {
+		final List<Pair<String,List<String>>> newList = new ArrayList<>();
+    	rankingList.forEach( line -> 
+    	newList.add(
+		    new Pair<>(
+	      	    line.split(":")[0], 
+	      	        List.of(
+	      	            line.split(":")[1].split(",")[0].split(" ")[1] + " " + line.split(":")[1].split(",")[0].split(" ")[0], 
+	      	            line.split(":")[1].split(",")[1].split(" ")[1] + " " + line.split(":")[1].split(",")[1].split(" ")[0],
+	      	            line.split(":")[1].split(",")[2].split(" ")[1] + " " + line.split(":")[1].split(",")[2].split(" ")[0]
+	      	        )
+	      	)
+		)
+	);
+	return newList;
+	}
+
 }

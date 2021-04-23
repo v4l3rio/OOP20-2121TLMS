@@ -27,4 +27,13 @@ public interface ScoreModel {
 	 * @return the list updated
 	 */       
 	List<String> updateRanking(List<String> list, Score<String, Integer> newScore);
+	
+	 /**
+     * This method takes a list of strings. Each string is in the "map:USER1 score,USER2 score,USER3 score" form.
+     * <p>
+     * It returns a list of pairs. Each pair is in the (map, ["USER1 score","USER2 score","USER3 score"]) form
+     * @param rankingList
+     * @return
+     */
+    List<Pair<String,List<String>>> rankingListRefactor(final List<String> rankingList);
 }
