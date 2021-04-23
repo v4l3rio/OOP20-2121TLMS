@@ -8,11 +8,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import factories.TexturedGunFactoryImpl;
+import model.AbstractGun;
 import model.Gun;
 
 public class GunTest {
 
-	private final Gun gun = new Gun(3, 5, 600) {
+	private final Gun gun = new AbstractGun(3, 5, 600) {
 		@Override
 		public void shoot() {
 			this.setNAmmo(this.getNAmmo()-1);

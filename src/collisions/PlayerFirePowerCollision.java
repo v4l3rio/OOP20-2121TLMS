@@ -25,20 +25,11 @@ public class PlayerFirePowerCollision extends CollisionHandler{
 	public void onCollisionBegin(Entity player, Entity firepower) {
 		
 		firepower.removeFromWorld();
-		PlayerTextures playerTexture = new PlayerTextures(PlayerColor.RED);
 		PlayerPowerUp playerPowerUp = new PlayerPowerUpProxy(player);
 		set("playerLife", 1.0);
 		
-		if(player.getComponent(ComponentUtils.PLAYER_COMPONENT).getPlayer().getColor()==PlayerColor.BLUE) {
 			playerPowerUp.transformation(PlayerColor.RED, 650, 
-					player.getComponent(ComponentUtils.PLAYER_COMPONENT).getPlayer().getMaxHeath(), 5);
-				getGameTimer().runOnceAfter(() -> {					
-					player.removeComponent(ComponentUtils.PLAYERTEXTURE_COMPONENT);  
-					player.addComponent(new TextureComponent(playerTexture.getTexture().getTextureMap()));		
-				}, Duration.seconds(0.8));
-		
-			}
-			
+					player.getComponent(ComponentUtils.PLAYER_COMPONENT).getPlayer().getMaxHeath(), 5);			
 		}
 	
 	}
