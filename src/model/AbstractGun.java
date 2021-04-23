@@ -2,10 +2,10 @@ package model;
 
 /**
  * Implements a gun model, leaving only the abstract method shoot() to be defined
- * in its implementations
+ * in its implementations.
  *
  */
-public abstract class AbstractGun implements Gun{
+public abstract class AbstractGun implements Gun {
 	
 	private final int shotDMG;
 	private final int maxAmmo;
@@ -22,37 +22,37 @@ public abstract class AbstractGun implements Gun{
 	}
 
 	@Override
-	public void reload() {
+	public final void reload() {
 		nAmmo = maxAmmo;
 	}
 
 	@Override
-    public int getDamage() {
+	public final int getDamage() {
         return shotDMG;
     }
 
 	@Override
-	public double getShotspeed() {
+	public final double getShotspeed() {
 		return shotSpeed;
 	}
 
 	@Override
-	public int getNAmmo() {
+	public final int getNAmmo() {
 		return nAmmo;
 	}
 
 	@Override
-	public void setNAmmo(final int nAmmo) {
+	public final void setNAmmo(final int nAmmo) {
 		this.nAmmo = nAmmo;
 	}
 
 	@Override
-	public int getMaxAmmo() {
+	public final int getMaxAmmo() {
 		return this.maxAmmo;
 	}
 
 	@Override
-	public boolean isSameTypeAs(final Gun otherGun) {
+	public final boolean isSameTypeAs(final Gun otherGun) {
 		return this.shotDMG == otherGun.getDamage() 
 				&& this.shotSpeed == otherGun.getShotspeed()
 				&& this.getMaxAmmo() == otherGun.getMaxAmmo();

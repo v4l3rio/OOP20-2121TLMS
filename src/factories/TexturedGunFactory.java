@@ -4,32 +4,15 @@ import model.TLMSType;
 import model.TexturedGun;
 
 /**
- * Organizes the creation of textured guns
+ * Organizes the creation of textured guns.
  *
  */
-public interface TexturedGunFactory{
-
-	/**
-	 * 
-	 * @return an instance of Beretta92
-	 */
-	TexturedGun createBeretta92();
+public interface TexturedGunFactory {
 	
 	/**
 	 * 
-	 * @return an instance of MagmaGun
+	 * @param type gun type
+	 * @return an instance of a textured gun of type "type"
 	 */
-	TexturedGun createMagmaGun();
-
-	/**
-	 * 
-	 * @return an instance of MachineGun
-	 */
-	TexturedGun createMachineGun();
-	/**
-	 * 
-	 * @param type firearm type
-	 * @return the matching firearm
-	 */
-	TexturedGun gunFromType(TLMSType type);
+	TexturedGun getTexturedGun(TLMSType type);
 }

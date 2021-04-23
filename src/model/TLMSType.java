@@ -59,13 +59,13 @@ public enum TLMSType {
 	ATTACK, 
 	
 	/**
-	 * Defines the SHOT type, used to spawn shots
+	 * Defines the SHOT type, used to spawn shots.
 	 * @see TLMSFactory
 	 */
 	SHOT, 
 	
 	/**
-	 * Defines MACHINEGUN type, used to spawn gun prop
+	 * Defines MACHINEGUN type, used to spawn gun prop.
 	 * 
 	 * but also to build a textured gun from type
 	 * @see TexturedGunFactoryImpl
@@ -73,7 +73,7 @@ public enum TLMSType {
 	MACHINEGUN, 
 	
 	/**
-	 * Defines MAGMAGUN type, used to spawn gun prop
+	 * Defines MAGMAGUN type, used to spawn gun prop.
 	 * 
 	 * but also to build a textured gun from type
 	 * @see TexturedGunFactoryImpl
@@ -88,7 +88,8 @@ public enum TLMSType {
 	BERETTA92,
 	
 	/**
-	 * Defines GUN type, to which a texture is connected
+	 * Defines GUN type,
+	 * used to get Texture from maps, by type searching.
 	 */
 	GUN,
 	

@@ -26,7 +26,7 @@ import model.score.Pair;
  * This class generates the view menu.
  */
 public class Menu {
-
+	
 	private static final int BACKGROUND_WIDTH = 1280;
 	private static final int BACKGROUND_HEIGHT = 720;
 	private static final double RESIZE_BUTTONS_WIDTH = 0.15;
