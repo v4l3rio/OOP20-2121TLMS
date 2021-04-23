@@ -15,6 +15,7 @@ import com.almasb.fxgl.physics.CollisionHandler;
 import components.TextureComponent;
 import components.ComponentUtils;
 import controller.ScoreControllerImpl;
+import controller.UserNameControllerImpl;
 import model.TLMSType;
 import model.score.JsonScore;
 import javafx.util.Duration;
@@ -50,7 +51,7 @@ public class PlayerZombieCollision extends CollisionHandler{
 					try {
 						new ScoreControllerImpl().updateScore(
 								new JsonScore.Builder()
-								    .nameFromPath(ScoreControllerImpl.FILE_NAME_USER)
+								    .nameFromPath(UserNameControllerImpl.FILE_NAME_USER)
 								    .score(getWorldProperties().intProperty("score").get())
 								    .build()
 					    );

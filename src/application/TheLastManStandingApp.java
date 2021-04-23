@@ -44,7 +44,7 @@ public class TheLastManStandingApp extends GameApplication {
 	
 	private final Random random = new Random();
 	private final SystemSettings mySystemSettings = new SystemSettingsImpl();   
-	private MapController mapController = new MapControllerImpl();
+	private final MapController mapController = new MapControllerImpl();
     private Entity player;
 
 	@Override
