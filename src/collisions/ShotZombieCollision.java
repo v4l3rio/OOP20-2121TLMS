@@ -28,7 +28,7 @@ public class ShotZombieCollision extends CollisionHandler{
 	
 		System.out.println("Lo zombie ha vita: " + zombie.getComponent(ComponentUtils.HEALTH_COMPONENT).getValue());
 		inc("score", +1);
-		spawn("zombiePoints", new SpawnData(zombie.getX(),zombie.getY()).put("zombiePoints", "+1"));
+		spawn("zombiePoints", new SpawnData(zombie.getX(), zombie.getY()).put("zombiePoints", "+1"));
 
 		if (zombie.getComponent(ComponentUtils.HEALTH_COMPONENT).getValue() <= 0) {
 			inc("score", +zombie.getComponent(ComponentUtils.HEALTH_COMPONENT).getMaxValue());

@@ -18,6 +18,7 @@ import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import components.*;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
+import javafx.scene.text.Text;
 import model.*;
 import components.PlayerComponent;
 import components.FirePowerComponent;
@@ -37,7 +38,7 @@ import model.PlayerImpl;
 public class TLMSFactory implements EntityFactory{
 	
 	private static final String GROUND_SENSOR = "GROUND_SENSOR";
-	
+	private final TexturedGunFactoryImpl gunFactory = new TexturedGunFactoryImpl();
 	private Entity player;
 	
 	public final void setPlayer(final Entity player) {
@@ -138,7 +139,7 @@ public class TLMSFactory implements EntityFactory{
 	
 	@Spawns("magmaGun")
     public Entity newMagmaGun(final SpawnData data) {
-		final TexturedGun magmaGun = new TexturedGunFactoryImpl().getTexturedGun(MAGMAGUN);
+		final TexturedGun magmaGun = gunFactory.getTexturedGun(MAGMAGUN);
 		final PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
         // this avoids player sticking to walls
@@ -155,7 +156,7 @@ public class TLMSFactory implements EntityFactory{
 
 	@Spawns("machineGun")
 	public final Entity newMachineGun(final SpawnData data) {
-		final TexturedGun machineGun = new TexturedGunFactoryImpl().getTexturedGun(MACHINEGUN);
+		final TexturedGun machineGun = gunFactory.getTexturedGun(MACHINEGUN);
         final PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
 
