@@ -36,9 +36,11 @@ import model.PlayerImpl;
 
 public class TLMSFactory implements EntityFactory{
 	
+	private static final String GROUND_SENSOR = "GROUND_SENSOR";
+	
 	private Entity player;
 	
-	public void setPlayer(Entity player) {
+	public void setPlayer(final Entity player) {
 		this.player = player;
 	}
 
@@ -48,13 +50,13 @@ public class TLMSFactory implements EntityFactory{
 	 * @return entity - created entity
 	 */
 	@Spawns("stupidZombie")
-    public Entity newStupidZombie(SpawnData data) {
+    public Entity newStupidZombie(final SpawnData data) {
 		
-        PhysicsComponent physics = new PhysicsComponent();
+        final PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
-        physics.addGroundSensor(new HitBox("GROUND_SENSOR", new Point2D(16, 38), BoundingShape.box(6, 8)));
+        physics.addGroundSensor(new HitBox(GROUND_SENSOR, new Point2D(16, 38), BoundingShape.box(6, 8)));
 
-        ZombieTextureDecorator zombie = data.get("zombie");
+        final ZombieTextureDecorator zombie = data.get("zombie");
 
         return entityBuilder(data)
                 .type(ZOMBIE)
@@ -74,13 +76,13 @@ public class TLMSFactory implements EntityFactory{
 	 * @return entity - created entity
 	 */
 	@Spawns("followingZombie")
-    public Entity newFollowingZombie(SpawnData data) {
+    public Entity newFollowingZombie(final SpawnData data) {
 		
-        PhysicsComponent physics = new PhysicsComponent();
+        final PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
-        physics.addGroundSensor(new HitBox("GROUND_SENSOR", new Point2D(16, 38), BoundingShape.box(6, 8)));
+        physics.addGroundSensor(new HitBox(GROUND_SENSOR, new Point2D(16, 38), BoundingShape.box(6, 8)));
 
-        ZombieTextureDecorator zombie = data.get("zombie");
+        final ZombieTextureDecorator zombie = data.get("zombie");
 
         return entityBuilder(data)
                 .type(ZOMBIE)
@@ -104,7 +106,7 @@ public class TLMSFactory implements EntityFactory{
 		PlayerTextures texture = new PlayerTextures(PlayerColor.BLUE);
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
-        physics.addGroundSensor(new HitBox("GROUND_SENSOR", new Point2D(16, 38), BoundingShape.box(6, 8)));
+        physics.addGroundSensor(new HitBox(GROUND_SENSOR, new Point2D(16, 38), BoundingShape.box(6, 8)));
 
         return entityBuilder(data)
                 .type(TLMSType.PLAYER)
@@ -131,7 +133,7 @@ public class TLMSFactory implements EntityFactory{
                 .with(new CollidableComponent(true))
                 .with(new ShotMovementComponent(physics, direction, currentGun.getShotspeed(), 
                 		new Image(currentGun.getTextureMap().get(SHOT))))
-                .with(new DamagingComponent(currentGun.getShotDamage()))
+                .with(new DamagingComponent(currentGun.getDamage()))
                 .build();
     }
 	
@@ -171,7 +173,7 @@ public class TLMSFactory implements EntityFactory{
 	public Entity newPower(SpawnData data) {
 		PhysicsComponent physics = new PhysicsComponent();
 		physics.setBodyType(BodyType.DYNAMIC);
-		physics.addGroundSensor(new HitBox("GROUND_SENSOR", new Point2D(16, 38), BoundingShape.box(6, 80)));
+		physics.addGroundSensor(new HitBox(GROUND_SENSOR, new Point2D(16, 38), BoundingShape.box(6, 80)));
 		
 		return entityBuilder(data)
 				.type(TLMSType.FIREPOWER)

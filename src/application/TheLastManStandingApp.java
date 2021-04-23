@@ -2,6 +2,7 @@ package application;
 
 import static com.almasb.fxgl.dsl.FXGL.*;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Random;
 import com.almasb.fxgl.app.GameApplication;
@@ -14,6 +15,9 @@ import com.almasb.fxgl.ui.UI;
 import collisions.ShotZombieCollision;
 import collisions.ZombieWallCollision;
 import components.ComponentUtils;
+import components.GunComponent;
+import controller.MapController;
+import controller.MapControllerImpl;
 import controller.VisorController;
 import collisions.GunCollisionFactoryImpl;
 import collisions.PlayerFirePowerCollision;
@@ -37,9 +41,9 @@ import factories.ZombieSpawner;
 
 public class TheLastManStandingApp extends GameApplication {
 	
-    private static final String PATH_MAP = "Cemetery.tmx";
 	private final Random random = new Random();
 	private final SystemSettings mySystemSettings = new SystemSettingsImpl();   
+	private MapController mapController = new MapControllerImpl();
     private Entity player;
 
 	@Override
@@ -122,9 +126,10 @@ public class TheLastManStandingApp extends GameApplication {
 	        getInput().addAction(new UserAction("Shoot") {
 				@Override
 				protected void onActionBegin() {
-					final Gun currentGun = player.getComponent(ComponentUtils.GUN_COMPONENT).getCurrentGun();
+					final var gunComponent = player.getComponent(ComponentUtils.GUN_COMPONENT);
+					final Gun currentGun = gunComponent.getCurrentGun();
 					//is reloading? can't shoot rn, do nothing
-					if(!currentGun.isReloading()) {
+					if(!gunComponent.isReloading()) {
 						if(currentGun.getNAmmo() > 0) {
 							// have the shot spawn facing coherently as player, with due distance from it
 							spawn("shot", player.getPosition().getX() - AppUtils.SHOT_X_AXIS_FIX 
@@ -132,7 +137,7 @@ public class TheLastManStandingApp extends GameApplication {
 									, player.getPosition().getY() - AppUtils.SHOT_Y_AXIS_FIX);
 							currentGun.shoot();
 						} else {
-							reload(currentGun);
+							reload(gunComponent);
 						}	
 					}
 				}
@@ -141,8 +146,7 @@ public class TheLastManStandingApp extends GameApplication {
 	        getInput().addAction(new UserAction("Reload") {
 	            @Override
 	            protected void onActionBegin() {
-	            	final Gun currentGun = player.getComponent(ComponentUtils.GUN_COMPONENT).getCurrentGun();
-	            	reload(currentGun);
+	            	reload(player.getComponent(ComponentUtils.GUN_COMPONENT));
 	            }
 	        }, KeyCode.R);
 
@@ -151,13 +155,13 @@ public class TheLastManStandingApp extends GameApplication {
 	  * Reloads the gun, keeping it busy for a reload time, while refilling the ammo
 	  * @param gun
 	  */
-     private void reload(final Gun gun) {
-    	 gun.setReloading(true);
+     private void reload(final GunComponent gunComponent) {
+    	 gunComponent.setReloading(true);
 			spawn("text", new SpawnData(840,150).put("text", "RELOADING"));
 			runOnce(()->{
-				gun.reload();
-				gun.setReloading(false);
-			}, Duration.seconds(Gun.RELOAD_TIME));
+				gunComponent.getCurrentGun().reload();
+				gunComponent.setReloading(false);
+			}, Duration.seconds(AppUtils.RELOAD_TIME));
      }
 	
     /**
@@ -168,7 +172,11 @@ public class TheLastManStandingApp extends GameApplication {
 	    final TLMSFactory factory = new TLMSFactory();
 		getGameWorld().addEntityFactory(new WorldFactory());
 		getGameWorld().addEntityFactory(factory);
-		setLevelFromMap(PATH_MAP);
+		try {
+			setLevelFromMap(mapController.readMapTMX());
+		} catch (IOException e) {
+			System.out.println("Error reading tmx file map");
+		}
 
 		final double delay = AppUtils.GUN_SPAWN_DELAY;
 		spawn("text", new SpawnData(mySystemSettings.getWidth()/3.3, mySystemSettings.getHeight()/8)
@@ -194,8 +202,8 @@ public class TheLastManStandingApp extends GameApplication {
 		    spawn("firePowerUp", random.nextInt(2000), 50);
 		}, Duration.seconds(2));
 		
-//		final TLMSMusic music = new TLMSMusic(0.1);
-//		getAudioPlayer().loopMusic(music.getMusic());
+		final TLMSMusic music = new TLMSMusic("thriller.mp3", 0.1);
+		getAudioPlayer().loopMusic(music.getMusic());
 
 	}
 	

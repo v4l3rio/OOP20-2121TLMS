@@ -3,7 +3,7 @@ package model;
 import java.util.Map;
 
 //adds texture to gun logics
-public abstract class TexturedGun extends Gun {
+public abstract class TexturedGun extends AbstractGun {
 
 	private final Texture texture = new Texture();
 	//calls super constructor and adds all textures to textures

@@ -18,33 +18,34 @@ import model.TLMSType;
  */
 
 public class ZombieTextureComponent extends Component {
+	
+	private static final double ANIMATION_TIME = 0.66;
 
-	private PhysicsComponent physics;
+	private final PhysicsComponent physics;
 
-	private AnimatedTexture texture;
+	private final AnimatedTexture texture;
 
-	private AnimationChannel animIdle, animWalk, animAttack, animDead;
+	private final AnimationChannel animIdle, animWalk, animAttack, animDead;
 
-	private boolean attacking = false;
+	private boolean attacking;
 
-	private Map<TLMSType, String> textureMap;
 
 	/**
 	 * @param textureMap - texture map with all zombie states
 	 */
-	public ZombieTextureComponent(Map<TLMSType, String> textureMap, PhysicsComponent physics) {
+	public ZombieTextureComponent(final Map<TLMSType, String> textureMap, final PhysicsComponent physics) {
 		this.physics = physics;
-		this.textureMap = textureMap;
-		animIdle = new AnimationChannel(new Image(this.textureMap.get(TLMSType.IDLE)), 15, 132, 160,
-				Duration.seconds(0.66), 0, 14);
-		animWalk = new AnimationChannel(new Image(this.textureMap.get(TLMSType.WALK)), 10, 132, 160,
-				Duration.seconds(0.66), 0, 9);
-		animAttack = new AnimationChannel(new Image(this.textureMap.get(TLMSType.ATTACK)), 8, 132, 160,
-				Duration.seconds(0.66), 0, 7);
-		animDead = new AnimationChannel(new Image(this.textureMap.get(TLMSType.DEAD)), 12, 192, 160,
-				Duration.seconds(0.66), 0, 11);
+		animIdle = new AnimationChannel(new Image(textureMap.get(TLMSType.IDLE)), 15, 132, 160,
+				Duration.seconds(ANIMATION_TIME), 0, 14);
+		animWalk = new AnimationChannel(new Image(textureMap.get(TLMSType.WALK)), 10, 132, 160,
+				Duration.seconds(ANIMATION_TIME), 0, 9);
+		animAttack = new AnimationChannel(new Image(textureMap.get(TLMSType.ATTACK)), 8, 132, 160,
+				Duration.seconds(ANIMATION_TIME), 0, 7);
+		animDead = new AnimationChannel(new Image(textureMap.get(TLMSType.DEAD)), 12, 192, 160,
+				Duration.seconds(ANIMATION_TIME), 0, 11);
 		texture = new AnimatedTexture(animIdle);
 		texture.loop();
+		this.attacking = false;
 	}
 
 	@Override
@@ -54,7 +55,7 @@ public class ZombieTextureComponent extends Component {
 		entity.setScaleUniform(0.8);
 	}
 
-	public void setAttacking(boolean attacking) {
+	public void setAttacking(final boolean attacking) {
 		this.attacking = attacking;
 	}
 
@@ -63,14 +64,14 @@ public class ZombieTextureComponent extends Component {
 	}
 
 	@Override
-	public void onUpdate(double tpf) {
+	public void onUpdate(final double tpf) {
 
 		if (entity.getComponent(ComponentUtils.HEALTH_COMPONENT).isZero()) {
 			if (texture.getAnimationChannel() != animDead) {
 				texture.playAnimationChannel(animDead);
 				FXGL.getGameTimer().runOnceAfter(() -> {
 					entity.removeFromWorld();
-				}, Duration.seconds(0.66));
+				}, Duration.seconds(ANIMATION_TIME));
 			}
 		}
 
@@ -79,7 +80,7 @@ public class ZombieTextureComponent extends Component {
 				texture.playAnimationChannel(animAttack);
 				FXGL.getGameTimer().runOnceAfter(() -> {
 					setAttacking(false);
-				}, Duration.seconds(0.66));
+				}, Duration.seconds(ANIMATION_TIME));
 			}
 		}
 

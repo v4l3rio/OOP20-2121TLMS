@@ -12,6 +12,8 @@ public class GunComponent extends Component {
 	private final TexturedGun defaultGun;
 	//current gun, might differ from default one
 	private TexturedGun currentGun;
+	//whether the entity using the gun is reloading or not
+	private boolean isReloading;
 	
 	/**
 	 * 
@@ -21,6 +23,7 @@ public class GunComponent extends Component {
 		this.currentGun = gun;
 		this.defaultGun = gun;
 		isChanged = false;
+		isReloading = false;
 	}
 	
 	/**
@@ -72,4 +75,21 @@ public class GunComponent extends Component {
 	public TexturedGun getDefaultGun() {
 		return this.defaultGun;
 	}
+
+	/**
+	 * 
+	 * @param isReloading sets whether current gun is being reloaded or not
+	 */
+	public void setReloading(final boolean isReloading) {
+		this.isReloading = isReloading;
+	}
+	
+	/**
+	 * 
+	 * @return whether current gun is being reloaded or not
+	 */
+	public boolean isReloading() {
+		return this.isReloading;
+	}
+
 }
