@@ -12,7 +12,7 @@ import model.score.Score;
 public interface ScoreController {
 	
 	/**
-	 * Create folder and files score 
+	 * Create folder and files score. 
 	 * @throws IOException 
 	 *             if an I/O error occurs
 	 */
