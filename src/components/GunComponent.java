@@ -6,6 +6,7 @@ import model.TexturedGun;
  * Implements a component to attach the entity to its gun.
  */
 public class GunComponent extends Component {
+	
 	//tracking multiple changes in the component's gun
 	private boolean isChanged;
 	//default gun, native one
@@ -36,7 +37,7 @@ public class GunComponent extends Component {
 	}
 
 	/**
-	 * Sets isChanged field
+	 * Sets isChanged field.
 	 * @param isChanged keeps track of multiple changes, used for handling timers
 	 * @see GunCollisionFactoryImpl
 	 */
@@ -53,7 +54,7 @@ public class GunComponent extends Component {
 	}
 
 	/**
-	 * Changes current gun
+	 * Changes current gun.
 	 * @param currentGun
 	 */
 	public void setCurrentGun(final TexturedGun currentGun) {

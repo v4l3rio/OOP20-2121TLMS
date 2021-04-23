@@ -1,31 +1,29 @@
 package model;
 
 /**
- * Gun interface: sets the stage for gun general behavior
- *
+ * Gun interface: sets the stage for gun general behavior.
  */
-public interface Gun{
+public interface Gun {
 	
 	/**
-	 * defines guns behavior when asked to shoot
+	 * defines guns behavior when asked to shoot.
 	 */
 	void shoot();
 	
 	/**
-	 * refills ammo, setting them back to the max capacity
+	 * refills ammo, setting them back to the max capacity.
 	 */
 	void reload();
 	
 	/**
-	 * @return shot damage value
+	 * @return shot damage value.
 	 */
     int getDamage();
-    
+
 	/**
 	 * 
-	 * @return shot speed value
+	 * @return shot speed value.
 	 */
-    
 	double getShotspeed();
 	
 	/**
@@ -38,7 +36,7 @@ public interface Gun{
 	 * 
 	 * @param nAmmo sets current ammunition number
 	 */
-	void setNAmmo(final int nAmmo);
+	void setNAmmo(int nAmmo);
 	
 	/**
 	 * 
@@ -51,5 +49,5 @@ public interface Gun{
 	 * @param otherGun
 	 * @return whether this gun is of the same type as otherGun, comparing main fields
 	 */
-	boolean isSameTypeAs(final Gun otherGun);
+	boolean isSameTypeAs(Gun otherGun);
 }

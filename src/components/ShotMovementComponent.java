@@ -9,24 +9,23 @@ import javafx.scene.image.Image;
 import javafx.util.Duration;
 /**
  * Implements a component managing shot movement, both graphically 
- * and logically (also used to handle collisions)
+ * and logically (also used to handle collisions).
  */
-public class ShotMovementComponent extends Component{
+public final class ShotMovementComponent extends Component {
 	
 	//Preset values, we want shot size to be SHOT_SCALE big, using NTEXTURES for its animation
-	private final static int NTEXTURES = 3;
-	private final static double SHOT_SCALE = 0.20;	
-
-	private final PhysicsComponent physics;
-
-	private final AnimatedTexture texture;
-
-	private final AnimationChannel animShot;
+	private static final int NTEXTURES = 3;
+	private static final double SHOT_SCALE = 0.20;	
 	
+	private final PhysicsComponent physics;
+	private final AnimatedTexture texture;
+	private final AnimationChannel animShot;
 	private final double direction;
 	private final double shotSpeed;
+	
 	/**
-	 * Constructor with necessary fields
+	 * Constructor with necessary fields.
+	 * @param physics component's physics, necessary to make it move
 	 * @param direction where the shot movement is directed
 	 * @param shotSpeed shot speed
 	 * @param shotImage the Image contatining NTEXTURES, used for animation
@@ -34,8 +33,8 @@ public class ShotMovementComponent extends Component{
 	public ShotMovementComponent(final PhysicsComponent physics, final double direction, final double shotSpeed, final Image shotImage) {
 		this.physics = physics;
 		this.direction = direction;
-		animShot = new AnimationChannel(shotImage, 3, (int) (shotImage.getWidth()/NTEXTURES)
-				, (int) shotImage.getHeight(), Duration.seconds(0.80), 0, NTEXTURES - 1);
+		animShot = new AnimationChannel(shotImage, 3, (int) (shotImage.getWidth() / NTEXTURES),
+				(int) shotImage.getHeight(), Duration.seconds(0.80), 0, NTEXTURES - 1);
 		texture = new AnimatedTexture(animShot);
 		this.shotSpeed = shotSpeed;
 		texture.loop();
@@ -46,9 +45,9 @@ public class ShotMovementComponent extends Component{
 		//get the entity to which the component connected, attaching the texture to it
 		getEntity().getViewComponent().addChild(texture);
 		//set image direction, taken from player
-		getEntity().setScaleX(getEntity().getScaleX()*direction*SHOT_SCALE);
+		getEntity().setScaleX(getEntity().getScaleX() * direction*SHOT_SCALE);
 		//reduce shot size, so to match player's one
-		getEntity().setScaleY(getEntity().getScaleY()*SHOT_SCALE);
+		getEntity().setScaleY(getEntity().getScaleY() * SHOT_SCALE);
 	}
 
 	@Override
@@ -57,7 +56,7 @@ public class ShotMovementComponent extends Component{
 			texture.loopAnimationChannel(animShot);
 		}
 		//set movement direction, equals to player sign
-		this.physics.setVelocityX(this.shotSpeed*direction);
+		this.physics.setVelocityX(this.shotSpeed * direction);
 	}
 
 }
