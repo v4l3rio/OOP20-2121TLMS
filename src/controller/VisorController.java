@@ -18,11 +18,13 @@ public class VisorController implements UIController {
 	
 	private static final  String FXMLVISORVIEW = "visorView.fxml";
 
+	/**This field has to be mutable.**/
 	@FXML
-	private final ProgressBar lifeBar;
+	private ProgressBar lifeBar;
 
+	/**This field has to be mutable.**/
 	@FXML
-	private final Label points;
+	private Label points;
 	
 	/**
 	 * Initialize a ProgressBar and a Label JavaFX components.
