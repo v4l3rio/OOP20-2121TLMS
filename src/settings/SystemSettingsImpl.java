@@ -3,7 +3,7 @@ package settings;
 /**
  * SystemSettingsImpl implements {@link SystemSettings} interface
  */
-public class SystemSettingsImpl implements SystemSettings {
+public final class SystemSettingsImpl implements SystemSettings {
 	
 	private static final int TILE_SIZE = 32;
 	private static final int NUM_TILES_WIDTH = 62;
