@@ -42,8 +42,12 @@ public interface Enemy {
 	void setDamage(int dmg);
 	
 	/**
-	 * 
 	 * @return damage dealt by the enemy
 	 */
 	int getDamage();
+	
+	/**
+	 * @return movement strategy
+	 */
+	String getMovementStrategy();
 }

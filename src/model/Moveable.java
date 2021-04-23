@@ -52,13 +52,22 @@ public interface Moveable {
 		/**
 		 * The entity will move following the player
 		 */
-		FOLLOW, 
+		FOLLOW("followingZombie"), 
 		
 		/**
 		 * The entity will move randomly
 		 */
-		RANDOM;
+		RANDOM("stupidZombie");
 		
+		public final String label;
+		
+		TypeOfMovement(String label) {
+			this.label = label;
+		}
+		
+		/**
+		 * @return random Enum Value
+		 */
 		public static TypeOfMovement getRandom() {
 			return TypeOfMovement.values()[new Random().nextInt(TypeOfMovement.values().length)];
 		}

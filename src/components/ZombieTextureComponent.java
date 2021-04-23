@@ -21,11 +21,11 @@ public class ZombieTextureComponent extends Component {
 	
 	private static final double ANIMATION_TIME = 0.66;
 
-	final private PhysicsComponent physics;
+	private final PhysicsComponent physics;
 
-	final private AnimatedTexture texture;
+	private final AnimatedTexture texture;
 
-	final private AnimationChannel animIdle, animWalk, animAttack, animDead;
+	private final AnimationChannel animIdle, animWalk, animAttack, animDead;
 
 	private boolean attacking;
 

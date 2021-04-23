@@ -28,7 +28,7 @@ public class ZombieSpawner extends Thread {
 	private static final int MINIMUM_SPEED = 170;
 	private static final int MINIMUM_DAMAGE = 2;
 
-	final private Random rnd;
+	private final Random rnd;
 
 	public ZombieSpawner() {
 		this.rnd = new Random();
@@ -47,6 +47,7 @@ public class ZombieSpawner extends Thread {
 			final SpawnData zombieStats = new SpawnData(x, INITIAL_SPAWN_Y);
 			
 			ZombieTextureDecorator zombieTexturized;
+			
 			switch (Gender.getRandom()) {
 			case MALE:
 				zombieTexturized = new ZombieMaleDecorator(getRandomZombie());
@@ -56,24 +57,12 @@ public class ZombieSpawner extends Thread {
 				break;
 			default:
 				throw new IllegalArgumentException("Gender error!");
-
 			}
 
 			zombieStats.put("zombie", zombieTexturized);
-
 			
-			switch (TypeOfMovement.getRandom()) {
-			case RANDOM:
-				spawn("stupidZombie", zombieStats);
-				break;
-			case FOLLOW:
-				spawn("followingZombie", zombieStats);
-				break;
-			default:
-				throw new IllegalArgumentException("Type of movement error!");
+			spawn(zombieTexturized.getMovementStrategy(), zombieStats);
 
-			}
-			
 			
 		}, Duration.seconds(SPAWN_TIME));
 
@@ -85,7 +74,7 @@ public class ZombieSpawner extends Thread {
 		final int speed = rnd.nextInt(80) + MINIMUM_SPEED;
 		final int damage = MINIMUM_DAMAGE;
 		
-		return new Zombie(life, speed, damage);
+		return new Zombie(life, speed, damage, TypeOfMovement.getRandom());
 	}
 	
 

@@ -8,13 +8,17 @@ import static model.TLMSType.ATTACK;
 
 import java.util.UUID;
 
+import model.Moveable.TypeOfMovement;
+
 /**
  * This Class models a Female Zombie 
  */
 public class ZombieFemaleDecorator implements ZombieTextureDecorator{
 
-	final private Zombie zombie;
-	final private Texture texture;
+	private final Zombie zombie;
+	private final Texture texture;
+	private static final int SPEED_BONUS = 20;
+	
 
 	/** 
 	 * @param model of zombie
@@ -27,6 +31,11 @@ public class ZombieFemaleDecorator implements ZombieTextureDecorator{
 		this.texture.addTexture(WALK, "assets/textures/zombie/zombie1/zombie_walk.png");
 		this.texture.addTexture(DEAD, "assets/textures/zombie/zombie1/zombie_dead.png");
 		this.texture.addTexture(ATTACK, "assets/textures/zombie/zombie1/zombie_attack.png");
+	}
+	
+
+	public String getMovementStrategy() {
+		return this.zombie.getMovementStrategy();
 	}
 	
 	@Override
@@ -54,7 +63,7 @@ public class ZombieFemaleDecorator implements ZombieTextureDecorator{
 	@Override
 	public int getSpeed() {
 		
-		return this.zombie.getSpeed();
+		return this.zombie.getSpeed() + SPEED_BONUS;
 	}
 
 	@Override

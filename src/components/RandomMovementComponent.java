@@ -15,11 +15,11 @@ public class RandomMovementComponent extends Component implements Moveable {
 
 	private double seconds;
 
-	final private Random rnd = new Random();
+	private final Random rnd = new Random();
 
-	final private int speed;
+	private final int speed;
 
-	final private PhysicsComponent physics;
+	private final PhysicsComponent physics;
 
 	/**
 	 * 

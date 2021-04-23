@@ -36,4 +36,5 @@ public interface ZombieTextureDecorator extends Enemy{
 	 */
 	Texture getTexture();
 	
+	
 }

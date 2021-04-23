@@ -15,14 +15,14 @@ import model.Moveable;
  */
 public class FollowPlayerComponent extends Component implements Moveable{
 	
-	final private Entity player;
-	final private PhysicsComponent physics;
-	final private int speed;
+	private final Entity player;
+	private final PhysicsComponent physics;
+	private final int speed;
 	
 	private double seconds;
 
 
-	final private Random rnd = new Random();
+	private final Random rnd = new Random();
 
 	/**
 	 * 

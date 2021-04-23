@@ -13,8 +13,9 @@ import java.util.UUID;
  */
 public class ZombieMaleDecorator implements ZombieTextureDecorator{
 
-	final private Zombie zombie;
-	final private Texture texture;
+	private final Zombie zombie;
+	private final Texture texture;
+	private static final int DAMAGE_BONUS = 1;
 	
 	/**
 	 * @param model of zombie
@@ -28,6 +29,11 @@ public class ZombieMaleDecorator implements ZombieTextureDecorator{
 		this.texture.addTexture(DEAD, "assets/textures/zombie/zombie0/zombie_dead.png");
 		this.texture.addTexture(ATTACK, "assets/textures/zombie/zombie0/zombie_attack.png");
 	}
+	
+	public String getMovementStrategy() {
+		return this.zombie.getMovementStrategy();
+	}
+	
 	
 	@Override
 	public void setLife(final int life) {
@@ -68,7 +74,7 @@ public class ZombieMaleDecorator implements ZombieTextureDecorator{
 
 	@Override
 	public int getDamage() {
-		return this.zombie.getDamage();
+		return this.zombie.getDamage() + DAMAGE_BONUS;
 	}
 	
 	
