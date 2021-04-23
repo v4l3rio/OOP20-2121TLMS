@@ -130,7 +130,7 @@ public class Menu {
 				  + "A  -  left\n" 
 				  + "D  -  right\n" 
 				  + "W -  jump\n"
-				  + "Q  -  look right\n"
+				  + "Q  -  look left\n"
 				  + "E  -  look right\n"
 				  + "------------------------------\n"
 				  + "ACTIONS\n"
