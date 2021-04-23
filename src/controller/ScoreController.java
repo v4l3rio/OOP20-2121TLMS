@@ -7,7 +7,7 @@ import model.score.Pair;
 import model.score.Score;
 
 /**
- * The ScoreController interface provides methods to read/write ranking
+ * The ScoreController interface provides methods to read/write ranking.
  */
 public interface ScoreController {
 	
@@ -34,7 +34,7 @@ public interface ScoreController {
 	 * @throws IOException
 	 *             if an I/O error occurs
 	 */
-	List<Pair<String,List<String>>> getRanking() throws IOException;
+	List<Pair<String, List<String>>> getRanking() throws IOException;
 	
 	/**
 	  * @return
@@ -50,6 +50,6 @@ public interface ScoreController {
 	 * @throws IOException
 	 *             if an I/O error occurs
 	 */
-	void writeUser(final String user) throws IOException;
+	void writeUser(String user) throws IOException;
 
 }

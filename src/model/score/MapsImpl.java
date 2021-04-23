@@ -9,7 +9,7 @@ import java.util.Set;
  * This class provides the set of all the maps present in the game.
  *
  */
-public class MapsImpl implements Maps {
+public final class MapsImpl implements Maps {
 	
 	private final Set<String> maps = new HashSet<>(Set.of("Cemetery", "Canyon", "Pyramid"));
 

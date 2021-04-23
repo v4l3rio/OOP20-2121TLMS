@@ -16,16 +16,16 @@ import javafx.scene.control.ProgressBar;
  */
 public class VisorController implements UIController {
 	
-	private String fxmlVisorView = "visorView.fxml";
+	private static final  String FXMLVISORVIEW = "visorView.fxml";
 
 	@FXML
-	private ProgressBar lifeBar;
+	private final ProgressBar lifeBar;
 
 	@FXML
-	private Label points;
+	private final Label points;
 	
 	/**
-	 * Initialize a ProgressBar and a Label JavaFX components
+	 * Initialize a ProgressBar and a Label JavaFX components.
 	 */
 	public VisorController() {
 		lifeBar = new ProgressBar();
@@ -37,7 +37,7 @@ public class VisorController implements UIController {
 	 *     the path of the fxml file
 	 */
 	public String getFxmlVisor() {
-		return this.fxmlVisorView;
+		return FXMLVISORVIEW;
 	}
 	
 	/**

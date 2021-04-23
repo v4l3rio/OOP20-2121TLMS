@@ -4,9 +4,9 @@ package model.score;
  * The POJO Score interface provides getter and setter
  * methods for user name and score.
  * @param <U>
- * 		      the left element type: the user name     	
+ * 		      the left element type: the user name
  * @param <V>
- * 		      the right element type: the score     	
+ * 		      the right element type: the score
  */
 public interface Score<U, V> {
 	

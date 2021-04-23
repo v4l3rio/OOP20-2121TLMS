@@ -8,13 +8,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * Implementation of {@link MapController} 
+ * Implementation of {@link MapController} .
  */
-public class MapControllerImpl implements MapController {
+public final class MapControllerImpl implements MapController {
 
 	private static final String SEPARATOR = File.separator;
 	private static final String FOLDER_NAME = System.getProperty("user.home") + SEPARATOR + "TLMS";
-	public static final String FILE_NAME_MAP = FOLDER_NAME + SEPARATOR + "map.json";
+	private static final String FILE_NAME_MAP = FOLDER_NAME + SEPARATOR + "map.json";
 	
 	@Override
 	public void firstGame() throws IOException {
@@ -28,7 +28,7 @@ public class MapControllerImpl implements MapController {
 		}	
 	}
 	 /**
-	  * Method to write map on file on the first start of game
+	  * Method to write map on file on the first start of game.
 	  * @param fileName
 	  *            the path of the file
 	  * @throws IOException

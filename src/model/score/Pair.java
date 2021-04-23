@@ -4,7 +4,7 @@ package model.score;
  * A standard generic Pair<X,Y>, with getters, hashCode, equals, and toString well implemented. 
  */
 
-public class Pair<X,Y> {
+public final class Pair<X, Y> {
 	
 	private final X x;
 	private final Y y;

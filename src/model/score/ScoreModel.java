@@ -25,7 +25,7 @@ public interface ScoreModel {
 	 * @param newScore
 	 * 	          the score to insert in top3
 	 * @return the list updated
-	 */       
+	 */
 	List<String> updateRanking(List<String> list, Score<String, Integer> newScore);
 	
 	 /**
@@ -33,7 +33,7 @@ public interface ScoreModel {
      * <p>
      * It returns a list of pairs. Each pair is in the (map, ["USER1 score","USER2 score","USER3 score"]) form
      * @param rankingList
-     * @return
+     * @return the new list
      */
-    List<Pair<String,List<String>>> rankingListRefactor(final List<String> rankingList);
+    List<Pair<String, List<String>>> rankingListRefactor(List<String> rankingList);
 }

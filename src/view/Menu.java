@@ -31,6 +31,15 @@ public class Menu {
 	private static final int BACKGROUND_HEIGHT = 720;
 	private static final double RESIZE_BUTTONS_WIDTH = 0.15;
 	private static final double RESIZE_BUTTONS_HEIGHT = 0.10;
+	private static final double RESIZE_LEFT_POSITION_WIDTH = 0.05;
+	private static final double RESIZE_RIGHT_POSITION_WIDTH = 0.75;
+	private static final double RESIZE_FIRST_RAW_HEIGHT = 0.15;
+	private static final double RESIZE_SECOND_RAW_HEIGHT = 0.40;
+	private static final double RESIZE_THIRD_RAW_HEIGHT = 0.65;
+	private static final double RESIZE_X_LOCATION_TITLE = 0.24;
+	private static final double RESIZE_Y_LOCATION_TITLE = 0.05;
+	private static final double RESIZE_WIDTH_TITLE = 0.5;
+	private static final double RESIZE_HEIGHT_TITLE = 0.1;
 	private final JFrame mainWindow;
 	private JPanelWithBackground mainPanel;
 	private JButton startButton;
@@ -60,7 +69,7 @@ public class Menu {
 	public Menu(final String[] args) throws IOException {
 
 		this.scoreController = new ScoreControllerImpl();
-		this.mapController= new MapControllerImpl(); 
+		this.mapController = new MapControllerImpl(); 
 		this.scoreController.firstGame();
 		this.mapController.firstGame();
 		this.mainWindow = new JFrame("The Last Man Standing-Menu");
@@ -70,12 +79,12 @@ public class Menu {
 		final int imgBackgroundHeight = img.getHeight();
 		buttonsWidth = imgBackgroundWidth * RESIZE_BUTTONS_WIDTH;
 		buttonsHeight = imgBackgroundHeight * RESIZE_BUTTONS_HEIGHT;
-		buttonsLeftPositionWidth = imgBackgroundWidth * 0.05;
-		buttonsRightPositionWidth = imgBackgroundWidth * 0.75;
-		buttonsFirstRawHeight = imgBackgroundHeight * 0.15;
-		buttonsSecondRawHeight = imgBackgroundHeight * 0.40;
-		buttonsThirdRawHeight = imgBackgroundHeight * 0.65;
-		addTitle("THE LAST MAN STANDING");
+		buttonsLeftPositionWidth = imgBackgroundWidth * RESIZE_LEFT_POSITION_WIDTH;
+		buttonsRightPositionWidth = imgBackgroundWidth * RESIZE_RIGHT_POSITION_WIDTH;
+		buttonsFirstRawHeight = imgBackgroundHeight * RESIZE_FIRST_RAW_HEIGHT;
+		buttonsSecondRawHeight = imgBackgroundHeight * RESIZE_SECOND_RAW_HEIGHT;
+		buttonsThirdRawHeight = imgBackgroundHeight * RESIZE_THIRD_RAW_HEIGHT;
+		addTitle("THE LAST MAN STANDING", imgBackgroundWidth, imgBackgroundHeight);
 		mainPanel.setLayout(null); // disable LayoutManager to set buttons positions easier
 		initButtons();
 		final String user = scoreController.readUser();
@@ -100,8 +109,8 @@ public class Menu {
 
 		rankingButton.addActionListener(l -> {
 			try {
-				
-				final List<Pair<String,List<String>>> rankingList = scoreController.getRanking();
+
+				final List<Pair<String, List<String>>> rankingList = scoreController.getRanking();
 				JOptionPane.showMessageDialog(mainWindow,
 						createStringRanking(rankingList),
 						"Ranking",
@@ -127,14 +136,14 @@ public class Menu {
 				  + "ACTIONS\n"
 				  + "L  -  shoot\n" 
 				  + "R  -  reload\n"
-				  + "S  -  fly down (when player is red)"
-				  , "Controls",
-					JOptionPane.INFORMATION_MESSAGE);
+				  + "S  -  fly down (when player is red)",
+				  "Controls",
+				 JOptionPane.INFORMATION_MESSAGE);
 		});
-		
+
 		mapButton.addActionListener(l -> {
 			final Object[] possibilities = {"Cemetery", "Pyramid", "Canyon"};
-			final String map = (String)JOptionPane.showInputDialog(
+			final String map = (String) JOptionPane.showInputDialog(
 			                    mainWindow,
 			                    "Choose the map:",
 			                    "",
@@ -187,14 +196,14 @@ public class Menu {
 		buttonList.add(mapButton);
 		setButtonColor(buttonList, buttonColor);
 		buttonList.forEach(b -> mainPanel.add(b));
-		buttonList.forEach(b -> b.setSize((int)buttonsWidth, (int)buttonsHeight));
-		startButton.setLocation((int)buttonsLeftPositionWidth, (int)buttonsFirstRawHeight);
-		controlsButton.setLocation((int)buttonsLeftPositionWidth, (int)buttonsSecondRawHeight);
-		mapButton.setLocation((int)buttonsLeftPositionWidth, (int)buttonsThirdRawHeight);
-		rankingButton.setLocation((int)buttonsRightPositionWidth, (int)buttonsFirstRawHeight);
-		usernameButton.setLocation((int)buttonsRightPositionWidth, (int)buttonsSecondRawHeight);
-		exitButton.setLocation((int)buttonsRightPositionWidth, (int)buttonsThirdRawHeight);
-		
+		buttonList.forEach(b -> b.setSize((int) buttonsWidth, (int) buttonsHeight));
+		startButton.setLocation((int) buttonsLeftPositionWidth, (int) buttonsFirstRawHeight);
+		controlsButton.setLocation((int) buttonsLeftPositionWidth, (int) buttonsSecondRawHeight);
+		mapButton.setLocation((int) buttonsLeftPositionWidth, (int) buttonsThirdRawHeight);
+		rankingButton.setLocation((int) buttonsRightPositionWidth, (int) buttonsFirstRawHeight);
+		usernameButton.setLocation((int) buttonsRightPositionWidth, (int) buttonsSecondRawHeight);
+		exitButton.setLocation((int) buttonsRightPositionWidth, (int) buttonsThirdRawHeight);
+
 	}
 
 	/**
@@ -208,12 +217,12 @@ public class Menu {
 	/**
 	 * @param titleName the window title
 	 */
-	private void addTitle(final String titleName) {
+	private void addTitle(final String titleName, final int imgWidth, final int imgHeight) {
 		final JLabel title;
 		title = new JLabel(titleName);
 		mainPanel.add(title);
-		title.setSize(800, 100);
-		title.setLocation(300, 5);
+		title.setSize((int) (imgWidth * RESIZE_WIDTH_TITLE), (int) (imgHeight * RESIZE_HEIGHT_TITLE));
+		title.setLocation((int) (imgWidth * RESIZE_X_LOCATION_TITLE), (int) (imgHeight * RESIZE_Y_LOCATION_TITLE));
 		title.setForeground(Color.white);
 		title.setFont(titleFont);
 	}
@@ -225,9 +234,9 @@ public class Menu {
 	 * @return
 	 *      the string of all of rankings
 	 */
-	private String createStringRanking(final List<Pair<String,List<String>>> rankingList) {
+	private String createStringRanking(final List<Pair<String, List<String>>> rankingList) {
 		final List<String> list = new ArrayList<>(); 
-		rankingList.forEach( l -> list.add(l.getX() + ":\n"
+		rankingList.forEach(l -> list.add(l.getX() + ":\n"
 				+ l.getY().get(0) + "\n"
 				+ l.getY().get(1) + "\n"
 			    + l.getY().get(2) + "\n\n"));

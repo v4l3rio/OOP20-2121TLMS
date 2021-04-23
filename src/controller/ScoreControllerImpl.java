@@ -23,16 +23,19 @@ import model.score.ScoreModel;
 import model.score.ScoreModelImpl;
 
 /**
- * Implementation of {@link ScoreController} 
+ * Implementation of {@link ScoreController}. 
  */
-public class ScoreControllerImpl implements ScoreController {
+public final class ScoreControllerImpl implements ScoreController {
 	
     private static final String SEPARATOR = File.separator;
 	private static final String FOLDER_NAME = System.getProperty("user.home") + SEPARATOR + "TLMS";
-    public static final String FILE_NAME_RANKING = FOLDER_NAME + SEPARATOR + "ranking.json";
+    private static final String FILE_NAME_RANKING = FOLDER_NAME + SEPARATOR + "ranking.json";
+    /**
+     * path of the user name file.
+     */
     public static final String FILE_NAME_USER = FOLDER_NAME + SEPARATOR + "userName.json";
     private final MapController mapController = new MapControllerImpl();
-	private final ScoreModel scoreModel= new ScoreModelImpl();
+	private final ScoreModel scoreModel = new ScoreModelImpl();
 	private List<String> list = new ArrayList<>();
 
 	@Override
@@ -97,7 +100,7 @@ public class ScoreControllerImpl implements ScoreController {
 	
 	@Override
 	public void updateScore(final Score<String, Integer> score) throws IOException {
-		
+
 		final String map = mapController.readMap();
 		/* Selection of the correct line of the file to update*/
 		final String line = Files.lines(Paths.get(FILE_NAME_RANKING))
@@ -108,12 +111,12 @@ public class ScoreControllerImpl implements ScoreController {
 			    .filter(l -> !l.contains(map))
 				.collect(Collectors.toList());
 		/*The line is split by ":" */
-		final List<String> rankingList = Arrays.stream(line.split( ":" )).collect(Collectors.toList());
+		final List<String> rankingList = Arrays.stream(line.split(":")).collect(Collectors.toList());
 		/*Selection of the second half of the string. The one with the ranking*/
 		final String rankingString = rankingList.get(1);
-		final Supplier<Stream<String>> supplier = () -> Arrays.stream(rankingString.split( "," ));
-		
-	    if(scoreModel.isInTopThree(supplier.get(), score.getScore())){
+		final Supplier<Stream<String>> supplier = () -> Arrays.stream(rankingString.split(","));
+
+	    if (scoreModel.isInTopThree(supplier.get(), score.getScore())) {
 	    	/*Update the file with the new line and the other ranking lines previously saved*/
 	    	final BufferedWriter writer = new BufferedWriter(new FileWriter(new File(FILE_NAME_RANKING)));
 			list = supplier.get().collect(Collectors.toList());
@@ -125,12 +128,12 @@ public class ScoreControllerImpl implements ScoreController {
 			writer.append(previousRanking.get(0) + "\n");
 			writer.append(previousRanking.get(1) + "\n");
 			writer.close();
-	    } 	
+	    } 
 	}
 	
     @Override
-	public List<Pair<String,List<String>>> getRanking() throws IOException {
-		
+	public List<Pair<String, List<String>>> getRanking() throws IOException {
+
     	final List<String> rankingList = new ArrayList<>();
     	final Supplier<Stream<String>> rankingStreamSupplier = () -> {
 			try {
@@ -148,9 +151,9 @@ public class ScoreControllerImpl implements ScoreController {
 			    .filter(l -> l.contains(map))
 				.collect(Collectors.joining())
 				)
-    	);  	
+    	); 
     	return List.copyOf(scoreModel.rankingListRefactor(rankingList));
-	}    
+	}
 
 	@Override
 	public String readUser() throws IOException {
