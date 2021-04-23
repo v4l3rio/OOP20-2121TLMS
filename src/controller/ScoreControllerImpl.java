@@ -46,7 +46,6 @@ public final class ScoreControllerImpl implements ScoreController {
 		} catch (IOException e) {
 			createFolder(FOLDER_NAME);
 			createRankingFile(FILE_NAME_RANKING);
-			createUserNameFile(UserNameControllerImpl.FILE_NAME_USER);
 		}	
 	}
 	
@@ -59,22 +58,6 @@ public final class ScoreControllerImpl implements ScoreController {
 	 */
 	private void createFolder(final String folderName) throws IOException {
 		Files.createDirectories(Paths.get(folderName));
-	}
-
-	
-	/**
-	 * Method to create user name file.
-	 * @param fileNameUser
-	 *            path of the file
-	 * @throws IOException
-	 *             if an I/O error occurs
-	 */
-	private void createUserNameFile(final String fileNameUser) throws IOException {
-		final FileWriter fw = new FileWriter(fileNameUser, true);
-		final BufferedWriter bw = new BufferedWriter(fw);
-	    bw.write("STEVEN");
-	    bw.close();
-	    fw.close();
 	}
 
 	/**

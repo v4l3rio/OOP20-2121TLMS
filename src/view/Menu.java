@@ -77,6 +77,7 @@ public class Menu {
 		this.userNameController = new UserNameControllerImpl();
 		this.scoreController.firstGame();
 		this.mapController.firstGame();
+		this.userNameController.firstGame();
 		this.mainWindow = new JFrame("The Last Man Standing-Menu");
 		addBackground(mainWindow, "/assets/levels/menuBackground.png");
 		final BufferedImage img = ImageIO.read(getClass().getResource("/assets/levels/menuBackground.png"));

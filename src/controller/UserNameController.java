@@ -8,6 +8,12 @@ import java.io.IOException;
 public interface UserNameController {
 	
 	/**
+	 * Create user name file. 
+	 * @throws IOException 
+	 *             if an I/O error occurs
+	 */
+	void firstGame() throws IOException;
+	/**
 	  * @return
 	  * 	 the last User saved on file
 	  * @throws IOException
