@@ -20,6 +20,9 @@ import controller.MapController;
 import controller.MapControllerImpl;
 import controller.ScoreController;
 import controller.ScoreControllerImpl;
+import controller.UserNameController;
+import controller.UserNameControllerImpl;
+import model.score.MapsImpl;
 import model.score.Pair;
 
 /**
@@ -53,6 +56,7 @@ public class Menu {
 	private final List<JButton> buttonList = new ArrayList<>();
 	private final ScoreController scoreController;
 	private final MapController mapController;
+	private final UserNameController userNameController;
 	private final double buttonsWidth;
 	private final double buttonsHeight;
 	private final double buttonsLeftPositionWidth;
@@ -70,6 +74,7 @@ public class Menu {
 
 		this.scoreController = new ScoreControllerImpl();
 		this.mapController = new MapControllerImpl(); 
+		this.userNameController = new UserNameControllerImpl();
 		this.scoreController.firstGame();
 		this.mapController.firstGame();
 		this.mainWindow = new JFrame("The Last Man Standing-Menu");
@@ -87,7 +92,7 @@ public class Menu {
 		addTitle("THE LAST MAN STANDING", imgBackgroundWidth, imgBackgroundHeight);
 		mainPanel.setLayout(null); // disable LayoutManager to set buttons positions easier
 		initButtons();
-		final String user = scoreController.readUser();
+		final String user = userNameController.readUser();
 
 		startButton.addActionListener(l -> {
 			mainWindow.dispose();
@@ -99,7 +104,7 @@ public class Menu {
 					JOptionPane.QUESTION_MESSAGE, null, null, user);
 			if (name != null && !name.equals("")) {
 				try {
-					scoreController.writeUser(name);
+					userNameController.writeUser(name);
 				} catch (IOException e) {
 					e.printStackTrace();
 					System.out.println("Error Username file");
@@ -142,7 +147,7 @@ public class Menu {
 		});
 
 		mapButton.addActionListener(l -> {
-			final Object[] possibilities = {"Cemetery", "Pyramid", "Canyon"};
+			final Object[] possibilities = new MapsImpl().getMaps().toArray();
 			final String map = (String) JOptionPane.showInputDialog(
 			                    mainWindow,
 			                    "Choose the map:",

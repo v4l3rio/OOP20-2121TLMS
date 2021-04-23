@@ -35,21 +35,5 @@ public interface ScoreController {
 	 *             if an I/O error occurs
 	 */
 	List<Pair<String, List<String>>> getRanking() throws IOException;
-	
-	/**
-	  * @return
-	  * 	 the last User saved on file
-	  * @throws IOException
-	  *             if an I/O error occurs
-	  */
-	String readUser() throws IOException;
-	
-	/**
-	 * @param user
-	 *           the user to write on file
-	 * @throws IOException
-	 *             if an I/O error occurs
-	 */
-	void writeUser(String user) throws IOException;
 
 }
