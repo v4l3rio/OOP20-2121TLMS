@@ -7,6 +7,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * 
+ * Implementation of {@link UserNameController}.
+ */
 public final class UserNameControllerImpl implements UserNameController {
 
 	private static final String SEPARATOR = File.separator;
