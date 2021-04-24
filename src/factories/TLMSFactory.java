@@ -125,7 +125,7 @@ public class TLMSFactory implements EntityFactory{
         physics.setBodyType(BodyType.KINEMATIC);
         return entityBuilder(data)
                 .type(SHOT)
-                .bbox(new HitBox(new Point2D(50, 100), BoundingShape.box(130, 130)))
+                .bbox(new HitBox(new Point2D(11, 35), BoundingShape.box(35, 17)))
                 .with(physics)
                 .with(new CollidableComponent(true))
                 .with(new ShotMovementComponent(physics, direction, currentGun.getShotspeed(), 
@@ -144,7 +144,7 @@ public class TLMSFactory implements EntityFactory{
 
         return entityBuilder(data)
                 .type(MAGMAGUN)
-                .bbox(new HitBox(new Point2D(35,130), BoundingShape.box(160, 100)))
+                .bbox(new HitBox(new Point2D(2, 42), BoundingShape.box(68, 38)))
                 .with(new CollidableComponent(true))
                 .with(physics)
                 .with(new PropComponent(new Image(magmaGun.getTextureMap().get(GUN))))
@@ -159,7 +159,7 @@ public class TLMSFactory implements EntityFactory{
 
         return entityBuilder(data)
                 .type(MACHINEGUN)
-                .bbox(new HitBox(new Point2D(35, 130), BoundingShape.box(160, 100)))
+                .bbox(new HitBox(new Point2D(2, 42), BoundingShape.box(68, 38)))
                 .with(new CollidableComponent(true))
                 .with(physics)
                 .with(new PropComponent(new Image(machineGun.getTextureMap().get(GUN))))

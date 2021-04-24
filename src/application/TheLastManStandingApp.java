@@ -40,7 +40,7 @@ import factories.ZombieSpawner;
 public class TheLastManStandingApp extends GameApplication {
 	
 	private final Random random = new Random();
-	private final SystemSettings mySystemSettings = new SystemSettingsImpl();   
+	private final SystemSettings mySystemSettings = new SystemSettingsImpl();
 	private final MapController mapController = new MapControllerImpl();
     private Entity player;
 
@@ -130,9 +130,9 @@ public class TheLastManStandingApp extends GameApplication {
 					if (!gunComponent.isReloading()) {
 						if (currentGun.getNAmmo() > 0) {
 							// have the shot spawn facing coherently as player, with due distance from it
-							spawn("shot", player.getPosition().getX() - AppUtils.SHOT_X_AXIS_FIX 
-									+ (AppUtils.GUN_LENGTH * player.getScaleX()),
-									player.getPosition().getY() - AppUtils.SHOT_Y_AXIS_FIX);
+							spawn("shot", player.getPosition().getX()
+									+ (AppUtils.GUN_LENGHT * player.getScaleX()),
+									player.getPosition().getY() - AppUtils.GUN_HEIGHT);
 							currentGun.shoot();
 						} else {
 							reload(gunComponent);

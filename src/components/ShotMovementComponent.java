@@ -15,7 +15,6 @@ public final class ShotMovementComponent extends Component {
 	
 	//Preset values, we want shot size to be SHOT_SCALE big, using NTEXTURES for its animation
 	private static final int NTEXTURES = 3;
-	private static final double SHOT_SCALE = 0.20;	
 	
 	private final PhysicsComponent physics;
 	private final AnimatedTexture texture;
@@ -45,9 +44,9 @@ public final class ShotMovementComponent extends Component {
 		//get the entity to which the component connected, attaching the texture to it
 		getEntity().getViewComponent().addChild(texture);
 		//set image direction, taken from player
-		getEntity().setScaleX(getEntity().getScaleX() * direction*SHOT_SCALE);
+		getEntity().setScaleX(getEntity().getScaleX() * direction);
 		//reduce shot size, so to match player's one
-		getEntity().setScaleY(getEntity().getScaleY() * SHOT_SCALE);
+		getEntity().setScaleY(getEntity().getScaleY());
 	}
 
 	@Override

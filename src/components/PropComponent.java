@@ -13,7 +13,6 @@ import javafx.util.Duration;
 public class PropComponent extends Component {
 	
 	private static final int PROPDEFAULTNTEXTURES = 3;
-	private static final double PROPDEFAULTSCALE = 0.3;
 	private static final double PROPDEFAULTCHANNELDURATION = 0.3;
 
 	private final AnimatedTexture propTexture;
@@ -38,6 +37,5 @@ public class PropComponent extends Component {
 	 */
 	public void onAdded() {
 		getEntity().getViewComponent().addChild(propTexture);
-		getEntity().setScaleUniform(PROPDEFAULTSCALE);
 	}
 }

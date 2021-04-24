@@ -5,25 +5,19 @@ package application;
 public final class AppUtils {
 	
 	/**
+	 * starting from player y center, gun length to spawn shots at the right y.
+	 */
+	public static final double GUN_HEIGHT = 12;
+	/**
 	 * starting from player x center, gun length to spawn shots at the right x.
 	 */
-	public static final double GUN_LENGTH = 30;
-	/**
-	 * variables fixing shot spawning axis: it's formula would've been of huge complexity,
-	 * /not worth it the calculus based on images: we want shot textured to follow requirements.
-	 */
-	public static final double SHOT_Y_AXIS_FIX = 60;
-	/**
-	 * variables fixing shot spawning axis: it's formula would've been of huge complexity,
-	 * /not worth it the calculus based on images: we want shot textured to follow requirements.
-	 */
-	public static final double SHOT_X_AXIS_FIX = 48;
+	public static final double GUN_LENGHT = 22;
 	/**
 	 * gun prop spawn delay.
 	 */
 	public static final double GUN_SPAWN_DELAY = 6;
 	/**
-	 * not to put over-complexify guns, and exceed variables.
+	 * not to put over-complicate guns, and exceed variables.
 	 */
 	public static final double RELOAD_TIME = 1.5;
 	/**
@@ -40,22 +34,22 @@ public final class AppUtils {
 	public static final int GUN_SPAWN_Y = -100;
 	
 	/**
-	 * Max value of an x coordinate
+	 * Max value of an x coordinate.
 	 */
 	public static final int MAXXCOORDINATES = 2000;
 	
 	/**
-	 * Middle value of an x coordinate
+	 * Middle value of an x coordinate.
 	 */
-	public static final int MIDDLEXCOORDINATES = MAXXCOORDINATES/2;
+	public static final int MIDDLEXCOORDINATES = MAXXCOORDINATES / 2;
 	
 	/**
-	 * A zero could be usefull in a lot of cases
+	 * A zero could be useful in a lot of cases.
 	 */
 	public static final int ZERO = 0;
 	
 	/**
-	 * initial volume of the music in tenths
+	 * initial volume of the music in tenthes.
 	 */
 	public static final double INITIALBGMUSICVOLUME = 0.1;
 	
