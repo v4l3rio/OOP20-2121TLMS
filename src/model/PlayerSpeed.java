@@ -12,7 +12,7 @@ public class PlayerSpeed implements PlayerSpeedStrategy {
 	
 	private Entity player;
 	
-	public PlayerSpeed(Entity playerSettings) {
+	public PlayerSpeed(final Entity playerSettings) {
 		this.player = playerSettings;
 	}
 

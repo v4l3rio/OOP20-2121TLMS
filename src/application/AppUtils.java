@@ -39,5 +39,25 @@ public final class AppUtils {
 	 */
 	public static final int GUN_SPAWN_Y = -100;
 	
+	/**
+	 * Max value of an x coordinate
+	 */
+	public static final int MAXXCOORDINATES = 2000;
+	
+	/**
+	 * Middle value of an x coordinate
+	 */
+	public static final int MIDDLEXCOORDINATES = MAXXCOORDINATES/2;
+	
+	/**
+	 * A zero could be usefull in a lot of cases
+	 */
+	public static final int ZERO = 0;
+	
+	/**
+	 * initial volume of the music in tenths
+	 */
+	public static final double INITIALBGMUSICVOLUME = 0.1;
+	
 	private AppUtils() { };
 }
