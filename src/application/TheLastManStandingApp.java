@@ -132,7 +132,7 @@ public class TheLastManStandingApp extends GameApplication {
 							// have the shot spawn facing coherently as player, with due distance from it
 							spawn("shot", player.getPosition().getX()
 									+ (AppUtils.GUN_LENGHT * player.getScaleX()),
-									player.getPosition().getY() - AppUtils.GUN_HEIGHT);
+									player.getPosition().getY());
 							currentGun.shoot();
 						} else {
 							reload(gunComponent);
@@ -196,11 +196,11 @@ public class TheLastManStandingApp extends GameApplication {
 		//sets factory reference of player
 		factory.setPlayer(player);
 		inc("playerLife", (double)player.getComponent(ComponentUtils.PLAYER_COMPONENT).getPlayer().getHealt() / 10);
-		
+	
 		getGameTimer().runAtInterval(() -> {
 		    spawn("firePowerUp", random.nextInt(AppUtils.MAXXCOORDINATES), AppUtils.ZERO);
 		}, Duration.seconds(2));
-		
+	
 		final TLMSMusic music = new TLMSMusic("thriller.mp3", AppUtils.INITIALBGMUSICVOLUME);
 		getAudioPlayer().loopMusic(music.getMusic());
 		music.noVolume();
@@ -212,7 +212,7 @@ public class TheLastManStandingApp extends GameApplication {
 	 */
 	@Override
 	protected void initPhysics() {
-		
+	
 		getPhysicsWorld().addCollisionHandler(new PlayerZombieCollision( TLMSType.PLAYER, TLMSType.ZOMBIE));
 		getPhysicsWorld().addCollisionHandler(new ShotZombieCollision(TLMSType.SHOT, TLMSType.ZOMBIE));
 		getPhysicsWorld().addCollisionHandler(new GunCollisionFactoryImpl()
@@ -228,7 +228,6 @@ public class TheLastManStandingApp extends GameApplication {
     protected void initGameVars(final Map<String, Object> vars) {
         vars.put("score", 0);
         vars.put("playerLife",0.0);
-        
     }
     
     @Override
