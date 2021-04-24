@@ -1,6 +1,6 @@
 package components;
 
-import static com.almasb.fxgl.dsl.FXGL.*;
+import static com.almasb.fxgl.dsl.FXGL.getGameTimer;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import javafx.util.Duration;
@@ -13,7 +13,7 @@ public class PlayerComponent extends Component {
     
     private PhysicsComponent physics;
     
-    private Player player;
+    private final Player player;
     
     private boolean isAttacked;
     private boolean isDead;

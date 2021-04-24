@@ -10,8 +10,8 @@ public class PlayerImpl implements Player {
 	private int maxJumps;
 	private final int jumpsHeight;
 	private int health;
-	private int maxHealth;
-	private double dimension;
+	private final int maxHealth;
+	private final double dimension;
 	private PlayerColor color;
 	
 	/**
@@ -21,10 +21,10 @@ public class PlayerImpl implements Player {
 	 * like to change dimension
 	 */
 	public PlayerImpl() {
-		this.dimension = 1.7;
+		this.dimension = 1;
 		this.maxHealth = 10;
 		this.health = this.maxHealth;
-		this.speed = 400;
+		this.speed = 450;
 		this.maxJumps = 1;
 		this.jumpCounter = this.maxJumps;
 		this.jumpsHeight = -550;

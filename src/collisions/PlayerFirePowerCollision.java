@@ -1,6 +1,6 @@
 package collisions;
 
-import static com.almasb.fxgl.dsl.FXGL.*;
+import static com.almasb.fxgl.dsl.FXGL.set;
 
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.CollisionHandler;
@@ -16,8 +16,8 @@ import model.TLMSType;
  */
 public class PlayerFirePowerCollision extends CollisionHandler{
 	
-	private final int RED_SPEED = 650;
-	private final int RED_NUMBER_OF_JUMPS = 5;
+	private static final int RED_SPEED = 650;
+	private static final int RED_NUMBER_OF_JUMPS = 5;
 	
 
 	public PlayerFirePowerCollision(final TLMSType player, final TLMSType firePower) {

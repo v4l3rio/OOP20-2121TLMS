@@ -10,7 +10,7 @@ import components.ComponentUtils;
  */
 public class PlayerSpeed implements PlayerSpeedStrategy {
 	
-	private Entity player;
+	private final Entity player;
 	
 	public PlayerSpeed(final Entity playerSettings) {
 		this.player = playerSettings;

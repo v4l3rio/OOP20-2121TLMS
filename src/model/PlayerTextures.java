@@ -6,7 +6,7 @@ package model;
  */
 public class PlayerTextures {
 	
-	private Texture playerTexture;
+	private final Texture playerTexture;
 	
 	/**
 	 * 

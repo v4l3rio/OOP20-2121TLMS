@@ -104,14 +104,14 @@ public class TLMSFactory implements EntityFactory{
 		final PlayerTextures texture = new PlayerTextures(PlayerColor.BLUE);
         final PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
-        physics.addGroundSensor(new HitBox(GROUND_SENSOR, new Point2D(16, 38), BoundingShape.box(6, 8)));
+        physics.addGroundSensor(new HitBox(GROUND_SENSOR, new Point2D(30, 12), BoundingShape.box(35, 52)));
 
         return entityBuilder(data)
                 .type(PLAYER)
-                .bbox(new HitBox(new Point2D(15,7), BoundingShape.box(15, 30))) //x collisioni e x piattaforme. Immagini sono incollate sulle hitbox //busto
+                .bbox(new HitBox(new Point2D(30,12), BoundingShape.box(35, 52))) 
                 .with(physics)
                 .with(new GunComponent(new TexturedGunFactoryImpl().getTexturedGun(BERETTA92)))
-                .with(new CollidableComponent(true)) //può essere colpito e può atterrare su piattaforme
+                .with(new CollidableComponent(true)) 
                 .with(new PlayerComponent()) 
                 .with(new TextureComponent(texture.getTexture().getTextureMap()))
                 .build();
@@ -125,7 +125,7 @@ public class TLMSFactory implements EntityFactory{
         physics.setBodyType(BodyType.KINEMATIC);
         return entityBuilder(data)
                 .type(SHOT)
-                .bbox(new HitBox(new Point2D(11, 35), BoundingShape.box(35, 17)))
+                .bbox(new HitBox(new Point2D(10, 28), BoundingShape.box(28, 10)))
                 .with(physics)
                 .with(new CollidableComponent(true))
                 .with(new ShotMovementComponent(physics, direction, currentGun.getShotspeed(), 
@@ -174,7 +174,7 @@ public class TLMSFactory implements EntityFactory{
 		
 		return entityBuilder(data)
 				.type(FIREPOWER)
-				.bbox(new HitBox(new Point2D(5,5), BoundingShape.circle(12)))
+				.bbox(new HitBox(new Point2D(10,10), BoundingShape.circle(10)))
 				.with(physics)
 				.with(new CollidableComponent(true))
 				.with(new FirePowerComponent())

@@ -5,13 +5,9 @@ package application;
 public final class AppUtils {
 	
 	/**
-	 * starting from player y center, gun length to spawn shots at the right y.
-	 */
-	public static final double GUN_HEIGHT = 12;
-	/**
 	 * starting from player x center, gun length to spawn shots at the right x.
 	 */
-	public static final double GUN_LENGHT = 22;
+	public static final double GUN_LENGHT = 45;
 	/**
 	 * gun prop spawn delay.
 	 */

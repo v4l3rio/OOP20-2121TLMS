@@ -18,7 +18,6 @@ import controller.ScoreControllerImpl;
 import controller.UserNameControllerImpl;
 import model.TLMSType;
 import model.score.JSonScoreBuilder;
-import model.score.JsonScore;
 import javafx.util.Duration;
 import model.PlayerPowerUp;
 import model.PlayerColor;
@@ -30,8 +29,8 @@ import components.TextureComponent;
  */
 public class PlayerZombieCollision extends CollisionHandler{
 	
-	private final int BLUE_SPEED = 450;
-	private final int BLUE_NUMBER_OF_JUMPS = 1;
+	private static final int BLUE_SPEED = 450;
+	private static final int BLUE_NUMBER_OF_JUMPS = 1;
 
 	public PlayerZombieCollision(final TLMSType player, final TLMSType zombie) {
 		super(player, zombie);
