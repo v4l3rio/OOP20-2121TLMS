@@ -35,7 +35,7 @@ import model.TLMSType;
 public class TLMSFactory implements EntityFactory{
 	
 	private static final String GROUND_SENSOR = "GROUND_SENSOR";
-	private final TexturedGunFactoryImpl gunFactory = new TexturedGunFactoryImpl();
+	private final TexturedGunFactory gunFactory = new TexturedGunFactoryImpl();
 	private Entity player;
 	
 	public final void setPlayer(final Entity player) {

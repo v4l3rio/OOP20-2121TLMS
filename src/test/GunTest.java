@@ -12,13 +12,14 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import org.junit.jupiter.api.Test;
 
 import components.GunComponent;
+import factories.TexturedGunFactory;
 import factories.TexturedGunFactoryImpl;
 import model.AbstractGun;
 import model.Gun;
 
 public class GunTest {
 	
-	private final TexturedGunFactoryImpl texturedGunFactory = new TexturedGunFactoryImpl();
+	private final TexturedGunFactory texturedGunFactory = new TexturedGunFactoryImpl();
 	private final TexturedGun beretta92 = texturedGunFactory.getTexturedGun(TLMSType.BERETTA92);
 	private final TexturedGun machineGun = texturedGunFactory.getTexturedGun(TLMSType.MACHINEGUN);
 	private final TexturedGun magmaGun = texturedGunFactory.getTexturedGun(TLMSType.MAGMAGUN);
