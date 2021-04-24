@@ -16,6 +16,9 @@ public class PlayerImpl implements Player {
 	
 	/**
 	 * this constructor assigns all player variables their initial values
+	 * note: I could have declared it as "final" 
+	 * but I chose to leave it more open for a hypothetical future extension,
+	 * like to change dimension
 	 */
 	public PlayerImpl() {
 		this.dimension = 1.7;

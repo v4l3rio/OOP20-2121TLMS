@@ -2,6 +2,7 @@ package collisions;
 
 
 import static com.almasb.fxgl.dsl.FXGL.getGameTimer;
+
 import static com.almasb.fxgl.dsl.FXGL.inc;
 import static com.almasb.fxgl.dsl.FXGL.getWorldProperties;
 import static com.almasb.fxgl.dsl.FXGL.getGameController;
@@ -12,7 +13,6 @@ import java.io.IOException;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.CollisionHandler;
 
-import components.TextureComponent;
 import components.ComponentUtils;
 import controller.ScoreControllerImpl;
 import controller.UserNameControllerImpl;
@@ -22,12 +22,15 @@ import javafx.util.Duration;
 import model.PlayerPowerUp;
 import model.PlayerColor;
 import model.PlayerPowerUpProxy;
-import model.PlayerTextures;
+import components.TextureComponent;
 
 /**
  * Manages collisions between players and zombies
  */
 public class PlayerZombieCollision extends CollisionHandler{
+	
+	private final int BLUE_SPEED = 450;
+	private final int BLUE_NUMBER_OF_JUMPS = 1;
 
 	public PlayerZombieCollision(final TLMSType player, final TLMSType zombie) {
 		super(player, zombie);
@@ -37,7 +40,6 @@ public class PlayerZombieCollision extends CollisionHandler{
 	public void onCollisionBegin(final Entity player, final Entity zombie) {
 		
 		zombie.getComponent(ComponentUtils.TEXTURE_COMPONENT).setAttacking(true);
-		//player.getComponent(ComponentUtils.HEALTH_COMPONENT).damage(zombie.getComponent(ComponentUtils.DAMAGING_COMPONENT).getDamage());
 		player.getComponent(ComponentUtils.PLAYER_COMPONENT).attacked(zombie.getComponent(ComponentUtils.DAMAGING_COMPONENT).getDamage());
 	
 		final PlayerPowerUp playerPowerUp = new PlayerPowerUpProxy(player);
@@ -59,10 +61,9 @@ public class PlayerZombieCollision extends CollisionHandler{
 						e.printStackTrace();
 					}
 					gameOver();		
-	    	}, Duration.seconds(1.7));
-		}
-		
-			playerPowerUp.transformation(PlayerColor.BLUE, 400, player.getComponent(ComponentUtils.PLAYER_COMPONENT).getPlayer().getHealt(), 1);
+	    	}, Duration.seconds(TextureComponent.TIME_ANIM_DEATH));
+		}		
+			playerPowerUp.transformation(PlayerColor.BLUE, BLUE_SPEED, player.getComponent(ComponentUtils.PLAYER_COMPONENT).getPlayer().getHealt(), BLUE_NUMBER_OF_JUMPS);
 	}
 	
 	private void gameOver() {

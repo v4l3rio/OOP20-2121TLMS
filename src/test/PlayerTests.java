@@ -1,15 +1,13 @@
 package test;
 
-import com.almasb.fxgl.entity.Entity;
-
-import components.ComponentUtils;
 import model.Player;
 import model.PlayerColor;
 import model.PlayerImpl;
 import model.PlayerTextures;
 import model.TLMSType;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Test;
 

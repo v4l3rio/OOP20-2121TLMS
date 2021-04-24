@@ -12,7 +12,7 @@ public class PlayerTextures {
 	 * 
 	 * @param player's color
 	 */
-	public PlayerTextures(PlayerColor color) {
+	public PlayerTextures(final PlayerColor color) {
 		this.playerTexture = new Texture();
 		
 		this.playerTexture.addTexture(TLMSType.IDLE, "Gunner_" + color.getActualName() + "_Idle.png");

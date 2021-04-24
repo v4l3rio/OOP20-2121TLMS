@@ -18,7 +18,6 @@ import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import components.*;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
-import javafx.scene.text.Text;
 import model.*;
 import components.PlayerComponent;
 import components.FirePowerComponent;
@@ -27,8 +26,6 @@ import components.RandomMovementComponent;
 import components.TextureComponent;
 import components.ZombieTextureComponent;
 import model.TLMSType;
-import model.Player;
-import model.PlayerImpl;
 
 
 /**
@@ -103,14 +100,14 @@ public class TLMSFactory implements EntityFactory{
 	 * @return a new entity player
 	 */
 	@Spawns("player")
-    public Entity newPlayer(SpawnData data) {
-		PlayerTextures texture = new PlayerTextures(PlayerColor.BLUE);
-        PhysicsComponent physics = new PhysicsComponent();
+    public Entity newPlayer(final SpawnData data) {
+		final PlayerTextures texture = new PlayerTextures(PlayerColor.BLUE);
+        final PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
         physics.addGroundSensor(new HitBox(GROUND_SENSOR, new Point2D(16, 38), BoundingShape.box(6, 8)));
 
         return entityBuilder(data)
-                .type(TLMSType.PLAYER)
+                .type(PLAYER)
                 .bbox(new HitBox(new Point2D(15,7), BoundingShape.box(15, 30))) //x collisioni e x piattaforme. Immagini sono incollate sulle hitbox //busto
                 .with(physics)
                 .with(new GunComponent(new TexturedGunFactoryImpl().getTexturedGun(BERETTA92)))
@@ -170,13 +167,13 @@ public class TLMSFactory implements EntityFactory{
     }
 	
 	@Spawns("firePowerUp")
-	public Entity newPower(SpawnData data) {
-		PhysicsComponent physics = new PhysicsComponent();
+	public Entity newPower(final SpawnData data) {
+		final PhysicsComponent physics = new PhysicsComponent();
 		physics.setBodyType(BodyType.DYNAMIC);
 		physics.addGroundSensor(new HitBox(GROUND_SENSOR, new Point2D(16, 38), BoundingShape.box(6, 80)));
 		
 		return entityBuilder(data)
-				.type(TLMSType.FIREPOWER)
+				.type(FIREPOWER)
 				.bbox(new HitBox(new Point2D(5,5), BoundingShape.circle(12)))
 				.with(physics)
 				.with(new CollidableComponent(true))
