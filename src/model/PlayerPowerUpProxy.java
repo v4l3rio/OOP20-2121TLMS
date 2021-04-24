@@ -11,7 +11,7 @@ import components.ComponentUtils;
 public class PlayerPowerUpProxy implements PlayerPowerUp{
 	
 	private final PlayerPowerUp player;	
-	private Entity playerSettings;
+	private final Entity playerSettings;
 	
 	/**
 	 * 

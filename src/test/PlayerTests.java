@@ -28,6 +28,10 @@ public class PlayerTests {
 		final Player player = new PlayerImpl();
 		assertEquals(player.getHealt(), player.getMaxHeath());
 		assertEquals(player.getNJumps(), 1);
+		assertEquals(player.getColor(), player.getColor());
+		assertEquals(player.getDimension(), 1);
+		assertEquals(player.getMaxHeath(), 10);
+		assertEquals(player.getSpeed(), 450);
 		player.decreaseJumps();
 		assertEquals(player.getNJumps(), 0);
 	}
