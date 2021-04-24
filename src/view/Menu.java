@@ -30,8 +30,6 @@ import model.score.Pair;
  */
 public class Menu {
 	
-	private static final int BACKGROUND_WIDTH = 1280;
-	private static final int BACKGROUND_HEIGHT = 720;
 	private static final double RESIZE_BUTTONS_WIDTH = 0.15;
 	private static final double RESIZE_BUTTONS_HEIGHT = 0.10;
 	private static final double RESIZE_LEFT_POSITION_WIDTH = 0.05;
@@ -168,7 +166,7 @@ public class Menu {
 		});
 
 		mainWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		mainWindow.setSize(BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
+		mainWindow.setSize(imgBackgroundWidth, imgBackgroundHeight);
 		mainWindow.setResizable(false);
 		mainWindow.setVisible(true);
 

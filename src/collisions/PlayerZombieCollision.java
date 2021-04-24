@@ -17,6 +17,7 @@ import components.ComponentUtils;
 import controller.ScoreControllerImpl;
 import controller.UserNameControllerImpl;
 import model.TLMSType;
+import model.score.JSonScoreBuilder;
 import model.score.JsonScore;
 import javafx.util.Duration;
 import model.PlayerPowerUp;
@@ -52,7 +53,7 @@ public class PlayerZombieCollision extends CollisionHandler{
 					System.out.println("Hai perso!");
 					try {
 						new ScoreControllerImpl().updateScore(
-								new JsonScore.Builder()
+								new JSonScoreBuilder()
 								    .nameFromPath(UserNameControllerImpl.FILE_NAME_USER)
 								    .score(getWorldProperties().intProperty("score").get())
 								    .build()

@@ -28,7 +28,7 @@ public class ScoreTest {
 	        assertTrue(model.isInTopThree(list.stream(), 15));
 	        assertTrue(model.isInTopThree(list.stream(), 100));
 	    }
-	 
+
 	 @Test
 	    public void testScoreModelUpdateRanking() {
 		 	final ScoreModel model = new ScoreModelImpl();
@@ -42,10 +42,10 @@ public class ScoreTest {
 		 	newList.add("45 MICHAEL");
 		 	newList.add("23 JOHN");
 	        assertEquals(model.updateRanking(list, newScore), newList);
-	        
-		 	list.clear();
+
+	        list.clear();
 	        newList.clear();
-	        
+
 	        newScore = new JsonScore("MICHAEL", 55);
 		 	list.add("19 MARK");
 		 	list.add("52 LUKE");
@@ -54,10 +54,10 @@ public class ScoreTest {
 		 	newList.add("52 LUKE");
 		 	newList.add("27 JOHN");
 	        assertEquals(model.updateRanking(list, newScore), newList);
-	        
+
 	        list.clear();
 	        newList.clear();
-	        
+
 	        newScore = new JsonScore("GUNTHER", 20);
 		 	list.add("21 JOEY");
 		 	list.add("25 ROSS");
