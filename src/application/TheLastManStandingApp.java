@@ -37,7 +37,7 @@ import settings.SystemSettings;
 import factories.ZombieSpawner;
 
 
-public class TheLastManStandingApp extends GameApplication {
+public final class TheLastManStandingApp extends GameApplication {
 	
 	private final Random random = new Random();
 	private final SystemSettings mySystemSettings = new SystemSettingsImpl();
@@ -178,7 +178,7 @@ public class TheLastManStandingApp extends GameApplication {
 		}
 
 		final double delay = AppUtils.GUN_SPAWN_DELAY;
-		spawn("text", new SpawnData(mySystemSettings.getWidth()/3.3, mySystemSettings.getHeight()/8)
+		spawn("text", new SpawnData(mySystemSettings.getWidth() / 3.3, mySystemSettings.getHeight() / 8)
 				.put("text", "PRESS R FOR AN EARLY RELOAD"));
 		final ZombieSpawner spawner = new ZombieSpawner();
 
@@ -195,12 +195,12 @@ public class TheLastManStandingApp extends GameApplication {
 		player = spawn("player", AppUtils.MIDDLEXCOORDINATES, AppUtils.ZERO);
 		//sets factory reference of player
 		factory.setPlayer(player);
-		inc("playerLife", (double)player.getComponent(ComponentUtils.PLAYER_COMPONENT).getPlayer().getHealt() / 10);
-		
+		inc("playerLife", (double) player.getComponent(ComponentUtils.PLAYER_COMPONENT).getPlayer().getHealt() / 10);
+
 		getGameTimer().runAtInterval(() -> {
 		    spawn("firePowerUp", random.nextInt(AppUtils.MAXXCOORDINATES), AppUtils.ZERO);
 		}, Duration.seconds(2));
-		
+
 		final TLMSMusic music = new TLMSMusic("thriller.mp3", AppUtils.INITIALBGMUSICVOLUME);
 		getAudioPlayer().loopMusic(music.getMusic());
 		music.noVolume();
@@ -212,14 +212,14 @@ public class TheLastManStandingApp extends GameApplication {
 	 */
 	@Override
 	protected void initPhysics() {
-		
-		getPhysicsWorld().addCollisionHandler(new PlayerZombieCollision( TLMSType.PLAYER, TLMSType.ZOMBIE));
+
+		getPhysicsWorld().addCollisionHandler(new PlayerZombieCollision(TLMSType.PLAYER, TLMSType.ZOMBIE));
 		getPhysicsWorld().addCollisionHandler(new ShotZombieCollision(TLMSType.SHOT, TLMSType.ZOMBIE));
 		getPhysicsWorld().addCollisionHandler(new GunCollisionFactoryImpl()
 				.createGunCollision(TLMSType.MAGMAGUN, TexturedGunFactoryImpl.MAGMA_GUN_DURATION));
 		getPhysicsWorld().addCollisionHandler(new GunCollisionFactoryImpl()
 				.createGunCollision(TLMSType.MACHINEGUN, TexturedGunFactoryImpl.MACHINE_GUN_DURATION));
-		getPhysicsWorld().addCollisionHandler(new ZombieWallCollision( TLMSType.ZOMBIE, TLMSType.WALL));
+		getPhysicsWorld().addCollisionHandler(new ZombieWallCollision(TLMSType.ZOMBIE, TLMSType.WALL));
 		getPhysicsWorld().addCollisionHandler(new PlayerFirePowerCollision(TLMSType.PLAYER, TLMSType.FIREPOWER));
 
 	}
@@ -227,10 +227,10 @@ public class TheLastManStandingApp extends GameApplication {
     @Override
     protected void initGameVars(final Map<String, Object> vars) {
         vars.put("score", 0);
-        vars.put("playerLife",0.0);
-        
+        vars.put("playerLife", 0.0);
+
     }
-    
+
     @Override
     protected void initUI() {
     	final VisorController visorController = new VisorController();
