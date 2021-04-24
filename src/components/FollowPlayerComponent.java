@@ -54,12 +54,12 @@ public class FollowPlayerComponent extends Component implements Moveable{
 	}
 	
 	public void left() {
-		getEntity().setScaleX(-0.8);
+		getEntity().setScaleX(-1);
 		this.physics.setVelocityX(-(this.speed));
 	}
 
 	public void right() {
-		getEntity().setScaleX(0.8);
+		getEntity().setScaleX(1);
 		this.physics.setVelocityX(this.speed);
 	}
 

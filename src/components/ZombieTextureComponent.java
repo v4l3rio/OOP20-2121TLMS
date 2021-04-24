@@ -35,13 +35,13 @@ public class ZombieTextureComponent extends Component {
 	 */
 	public ZombieTextureComponent(final Map<TLMSType, String> textureMap, final PhysicsComponent physics) {
 		this.physics = physics;
-		animIdle = new AnimationChannel(new Image(textureMap.get(TLMSType.IDLE)), 15, 132, 160,
+		animIdle = new AnimationChannel(new Image(textureMap.get(TLMSType.IDLE)), 15, 105, 128,
 				Duration.seconds(ANIMATION_TIME), 0, 14);
-		animWalk = new AnimationChannel(new Image(textureMap.get(TLMSType.WALK)), 10, 132, 160,
+		animWalk = new AnimationChannel(new Image(textureMap.get(TLMSType.WALK)), 10, 105, 128,
 				Duration.seconds(ANIMATION_TIME), 0, 9);
-		animAttack = new AnimationChannel(new Image(textureMap.get(TLMSType.ATTACK)), 8, 132, 160,
+		animAttack = new AnimationChannel(new Image(textureMap.get(TLMSType.ATTACK)), 8, 105, 128,
 				Duration.seconds(ANIMATION_TIME), 0, 7);
-		animDead = new AnimationChannel(new Image(textureMap.get(TLMSType.DEAD)), 12, 192, 160,
+		animDead = new AnimationChannel(new Image(textureMap.get(TLMSType.DEAD)), 12, 153, 128,
 				Duration.seconds(ANIMATION_TIME), 0, 11);
 		texture = new AnimatedTexture(animIdle);
 		texture.loop();
@@ -52,7 +52,7 @@ public class ZombieTextureComponent extends Component {
 	public void onAdded() {
 		entity.getTransformComponent().setScaleOrigin(new Point2D(16, 21));
 		entity.getViewComponent().addChild(texture);
-		entity.setScaleUniform(0.8);
+		entity.setScaleUniform(1);
 	}
 
 	public void setAttacking(final boolean attacking) {

@@ -58,7 +58,7 @@ public class TLMSFactory implements EntityFactory{
 
         return entityBuilder(data)
                 .type(ZOMBIE)
-                .bbox(new HitBox(new Point2D(35,28), BoundingShape.box(65, 125)))
+                .bbox(new HitBox(new Point2D(35,24), BoundingShape.box(48, 103)))
                 .with(physics)
                 .with(new DamagingComponent(zombie.getDamage()))
                 .with(new HealthIntComponent(zombie.getLife()))
@@ -84,7 +84,7 @@ public class TLMSFactory implements EntityFactory{
 
         return entityBuilder(data)
                 .type(ZOMBIE)
-                .bbox(new HitBox(new Point2D(35,28), BoundingShape.box(65, 125)))
+                .bbox(new HitBox(new Point2D(35,24), BoundingShape.box(48, 103)))
                 .with(physics)
                 .with(new DamagingComponent(zombie.getDamage()))
                 .with(new HealthIntComponent(zombie.getLife()))
