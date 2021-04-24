@@ -47,6 +47,6 @@ public class PlayerPowerUpImpl implements PlayerPowerUp{
 		getGameTimer().runOnceAfter(() -> {					
 			player.removeComponent(ComponentUtils.PLAYERTEXTURE_COMPONENT);  
 			player.addComponent(new TextureComponent(playerTexture.getTexture().getTextureMap()));		
-		}, Duration.seconds(0.8));
+		}, Duration.seconds(TextureComponent.TIME_ANIM_DAMAGE));
 	}
 }

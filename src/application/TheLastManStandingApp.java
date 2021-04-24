@@ -11,8 +11,6 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.ui.UI;
-import application.AppUtils;
-
 import collisions.ShotZombieCollision;
 import collisions.ZombieWallCollision;
 import components.ComponentUtils;
@@ -23,7 +21,6 @@ import controller.VisorController;
 import collisions.GunCollisionFactoryImpl;
 import collisions.PlayerFirePowerCollision;
 import collisions.PlayerZombieCollision;
-import components.PlayerComponent;
 import factories.TexturedGunFactoryImpl;
 import factories.TLMSFactory;
 import factories.WorldFactory;
@@ -66,7 +63,7 @@ public class TheLastManStandingApp extends GameApplication {
 	    	getInput().addAction(new UserAction("Left") {
 	            @Override
 	            protected void onAction() {
-	            	PlayerSpeedStrategy strategy = new PlayerSpeed(player);
+	            	final PlayerSpeedStrategy strategy = new PlayerSpeed(player);
 	                player.getComponent(ComponentUtils.PLAYER_COMPONENT).moveLeft(strategy);
 	            }
 
@@ -79,15 +76,15 @@ public class TheLastManStandingApp extends GameApplication {
 	    	getInput().addAction(new UserAction("TurnLeft") {
 	            @Override
 	            protected void onActionBegin() {
-	            	PlayerSpeedStrategy strategy = new PlayerSpeedTurnsAround();
-	                player.getComponent(ComponentUtils.PLAYER_COMPONENT).moveLeft(strategy);;
+	            	final PlayerSpeedStrategy strategy = new PlayerSpeedTurnsAround();
+	                player.getComponent(ComponentUtils.PLAYER_COMPONENT).moveLeft(strategy);
 	            }
 	        }, KeyCode.Q);
 
 	        getInput().addAction(new UserAction("Right") {
 	            @Override
 	            protected void onAction() {
-	            	PlayerSpeedStrategy strategy = new PlayerSpeed(player);
+	            	final PlayerSpeedStrategy strategy = new PlayerSpeed(player);
 	                player.getComponent(ComponentUtils.PLAYER_COMPONENT).moveRight(strategy);
 	            }
 
@@ -100,8 +97,8 @@ public class TheLastManStandingApp extends GameApplication {
 	        getInput().addAction(new UserAction("TurnRight") {
 	            @Override
 	            protected void onActionBegin() {
-	            	PlayerSpeedStrategy strategy = new PlayerSpeedTurnsAround();
-	                player.getComponent(ComponentUtils.PLAYER_COMPONENT).moveRight(strategy);;
+	            	final PlayerSpeedStrategy strategy = new PlayerSpeedTurnsAround();
+	                player.getComponent(ComponentUtils.PLAYER_COMPONENT).moveRight(strategy);
 	            }
 	        }, KeyCode.E);
 
@@ -195,17 +192,18 @@ public class TheLastManStandingApp extends GameApplication {
 			spawn("machineGun", random.nextInt(mySystemSettings.getWidth()), AppUtils.GUN_SPAWN_Y);
 			}, Duration.seconds(delay + random.nextInt((int) delay)));
 
-		player = spawn("player", 1000, 0);
+		player = spawn("player", AppUtils.MIDDLEXCOORDINATES, AppUtils.ZERO);
 		//sets factory reference of player
 		factory.setPlayer(player);
-		inc("playerLife", ((double)player.getComponent(ComponentUtils.PLAYER_COMPONENT).getPlayer().getHealt() / 10));
+		inc("playerLife", (double)player.getComponent(ComponentUtils.PLAYER_COMPONENT).getPlayer().getHealt() / 10);
 		
 		getGameTimer().runAtInterval(() -> {
-		    spawn("firePowerUp", random.nextInt(2000), 50);
+		    spawn("firePowerUp", random.nextInt(AppUtils.MAXXCOORDINATES), AppUtils.ZERO);
 		}, Duration.seconds(2));
 		
-		final TLMSMusic music = new TLMSMusic("thriller.mp3", 0.1);
+		final TLMSMusic music = new TLMSMusic("thriller.mp3", AppUtils.INITIALBGMUSICVOLUME);
 		getAudioPlayer().loopMusic(music.getMusic());
+		music.noVolume();
 
 	}
 	

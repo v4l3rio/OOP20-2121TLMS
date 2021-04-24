@@ -2,27 +2,36 @@ package test;
 
 
 import model.TLMSType;
+import model.TexturedGun;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Test;
 
+import components.GunComponent;
 import factories.TexturedGunFactoryImpl;
 import model.AbstractGun;
 import model.Gun;
 
 public class GunTest {
 	
-	private final Gun gun = new AbstractGun(3, 5, 600) {
-		@Override
-		public void shoot() {
-			this.setNAmmo(this.getNAmmo() - 1);
-		}
-	};
+	private final TexturedGunFactoryImpl texturedGunFactory = new TexturedGunFactoryImpl();
+	private final TexturedGun beretta92 = texturedGunFactory.getTexturedGun(TLMSType.BERETTA92);
+	private final TexturedGun machineGun = texturedGunFactory.getTexturedGun(TLMSType.MACHINEGUN);
+	private final TexturedGun magmaGun = texturedGunFactory.getTexturedGun(TLMSType.MAGMAGUN);
 	
 	@Test
-	public void testShootingGun() {
+	public void abstractGunTest() {
+		final Gun gun = new AbstractGun(3, 5, 600) {
+			@Override
+			public void shoot() {
+				this.setNAmmo(this.getNAmmo() - 1);
+			}
+		};
+	
 		for (int i = 1; i < gun.getMaxAmmo(); i++) {
 			gun.shoot();
 			assertEquals(gun.getMaxAmmo() - i, gun.getNAmmo());
@@ -38,10 +47,7 @@ public class GunTest {
 	}
 	
 	@Test
-	public void testGunTypes() {
-		final Gun beretta92 = new TexturedGunFactoryImpl().getTexturedGun(TLMSType.BERETTA92);
-		final Gun machineGun = new TexturedGunFactoryImpl().getTexturedGun(TLMSType.MACHINEGUN);
-		final Gun magmaGun = new TexturedGunFactoryImpl().getTexturedGun(TLMSType.MAGMAGUN);
+	public void gunTypesTest() {
 
 		assertEquals(10, beretta92.getMaxAmmo());
 		assertEquals(7, magmaGun.getNAmmo());
@@ -73,4 +79,19 @@ public class GunTest {
 		assertFalse(magmaGun.isSameTypeAs(machineGun));
 	}
 	
+	@Test
+	public void componentTest() {
+		final GunComponent gunComponent = new GunComponent(beretta92);
+	
+		assertEquals(beretta92, gunComponent.getCurrentGun());
+		assertEquals(gunComponent.getDefaultGun(), gunComponent.getCurrentGun());
+	
+		gunComponent.setCurrentGun(magmaGun);
+		assertNotEquals(gunComponent.getDefaultGun(), gunComponent.getCurrentGun());
+		assertEquals(magmaGun, gunComponent.getCurrentGun());
+	
+		gunComponent.setCurrentGun(machineGun);
+		assertNotEquals(gunComponent.getDefaultGun(), gunComponent.getCurrentGun());
+		assertEquals(machineGun, gunComponent.getCurrentGun());
+	}
 }

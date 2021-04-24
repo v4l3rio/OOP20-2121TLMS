@@ -15,8 +15,8 @@ public class PlayerComponent extends Component {
     
     private Player player;
     
-    private boolean isAttacked = false;
-    private boolean isDead = false;
+    private boolean isAttacked;
+    private boolean isDead;
 
     /**
      * generation of all the initial values of the player
@@ -105,7 +105,7 @@ public class PlayerComponent extends Component {
     /**
      * @param damage
      */
-    public void attacked(int damage) {
+    public void attacked(final int damage) {
     	this.isAttacked = true;
     	
     	this.player.setHealt(player.getHealt()-damage);
@@ -123,7 +123,7 @@ public class PlayerComponent extends Component {
     /**
      * this method set a boolean, telling the player's death
      */
-    void dead() {
+    private void dead() {
     	this.isDead = true;
     }
   
