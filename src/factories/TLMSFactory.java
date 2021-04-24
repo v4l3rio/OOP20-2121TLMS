@@ -125,7 +125,7 @@ public class TLMSFactory implements EntityFactory{
         physics.setBodyType(BodyType.KINEMATIC);
         return entityBuilder(data)
                 .type(SHOT)
-                .bbox(new HitBox(new Point2D(11, 35), BoundingShape.box(35, 17)))
+                .bbox(new HitBox(new Point2D(10, 28), BoundingShape.box(28, 10)))
                 .with(physics)
                 .with(new CollidableComponent(true))
                 .with(new ShotMovementComponent(physics, direction, currentGun.getShotspeed(), 
