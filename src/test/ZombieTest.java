@@ -6,11 +6,11 @@ import static org.junit.Assert.assertEquals;
 
 import static org.junit.Assert.assertNotNull;
 
-import model.TLMSType;
-import model.Zombie;
-import model.ZombieFemaleDecorator;
-import model.Moveable.TypeOfMovement;
-import model.ZombieMaleDecorator;
+import main.model.TLMSType;
+import main.model.enemy.Zombie;
+import main.model.enemy.ZombieFemaleDecorator;
+import main.model.enemy.Moveable.TypeOfMovement;
+import main.model.enemy.ZombieMaleDecorator;
 
 public class ZombieTest {
 	

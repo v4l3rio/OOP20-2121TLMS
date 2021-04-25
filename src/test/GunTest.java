@@ -1,8 +1,8 @@
 package test;
 
 
-import model.TLMSType;
-import model.TexturedGun;
+import main.model.TLMSType;
+import main.model.gun.TexturedGun;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -11,11 +11,11 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.Test;
 
-import components.GunComponent;
-import factories.TexturedGunFactory;
-import factories.TexturedGunFactoryImpl;
-import model.AbstractGun;
-import model.Gun;
+import main.components.GunComponent;
+import main.factories.TexturedGunFactory;
+import main.factories.TexturedGunFactoryImpl;
+import main.model.gun.AbstractGun;
+import main.model.gun.Gun;
 
 public class GunTest {
 	

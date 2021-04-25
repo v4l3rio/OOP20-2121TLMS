@@ -10,11 +10,12 @@ import java.util.List;
 
 import org.junit.Test;
 
-import model.score.JSonScoreBuilder;
-import model.score.JsonScore;
-import model.score.Score;
-import model.score.ScoreModel;
-import model.score.ScoreModelImpl;
+import main.model.score.JSonScoreBuilder;
+import main.model.score.JsonScore;
+import main.model.score.Score;
+import main.model.score.ScoreModel;
+import main.model.score.ScoreModelImpl;
+
 
 public class ScoreTest {
 	

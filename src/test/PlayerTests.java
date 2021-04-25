@@ -1,10 +1,10 @@
 package test;
 
-import model.Player;
-import model.PlayerColor;
-import model.PlayerImpl;
-import model.PlayerTextures;
-import model.TLMSType;
+import main.model.player.Player;
+import main.model.player.PlayerColor;
+import main.model.player.PlayerImpl;
+import main.model.player.PlayerTextures;
+import main.model.TLMSType;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
