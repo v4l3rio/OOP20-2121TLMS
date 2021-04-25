@@ -1,6 +1,5 @@
 package test;
 
-import static com.almasb.fxgl.dsl.FXGL.getWorldProperties;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,9 +10,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import controller.ScoreController;
-import controller.ScoreControllerImpl;
-import controller.UserNameControllerImpl;
 import model.score.JSonScoreBuilder;
 import model.score.JsonScore;
 import model.score.Score;

@@ -39,7 +39,7 @@ public class Menu {
 	private static final double RESIZE_THIRD_RAW_HEIGHT = 0.65;
 	private static final double RESIZE_X_LOCATION_TITLE = 0.24;
 	private static final double RESIZE_Y_LOCATION_TITLE = 0.05;
-	private static final double RESIZE_WIDTH_TITLE = 0.5;
+	private static final double RESIZE_WIDTH_TITLE = 1;
 	private static final double RESIZE_HEIGHT_TITLE = 0.1;
 	private final JFrame mainWindow;
 	private JPanelWithBackground mainPanel;
