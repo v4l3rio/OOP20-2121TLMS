@@ -14,7 +14,7 @@ Anyway, I'd suggest fighting: that's the only way you can gain points to defeat 
 
 #### INSTALLATION: ####
 1) Download the last realease of 2121: The last man standing.
-2) Execute "java -jar '2121-TheLastManStanding.jar" from your terminal.
+2) Execute "java -jar 2121-TheLastManStanding.jar" from your terminal.
 3) Enjoy!
 
 #### COMMANDS: ####
