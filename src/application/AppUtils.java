@@ -11,7 +11,7 @@ public final class AppUtils {
 	/**
 	 * gun prop spawn delay.
 	 */
-	public static final double GUN_SPAWN_DELAY = 6;
+	public static final double GUN_SPAWN_DELAY = 7;
 	/**
 	 * not to put over-complicate guns, and exceed variables.
 	 */
