@@ -110,7 +110,7 @@ public class TLMSFactory implements EntityFactory{
                 .type(PLAYER)
                 .bbox(new HitBox(new Point2D(30,12), BoundingShape.box(35, 52))) 
                 .with(physics)
-                .with(new GunComponent(new TexturedGunFactoryImpl().getTexturedGun(BERETTA92)))
+                .with(new GunComponent(gunFactory.getTexturedGun(BERETTA92)))
                 .with(new CollidableComponent(true)) 
                 .with(new PlayerComponent()) 
                 .with(new TextureComponent(texture.getTexture().getTextureMap()))
