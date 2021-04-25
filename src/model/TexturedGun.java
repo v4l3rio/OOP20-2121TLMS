@@ -17,7 +17,7 @@ public abstract class TexturedGun extends AbstractGun {
 	 * 
 	 * @return the texture map straight from texture's method
 	*/
-	public Map<TLMSType, String> getTextureMap() {
+	public Map<TLMSType, String> getTexture() {
 		return this.texture.getTextureMap();
 	}
 }
