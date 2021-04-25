@@ -2,7 +2,7 @@ package components;
 
 import java.util.Map;
 
-import com.almasb.fxgl.dsl.FXGL;
+import static com.almasb.fxgl.dsl.FXGL.getGameTimer;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.texture.AnimatedTexture;
@@ -69,7 +69,7 @@ public class ZombieTextureComponent extends Component {
 		if (entity.getComponent(ComponentUtils.HEALTH_COMPONENT).isZero()) {
 			if (texture.getAnimationChannel() != animDead) {
 				texture.playAnimationChannel(animDead);
-				FXGL.getGameTimer().runOnceAfter(() -> {
+				getGameTimer().runOnceAfter(() -> {
 					entity.removeFromWorld();
 				}, Duration.seconds(ANIMATION_TIME));
 			}
@@ -78,7 +78,7 @@ public class ZombieTextureComponent extends Component {
 		else if (isAttacking()) {
 			if (texture.getAnimationChannel() != animAttack) {
 				texture.playAnimationChannel(animAttack);
-				FXGL.getGameTimer().runOnceAfter(() -> {
+				getGameTimer().runOnceAfter(() -> {
 					setAttacking(false);
 				}, Duration.seconds(ANIMATION_TIME));
 			}
