@@ -205,7 +205,7 @@ public final class TheLastManStandingApp extends GameApplication {
 
 		final TLMSMusic music = new TLMSMusic("thriller.mp3", AppUtils.INITIALBGMUSICVOLUME);
 		getAudioPlayer().loopMusic(music.getMusic());
-		music.noVolume();
+		music.setVolume(0.05);
 
 	}
 	

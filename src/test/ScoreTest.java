@@ -1,14 +1,20 @@
 package test;
 
+import static com.almasb.fxgl.dsl.FXGL.getWorldProperties;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
 
+import controller.ScoreController;
+import controller.ScoreControllerImpl;
+import controller.UserNameControllerImpl;
+import model.score.JSonScoreBuilder;
 import model.score.JsonScore;
 import model.score.Score;
 import model.score.ScoreModel;
@@ -67,5 +73,25 @@ public class ScoreTest {
 		 	newList.add("21 JOEY");
 	        assertEquals(model.updateRanking(list, newScore), newList);
 	    }
+
+	 @Test
+	    public void testJSonScoreBuilder() {
+		 final Score<String, Integer> score = new JsonScore("Phoebe", 300);
+		 final Score<String, Integer> score1 = new JSonScoreBuilder()
+				 						    .nameFromString("Phoebe")
+				 						    .score(300)
+				 						    .build();
+		 assertEquals(score, score1);
+		 final Score<String, Integer> score2 = new JSonScoreBuilder()
+				    .nameFromString("PHOEBE")
+				    .score(300)
+				    .build();
+         assertNotEquals(score, score2);
+		 final Score<String, Integer> score3 = new JSonScoreBuilder()
+				 								   .nameFromString("John")
+				                                   .score(300)
+				                                   .build();
+		 assertNotEquals(score, score3);
+	 }
 
 }
