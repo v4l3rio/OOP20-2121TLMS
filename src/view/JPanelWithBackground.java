@@ -13,7 +13,8 @@ import javax.swing.JPanel;
  * Extends JPanel to create a Panel with background.
  *
  */
-public final class JPanelWithBackground extends JPanel {
+public
+class JPanelWithBackground extends JPanel {
 
 	private static final long serialVersionUID = -5042514025454946591L;
 	private transient Image backgroundImage;

@@ -6,13 +6,13 @@ package model;
  */
 public class PlayerTextures {
 	
-	private Texture playerTexture;
+	private final Texture playerTexture;
 	
 	/**
 	 * 
 	 * @param player's color
 	 */
-	public PlayerTextures(PlayerColor color) {
+	public PlayerTextures(final PlayerColor color) {
 		this.playerTexture = new Texture();
 		
 		this.playerTexture.addTexture(TLMSType.IDLE, "Gunner_" + color.getActualName() + "_Idle.png");

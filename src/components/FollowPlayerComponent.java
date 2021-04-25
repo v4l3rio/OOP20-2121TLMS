@@ -15,14 +15,14 @@ import model.Moveable;
  */
 public class FollowPlayerComponent extends Component implements Moveable{
 	
-	private Entity player;
-	private PhysicsComponent physics;
-	int speed;
+	private final Entity player;
+	private final PhysicsComponent physics;
+	private final int speed;
 	
-	private double seconds = 0.0;
+	private double seconds;
 
 
-	private Random rnd = new Random();
+	private final Random rnd = new Random();
 
 	/**
 	 * 
@@ -30,14 +30,15 @@ public class FollowPlayerComponent extends Component implements Moveable{
 	 * @param physics - PhysicsComponent
 	 * @param speed - movement speed
 	 */
-	public FollowPlayerComponent(Entity player, PhysicsComponent physics, int speed) {
+	public FollowPlayerComponent(final Entity player, final PhysicsComponent physics, final int speed) {
 		this.player = player;
 		this.physics = physics;
 		this.speed = speed;
+		this.seconds = 0.0;
 	}
 	
 	@Override
-	public void onUpdate(double tpf) {
+	public void onUpdate(final double tpf) {
 		
 		if (getGameTimer().getNow() > seconds) {
 			
@@ -53,12 +54,12 @@ public class FollowPlayerComponent extends Component implements Moveable{
 	}
 	
 	public void left() {
-		getEntity().setScaleX(-0.8);
+		getEntity().setScaleX(-1);
 		this.physics.setVelocityX(-(this.speed));
 	}
 
 	public void right() {
-		getEntity().setScaleX(0.8);
+		getEntity().setScaleX(1);
 		this.physics.setVelocityX(this.speed);
 	}
 

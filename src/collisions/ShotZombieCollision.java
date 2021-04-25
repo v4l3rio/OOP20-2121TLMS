@@ -15,26 +15,26 @@ import model.TLMSType;
  */
 
 public class ShotZombieCollision extends CollisionHandler{
-
-
-	public ShotZombieCollision(final TLMSType shot , final TLMSType zombie) {
+	
+	public ShotZombieCollision(final TLMSType shot, final TLMSType zombie) {
 		super(shot, zombie);
-
 	}
+	
 	@Override
-	public void onCollisionBegin(final Entity shot, final Entity zombie) {		
+	public final void onCollisionBegin(final Entity shot, final Entity zombie) {
 		zombie.getComponent(ComponentUtils.HEALTH_COMPONENT).damage(shot.getComponent(ComponentUtils.DAMAGING_COMPONENT).getDamage());
-		
+	
 		shot.removeFromWorld();
-		
+	
 		System.out.println("Lo zombie ha vita: " + zombie.getComponent(ComponentUtils.HEALTH_COMPONENT).getValue());
 		inc("score", +1);
-		spawn("zombiePoints", new SpawnData(zombie.getX(),zombie.getY()).put("zombiePoints", "+1"));
+		spawn("zombiePoints", new SpawnData(zombie.getX(), zombie.getY()).put("zombiePoints", "+1"));
 
-		if(zombie.getComponent(ComponentUtils.HEALTH_COMPONENT).getValue()<=0) {
+		if (zombie.getComponent(ComponentUtils.HEALTH_COMPONENT).getValue() <= 0) {
+			inc("score", +zombie.getComponent(ComponentUtils.HEALTH_COMPONENT).getMaxValue());
 			System.out.println("Zombie rimosso");
 		}
-		
+	
 	}
 
 }

@@ -65,7 +65,7 @@ public class WorldFactory implements EntityFactory {
             .with(new CollidableComponent(true))
             .build();
 	}
- 	
+
 	/**
 	 * @param data
 	 * @return
@@ -74,7 +74,7 @@ public class WorldFactory implements EntityFactory {
  	 @Spawns("text")
      public Entity centralText(final SpawnData data) {
  		final String text = data.get("text");
-         
+
  		final var e = entityBuilder(data)
                  .view(FXGL.getUIFactoryService().newText(text, SIZE_RELOAD_TEXT))
                  .with(new ExpireCleanComponent(Duration.seconds(DURATION_RELOAD_TEXT)))
@@ -89,7 +89,7 @@ public class WorldFactory implements EntityFactory {
 
          return e;
      }
- 	 
+
  	 /** 
  	  * @param data
  	  * @return

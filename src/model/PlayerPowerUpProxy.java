@@ -11,13 +11,13 @@ import components.ComponentUtils;
 public class PlayerPowerUpProxy implements PlayerPowerUp{
 	
 	private final PlayerPowerUp player;	
-	private Entity playerSettings;
+	private final Entity playerSettings;
 	
 	/**
 	 * 
 	 * @param player entity
 	 */
-	public PlayerPowerUpProxy(Entity player) {
+	public PlayerPowerUpProxy(final Entity player) {
 		this.playerSettings = player;
 		this.player = new PlayerPowerUpImpl(this.playerSettings);
 	}

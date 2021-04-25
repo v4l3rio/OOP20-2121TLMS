@@ -2,7 +2,7 @@ package components;
 
 import java.util.Map;
 
-import static com.almasb.fxgl.dsl.FXGL.*;
+import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.texture.AnimatedTexture;
@@ -18,32 +18,43 @@ import model.TLMSType;
  */
 public class TextureComponent extends Component{
 	
+	public static final double TIME_ANIM_IDLE = 1;
+	public static final double TIME_ANIM_RUN = 1;
+	public static final double TIME_ANIM_JUMP = 1.7;
+	public static final double TIME_ANIM_DEATH = 1.7;
+	public static final double TIME_ANIM_DAMAGE = 0.8;
+	
+	private static final int X_DIM = 82;
+	private static final int Y_DIM = 82;
+
+	
 	private AnimatedTexture animTexture;
     private AnimationChannel animIdle, animRun, animJump, animDeath, animDamage;
+    
     private PhysicsComponent physics;
     
     /**
      * @param a map of textures
      */
-    public TextureComponent (final Map<TLMSType, String> textures) {   	
-    	this.animIdle = new AnimationChannel(image(textures.get(TLMSType.IDLE)), 5, 48, 48, Duration.seconds(1), 0, 4);
-    	this.animRun = new AnimationChannel(image(textures.get(TLMSType.RUN)), 6, 48, 48, Duration.seconds(1), 0, 5);
-    	this.animJump = new AnimationChannel(image(textures.get(TLMSType.JUMP)), 2, 48, 48, Duration.seconds(1.7), 1, 1);
-    	this.animDeath = new AnimationChannel(image(textures.get(TLMSType.DEAD)), 8, 48, 48, Duration.seconds(1.7), 0, 7);
-    	this.animDamage = new AnimationChannel(image(textures.get(TLMSType.DEAD)), 4, 48, 48, Duration.seconds(0.8), 0, 3);
+    public TextureComponent (final Map<TLMSType, String> textures) { 
+    	this.animIdle = new AnimationChannel(FXGL.image(textures.get(TLMSType.IDLE)), 5, X_DIM, Y_DIM, Duration.seconds(TIME_ANIM_IDLE), 0, 4);
+    	this.animRun = new AnimationChannel(FXGL.image(textures.get(TLMSType.RUN)), 6, X_DIM, Y_DIM, Duration.seconds(TIME_ANIM_RUN), 0, 5);
+    	this.animJump = new AnimationChannel(FXGL.image(textures.get(TLMSType.JUMP)), 2, X_DIM, Y_DIM, Duration.seconds(TIME_ANIM_JUMP), 1, 1);
+    	this.animDeath = new AnimationChannel(FXGL.image(textures.get(TLMSType.DEAD)), 8, X_DIM, Y_DIM, Duration.seconds(TIME_ANIM_DEATH), 0, 7);
+    	this.animDamage = new AnimationChannel(FXGL.image(textures.get(TLMSType.DEAD)), 4, X_DIM, Y_DIM, Duration.seconds(TIME_ANIM_DAMAGE), 0, 3);
   	
     	animTexture = new AnimatedTexture(animIdle);
     }
     
     @Override
-    public void onAdded() { //appena entità viene aggiunto al mondo, viene eseguito
+    public void onAdded() { 
         entity.getTransformComponent().setScaleOrigin(new Point2D(16, 21));
         entity.getViewComponent().addChild(animTexture);
         getEntity().setScaleUniform(entity.getComponent(ComponentUtils.PLAYER_COMPONENT).getPlayer().getDimension()); //setta la grandezza iniziale in percentuale
     }
     
     @Override
-    public void onUpdate(double tpf) { 
+    public void onUpdate(final double tpf) { 
     	if(entity.getComponent(ComponentUtils.PLAYER_COMPONENT).isDead()) {
     		if (animTexture.getAnimationChannel() != animDeath) {
     			animTexture.loopAnimationChannel(animDeath); 

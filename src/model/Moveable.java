@@ -15,7 +15,7 @@ public interface Moveable {
 	 * {@link #STOP}
 	 * {@link #JUMP}
 	 */
-	public static enum DIRECTIONS {
+	enum Directions {
 		
 		/**
 		 * Movement to the left
@@ -37,8 +37,8 @@ public interface Moveable {
 		 */
 		JUMP;
 		
-		public static DIRECTIONS getRandom() {
-			return DIRECTIONS.values()[new Random().nextInt(DIRECTIONS.values().length)];
+		public static Directions getRandom() {
+			return Directions.values()[new Random().nextInt(Directions.values().length)];
 		}
 	}
 	
@@ -47,40 +47,49 @@ public interface Moveable {
 	 * {@link #FOLLOW}
 	 * {@link #RANDOM}
 	 */
-	public static enum TYPE_OF_MOVEMENT{
+	enum TypeOfMovement{
 		
 		/**
 		 * The entity will move following the player
 		 */
-		FOLLOW, 
+		FOLLOW("followingZombie"), 
 		
 		/**
 		 * The entity will move randomly
 		 */
-		RANDOM;
+		RANDOM("stupidZombie");
 		
-		public static TYPE_OF_MOVEMENT getRandom() {
-			return TYPE_OF_MOVEMENT.values()[new Random().nextInt(TYPE_OF_MOVEMENT.values().length)];
+		public final String label;
+		
+		TypeOfMovement(String label) {
+			this.label = label;
+		}
+		
+		/**
+		 * @return random Enum Value
+		 */
+		public static TypeOfMovement getRandom() {
+			return TypeOfMovement.values()[new Random().nextInt(TypeOfMovement.values().length)];
 		}
 		
 	}
 	/**
 	 * Moves the entity to the left
 	 */
-	public void left();
+	void left();
 	
 	/**
 	 * Moves the entity to the right
 	 */
-	public void right();
+	void right();
 	
 	/**
 	 * Stop the entity movement
 	 */
-	public void stop();
+	void stop();
 	
 	/**
 	 * Moves the entity up
 	 */
-	public void jump();
+	void jump();
 }

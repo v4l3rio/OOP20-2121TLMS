@@ -1,6 +1,6 @@
 package components;
 
-import static com.almasb.fxgl.dsl.FXGL.*;
+import static com.almasb.fxgl.dsl.FXGL.getGameTimer;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import javafx.util.Duration;
@@ -13,10 +13,10 @@ public class PlayerComponent extends Component {
     
     private PhysicsComponent physics;
     
-    private Player player;
+    private final Player player;
     
-    private boolean isAttacked = false;
-    private boolean isDead = false;
+    private boolean isAttacked;
+    private boolean isDead;
 
     /**
      * generation of all the initial values of the player
@@ -105,7 +105,7 @@ public class PlayerComponent extends Component {
     /**
      * @param damage
      */
-    public void attacked(int damage) {
+    public void attacked(final int damage) {
     	this.isAttacked = true;
     	
     	this.player.setHealt(player.getHealt()-damage);
@@ -123,7 +123,7 @@ public class PlayerComponent extends Component {
     /**
      * this method set a boolean, telling the player's death
      */
-    void dead() {
+    private void dead() {
     	this.isDead = true;
     }
   

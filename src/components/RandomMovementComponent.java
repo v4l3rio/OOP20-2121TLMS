@@ -2,7 +2,7 @@ package components;
 
 import java.util.Random;
 
-import static com.almasb.fxgl.dsl.FXGL.*;
+import static com.almasb.fxgl.dsl.FXGL.getGameTimer;
 import com.almasb.fxgl.entity.component.Component;
 import com.almasb.fxgl.physics.PhysicsComponent;
 
@@ -13,31 +13,32 @@ import model.Moveable;
  */
 public class RandomMovementComponent extends Component implements Moveable {
 
-	private double seconds = 0.0;
+	private double seconds;
 
-	private Random rnd = new Random();
+	private final Random rnd = new Random();
 
-	int speed;
+	private final int speed;
 
-	private PhysicsComponent physics;
+	private final PhysicsComponent physics;
 
 	/**
 	 * 
 	 * @param physics - PhysicsComponent
 	 * @param speed - movement speed
 	 */
-	public RandomMovementComponent(PhysicsComponent physics, int speed) {
+	public RandomMovementComponent(final PhysicsComponent physics, final int speed) {
 		this.physics = physics;
 		this.speed = speed;
+		this.seconds = 0.0;
 	}
 
 	@Override
-	public void onUpdate(double tpf) {
+	public void onUpdate(final double tpf) {
 		
 
 		if (getGameTimer().getNow() > seconds) {
 
-			switch (DIRECTIONS.getRandom()) {
+			switch (Directions.getRandom()) {
 			case LEFT:
 				left();
 				seconds = seconds + rnd.nextDouble();
@@ -65,12 +66,12 @@ public class RandomMovementComponent extends Component implements Moveable {
 
 
 	public void left() {
-		getEntity().setScaleX(-0.8);
+		getEntity().setScaleX(-1);
 		this.physics.setVelocityX(-(this.speed));
 	}
 
 	public void right() {
-		getEntity().setScaleX(0.8);
+		getEntity().setScaleX(1);
 		this.physics.setVelocityX(this.speed);
 	}
 

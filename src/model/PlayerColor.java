@@ -14,7 +14,7 @@ public enum PlayerColor{
 	 * 
 	 * @param color's name
 	 */
-		private PlayerColor(String name) {
+		PlayerColor(final String name) {
 			this.actualName = name;
 		}
 

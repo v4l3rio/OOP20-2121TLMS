@@ -3,16 +3,18 @@ package controller;
 import java.io.IOException;
 import java.util.List;
 
+import model.score.Pair;
 import model.score.Score;
 
 /**
- * The ScoreController interface provides methods to read/write ranking
+ * The ScoreController interface provides methods to read/write ranking.
  */
 public interface ScoreController {
 	
 	/**
+	 * Create folder and files score. 
 	 * @throws IOException 
-	 * 
+	 *             if an I/O error occurs
 	 */
 	void firstGame() throws IOException;
 	/**
@@ -24,11 +26,14 @@ public interface ScoreController {
 	void updateScore(Score<String, Integer> score) throws IOException;
 
 	/**
-	 * 
-	 * @return the ranking in a list
+	 * This method provide a list of all the rankings.
+	 * A component of this list, a pair, is composed like this:
+	 * <p>
+	 *  ("Cemetery", ["Mark 30", "John 20", "Luke 12"]) 
+	 * @return a list of pairs (String map, List<String> ranking)
 	 * @throws IOException
 	 *             if an I/O error occurs
 	 */
-	List<String> getRanking() throws IOException;
+	List<Pair<String, List<String>>> getRanking() throws IOException;
 
 }

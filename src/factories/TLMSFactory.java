@@ -26,19 +26,19 @@ import components.RandomMovementComponent;
 import components.TextureComponent;
 import components.ZombieTextureComponent;
 import model.TLMSType;
-import model.Player;
-import model.PlayerImpl;
 
 
 /**
- * This factory creates various types of entities that can be spawned with the "spawn ()" method
+ * This factory creates various types of entities that can be spawned with the "spawn ()" method.
  */
 
 public class TLMSFactory implements EntityFactory{
 	
+	private static final String GROUND_SENSOR = "GROUND_SENSOR";
+	private final TexturedGunFactory gunFactory = new TexturedGunFactoryImpl();
 	private Entity player;
 	
-	public void setPlayer(Entity player) {
+	public final void setPlayer(final Entity player) {
 		this.player = player;
 	}
 
@@ -48,17 +48,17 @@ public class TLMSFactory implements EntityFactory{
 	 * @return entity - created entity
 	 */
 	@Spawns("stupidZombie")
-    public Entity newStupidZombie(SpawnData data) {
+    public Entity newStupidZombie(final SpawnData data) {
 		
-        PhysicsComponent physics = new PhysicsComponent();
+        final PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
-        physics.addGroundSensor(new HitBox("GROUND_SENSOR", new Point2D(16, 38), BoundingShape.box(6, 8)));
+        physics.addGroundSensor(new HitBox(GROUND_SENSOR, new Point2D(16, 38), BoundingShape.box(6, 8)));
 
-        ZombieTextureDecorator zombie = data.get("zombie");
+        final ZombieTextureDecorator zombie = data.get("zombie");
 
         return entityBuilder(data)
                 .type(ZOMBIE)
-                .bbox(new HitBox(new Point2D(35,28), BoundingShape.box(65, 125)))
+                .bbox(new HitBox(new Point2D(35,24), BoundingShape.box(48, 103)))
                 .with(physics)
                 .with(new DamagingComponent(zombie.getDamage()))
                 .with(new HealthIntComponent(zombie.getLife()))
@@ -74,17 +74,17 @@ public class TLMSFactory implements EntityFactory{
 	 * @return entity - created entity
 	 */
 	@Spawns("followingZombie")
-    public Entity newFollowingZombie(SpawnData data) {
+    public Entity newFollowingZombie(final SpawnData data) {
 		
-        PhysicsComponent physics = new PhysicsComponent();
+        final PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
-        physics.addGroundSensor(new HitBox("GROUND_SENSOR", new Point2D(16, 38), BoundingShape.box(6, 8)));
+        physics.addGroundSensor(new HitBox(GROUND_SENSOR, new Point2D(16, 38), BoundingShape.box(6, 8)));
 
-        ZombieTextureDecorator zombie = data.get("zombie");
+        final ZombieTextureDecorator zombie = data.get("zombie");
 
         return entityBuilder(data)
                 .type(ZOMBIE)
-                .bbox(new HitBox(new Point2D(35,28), BoundingShape.box(65, 125)))
+                .bbox(new HitBox(new Point2D(35,24), BoundingShape.box(48, 103)))
                 .with(physics)
                 .with(new DamagingComponent(zombie.getDamage()))
                 .with(new HealthIntComponent(zombie.getLife()))
@@ -100,82 +100,81 @@ public class TLMSFactory implements EntityFactory{
 	 * @return a new entity player
 	 */
 	@Spawns("player")
-    public Entity newPlayer(SpawnData data) {
-		PlayerTextures texture = new PlayerTextures(PlayerColor.BLUE);
-        PhysicsComponent physics = new PhysicsComponent();
+    public Entity newPlayer(final SpawnData data) {
+		final PlayerTextures texture = new PlayerTextures(PlayerColor.BLUE);
+        final PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
-        physics.addGroundSensor(new HitBox("GROUND_SENSOR", new Point2D(16, 38), BoundingShape.box(6, 8)));
+        physics.addGroundSensor(new HitBox(GROUND_SENSOR, new Point2D(30, 12), BoundingShape.box(35, 52)));
 
         return entityBuilder(data)
-                .type(TLMSType.PLAYER)
-                .bbox(new HitBox(new Point2D(15,7), BoundingShape.box(15, 30))) //x collisioni e x piattaforme. Immagini sono incollate sulle hitbox //busto
+                .type(PLAYER)
+                .bbox(new HitBox(new Point2D(30,12), BoundingShape.box(35, 52))) 
                 .with(physics)
-                .with(new GunComponent(new TexturedGunFactoryImpl().createBeretta92()))
-                .with(new CollidableComponent(true)) //può essere colpito e può atterrare su piattaforme
+                .with(new GunComponent(gunFactory.getTexturedGun(BERETTA92)))
+                .with(new CollidableComponent(true)) 
                 .with(new PlayerComponent()) 
                 .with(new TextureComponent(texture.getTexture().getTextureMap()))
                 .build();
         }
 
 	@Spawns("shot")
-    public Entity newShot(final SpawnData data) {
+	public final Entity newShot(final SpawnData data) {
 		final TexturedGun currentGun = player.getComponent(ComponentUtils.GUN_COMPONENT).getCurrentGun();
 	 	final double direction = Math.signum(this.player.getScaleX());
 	 	final PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.KINEMATIC);
-        
         return entityBuilder(data)
                 .type(SHOT)
-                .bbox(new HitBox(new Point2D(50,100), BoundingShape.box(130, 130)))
+                .bbox(new HitBox(new Point2D(10, 28), BoundingShape.box(28, 10)))
                 .with(physics)
                 .with(new CollidableComponent(true))
                 .with(new ShotMovementComponent(physics, direction, currentGun.getShotspeed(), 
-                		new Image(currentGun.getTextureMap().get(SHOT))))
-                .with(new DamagingComponent(currentGun.getShotDamage()))
+                		new Image(currentGun.getTexture().getTextureMap().get(SHOT))))
+                .with(new DamagingComponent(currentGun.getDamage()))
                 .build();
     }
 	
 	@Spawns("magmaGun")
     public Entity newMagmaGun(final SpawnData data) {
-		final TexturedGun magmaGun = new TexturedGunFactoryImpl().createMagmaGun();
+		final TexturedGun magmaGun = gunFactory.getTexturedGun(MAGMAGUN);
 		final PhysicsComponent physics = new PhysicsComponent();
-        physics.setBodyType(BodyType.DYNAMIC);        
+        physics.setBodyType(BodyType.DYNAMIC);
         // this avoids player sticking to walls
         physics.setFixtureDef(new FixtureDef().friction(0.0f));
 
         return entityBuilder(data)
                 .type(MAGMAGUN)
-                .bbox(new HitBox(new Point2D(35,130), BoundingShape.box(160, 100)))
+                .bbox(new HitBox(new Point2D(2, 42), BoundingShape.box(68, 38)))
                 .with(new CollidableComponent(true))
                 .with(physics)
-                .with(new PropComponent(new Image(magmaGun.getTextureMap().get(GUN))))
+                .with(new PropComponent(new Image(magmaGun.getTexture().getTextureMap().get(GUN))))
                 .build();
     }
 
 	@Spawns("machineGun")
-    public Entity newMachineGun(final SpawnData data) {
-		final TexturedGun machineGun = new TexturedGunFactoryImpl().createMachineGun();
+	public final Entity newMachineGun(final SpawnData data) {
+		final TexturedGun machineGun = gunFactory.getTexturedGun(MACHINEGUN);
         final PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.DYNAMIC);
 
         return entityBuilder(data)
                 .type(MACHINEGUN)
-                .bbox(new HitBox(new Point2D(35,130), BoundingShape.box(160, 100)))
+                .bbox(new HitBox(new Point2D(2, 42), BoundingShape.box(68, 38)))
                 .with(new CollidableComponent(true))
                 .with(physics)
-                .with(new PropComponent(new Image(machineGun.getTextureMap().get(GUN))))
+                .with(new PropComponent(new Image(machineGun.getTexture().getTextureMap().get(GUN))))
                 .build();
     }
 	
 	@Spawns("firePowerUp")
-	public Entity newPower(SpawnData data) {
-		PhysicsComponent physics = new PhysicsComponent();
+	public Entity newPower(final SpawnData data) {
+		final PhysicsComponent physics = new PhysicsComponent();
 		physics.setBodyType(BodyType.DYNAMIC);
-		physics.addGroundSensor(new HitBox("GROUND_SENSOR", new Point2D(16, 38), BoundingShape.box(6, 80)));
+		physics.addGroundSensor(new HitBox(GROUND_SENSOR, new Point2D(16, 38), BoundingShape.box(6, 80)));
 		
 		return entityBuilder(data)
-				.type(TLMSType.FIREPOWER)
-				.bbox(new HitBox(new Point2D(5,5), BoundingShape.circle(12)))
+				.type(FIREPOWER)
+				.bbox(new HitBox(new Point2D(10,10), BoundingShape.circle(10)))
 				.with(physics)
 				.with(new CollidableComponent(true))
 				.with(new FirePowerComponent())

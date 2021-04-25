@@ -12,9 +12,8 @@ import javafx.util.Duration;
  */
 public class PropComponent extends Component {
 	
-	private final static int PROPDEFAULTNTEXTURES = 3;
-	private final static double PROPDEFAULTSCALE = 0.3;
-	private final static double PROPDEFAULTCHANNELDURATION = 0.3;
+	private static final int PROPDEFAULTNTEXTURES = 3;
+	private static final double PROPDEFAULTCHANNELDURATION = 0.3;
 
 	private final AnimatedTexture propTexture;
 	
@@ -23,17 +22,20 @@ public class PropComponent extends Component {
 	 * @param propIMG is the image containing prop's textures to set animation
 	 */
 	public PropComponent(final Image propIMG) {
-		final AnimationChannel propChannel = new AnimationChannel(propIMG, 3, (int) (propIMG.getWidth()/PROPDEFAULTNTEXTURES)
-				, (int) propIMG.getHeight(), Duration.seconds(PROPDEFAULTCHANNELDURATION), 0, PROPDEFAULTNTEXTURES - 1);
+		final AnimationChannel propChannel = new AnimationChannel(propIMG,
+				3,
+				(int) (propIMG.getWidth() / PROPDEFAULTNTEXTURES),
+				(int) propIMG.getHeight(),
+				Duration.seconds(PROPDEFAULTCHANNELDURATION),
+				0, PROPDEFAULTNTEXTURES - 1);
 		propTexture = new AnimatedTexture(propChannel);
 		propTexture.loop();
 	}
 
 	/**
-	 * adds texture to the entity, setting due scale
+	 * adds texture to the entity, setting due scale.
 	 */
 	public void onAdded() {
 		getEntity().getViewComponent().addChild(propTexture);
-		getEntity().setScaleUniform(PROPDEFAULTSCALE);
 	}
 }

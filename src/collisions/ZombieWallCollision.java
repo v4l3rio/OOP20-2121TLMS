@@ -17,13 +17,13 @@ public class ZombieWallCollision extends CollisionHandler{
 	 * @param zombie 
 	 * @param wall
 	 */
-	public ZombieWallCollision(TLMSType zombie , TLMSType wall) {
+	public ZombieWallCollision(final TLMSType zombie , final TLMSType wall) {
 		super(zombie, wall);
 		
 	}
 	
 	@Override
-	public void onCollision(Entity zombie, Entity wall) {		
+	public void onCollision(final Entity zombie, final Entity wall) {		
 		if(zombie.hasComponent(ComponentUtils.RANDOM_MOVEMENT_COMPONENT)) {
 			zombie.getComponent(ComponentUtils.RANDOM_MOVEMENT_COMPONENT).jump();		
 		}
